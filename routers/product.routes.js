@@ -1,6 +1,8 @@
 import express from "express";
 import { Product } from "../models/product.model.js"; 
 import { upload } from "../utils/multer.config.js";
+import { getPagination } from "../utils/pagination.js";
+
 import { verifyJWT, verifyRole } from "../middleware/auth.middleware.js";
 import {
   addProductController,
@@ -11,21 +13,32 @@ import {
 } from "../controllers/product.controller.js";
 
 const router = express.Router();
-
 router.get("/products", 
-  verifyJWT, 
-  verifyRole("admin"), 
-  async (req, res) => {
-    try {
-        const products = await Product.find({});
-        res.render('admin/products', { 
-            products: products,
-            title: "Product List"
-        });
-    } catch (error) {
-        res.status(500).json({ message: "Server error", error });
-    }
-});
+    verifyJWT, 
+    verifyRole("admin"), 
+    async (req, res) => {
+      try {
+          const page = parseInt(req.query.page) || 1;
+          const limit = 8;
+  
+          const totalProducts = await Product.countDocuments();
+          const pagination = getPagination(totalProducts, page, limit);
+  
+          const products = await Product.find({})
+                                       .skip((pagination.currentPage - 1) * limit)
+                                       .limit(limit)
+                                       .exec();
+      
+          res.render('admin/products', { 
+              products,
+              pagination,
+              title: "Product List"
+          });
+      } catch (error) {
+          res.status(500).json({ message: "Server error", error });
+      }
+  });
+  
 
 router.get("/add-product", verifyJWT, verifyRole("admin"), (req, res) => {
     res.render("admin/add-product");
