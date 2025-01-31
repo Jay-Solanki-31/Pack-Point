@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="PACK POINT admin is super flexible, powerful, clean &amp; modern responsive bootstrap 4 admin template with unlimited possibilities.">
+    <meta name="keywords"
+        content="admin template, PACK POINT admin template, dashboard template, flat admin template, responsive admin template, web app">
+    <meta name="author" content="pixelstrap">
+    <link rel="icon" href="/images/dashboard/favicon.png" type="image/x-icon">
+    <link rel="shortcut icon" href="/images/dashboard/favicon.png" type="image/x-icon">
+    <title>PACK POINT ADMIN DASHBOARD </title>
+
+    <!-- Google font-->
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,500;1,600;1,700;1,800;1,900&amp;display=swap">
+
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;display=swap">
+
+
+    <!-- Font Awesome-->
+    <link rel="stylesheet" type="text/css" href="/css/vendors/font-awesome.css">
+
+    <!-- Flag icon-->
+    <link rel="stylesheet" type="text/css" href="/css/vendors/flag-icon.css">
+
+    <!-- Dropzone css-->
+    <link rel="stylesheet" type="text/css" href="/css/vendors/dropzone.css">
+
+    <!-- ico-font-->
+    <link rel="stylesheet" type="text/css" href="/css/vendors/icofont.css">
+
+    <!-- Prism css-->
+    <link rel="stylesheet" type="text/css" href="/css/vendors/prism.css">
+
+   
+
+    <!-- Chartist css -->
+    <link rel="stylesheet" type="text/css" href="/css/vendors/chartist.css">
+
+    <!-- Bootstrap css-->
+    <link rel="stylesheet" type="text/css" href="/css/vendors/bootstrap.css">
+
+     <!-- Add this with your other CSS links -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@icon/themify-icons@1.0.1-alpha.3/themify-icons.min.css">
+
+    <!-- App css-->
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+</head>
+
+
+<body>
+
+    <!-- page-wrapper Start-->
+    <div class="page-wrapper">
+
+        <!-- Page Header Start-->
+        <div class="page-main-header">
+            <div class="main-header-right row">
+                <div class="main-header-left d-lg-none w-auto">
+
+                </div>
+                <div class="mobile-sidebar w-auto">
+                    <div class="media-body text-end switch-sm">
+                        <label class="switch">
+                            <a href="javascript:void(0)">
+                                <i id="sidebar-toggle" data-feather="align-left"></i>
+                            </a>
+                        </label>
+                    </div>
+                </div>
+                <div class="nav-right col">
+                    <ul class="nav-menus">
+                        <li>
+                            <form class="form-inline search-form">
+                                <div class="form-group">
+                                    <input class="form-control-plaintext" type="search" placeholder="Search..">
+                                    <span class="d-sm-none mobile-search">
+                                        <i data-feather="search"></i>
+                                    </span>
+                                </div>
+                            </form>
+                        </li>
+                        <li>
+                            <a class="text-dark" href="#!" onclick="javascript:toggleFullScreen()">
+                                <i data-feather="maximize-2"></i>
+                            </a>
+                        </li>
+
+
+                        <li class="onhover-dropdown">
+                            <div class="media align-items-center">
+                                <img class="align-self-center pull-right img-50 blur-up lazyloaded"
+                                    src="/images/dashboard/admin-1.png" alt="header-user">
+                                <div class="dotted-animation">
+                                    <span class="animate-circle"></span>
+                                    <span class="main-circle"></span>
+                                </div>
+                            </div>
+                            <ul class="profile-dropdown onhover-show-div p-20 profile-dropdown-hover">
+                                <li>
+                                    <a href="/admin/profile">
+                                        <i data-feather="user"></i> Profile
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <form id="logoutForm" action="/auth/logout" method="POST" style="display: none;">
+                                    </form>
+                                    <a href="javascript:void(0)"
+                                        onclick="document.getElementById('logoutForm').submit();">
+                                        <i data-feather="log-out"></i> Logout
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </li>
+                    </ul>
+                    <div class="d-lg-none mobile-toggle pull-right">
+                        <i data-feather="more-horizontal"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Page Header Ends -->

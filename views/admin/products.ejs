@@ -1,0 +1,66 @@
+<%-include('../partials/admin/index-header.ejs') %>
+
+<!-- Page Body Start-->
+<div class="page-body-wrapper">
+    <%-include('../partials/admin/index-sidebar.ejs') %>
+
+    <div class="page-body">
+
+        <!-- Container-fluid starts-->
+        <div class="container-fluid">
+            <div class="row products-admin ratio_asos">
+                <% products.forEach(product => { %>
+                <div class="col-xl-3 col-sm-6">
+                    <div class="card">
+                        <div class="card-body product-box">
+                            <div class="img-wrapper">
+                                <div class="front">
+                                    <a href="#">
+                                        <img src="<%= product.imgUrls[0] %>" 
+                                             class="img-fluid blur-up lazyload bg-img" 
+                                             alt="<%= product.title %>">
+                                    </a>
+                                    <div class="product-hover">
+                                        <ul>
+                                            <li>
+                                                <a href="/admin/edit-product/<%= product._id %>" class="btn">
+                                                    <i class="icofont icofont-pencil-alt-2"></i>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <form action="/admin/delete-product/<%= product._id %>" method="POST">
+                                                    <button class="btn" type="submit">
+                                                        <i class="icofont icofont-trash"></i>                                                    </button>
+                                                </form>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="product-detail">
+                                <div class="rating">
+                                    <% for(let i = 0; i < product.rating; i++) { %>
+                                        <i class="fa fa-star"></i>
+                                    <% } %>
+                                </div>
+                                <a href="#">
+                                    <h6><%= product.title %></h6>
+                                </a>
+                                <h4>₹<%= product.price.toFixed(2) %>
+                                    <% if(product.oldPrice) { %>
+                                        <del>$<%= product.oldPrice.toFixed(2) %></del>
+                                    <% } %>
+                                </h4>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <% }); %>
+            </div>
+        </div>
+        <!-- Container-fluid Ends-->
+    </div>
+
+    <%-include('../partials/admin/index-footer.ejs') %>
+</div>

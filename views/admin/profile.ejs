@@ -1,0 +1,84 @@
+<%- include('../partials/admin/index-header.ejs') %>
+
+<!-- Page Body Start-->
+<div class="page-body-wrapper">
+    <%- include('../partials/admin/index-sidebar.ejs') %>
+    <div class="page-body">
+        <!-- Container-fluid starts-->
+        <div class="container-fluid">
+            <div class="page-header">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="page-header-left">
+                            <h3>Profile
+                                <small>PACK POINT Admin panel</small>
+                            </h3>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <ol class="breadcrumb pull-right">
+                            <li class="breadcrumb-item">
+                                <a href="/admin/dashboard">
+                                    <i data-feather="home"></i>
+                                </a>
+                            </li>
+                            <li class="breadcrumb-item">Settings</li>
+                            <li class="breadcrumb-item active">Profile</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Container-fluid Ends-->
+
+        <!-- Container-fluid starts-->
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-xl-10">
+                    <div class="card tab2-card">
+                        <div class="card-body">
+                            <ul class="nav nav-tabs nav-material" id="top-tab" role="tablist">
+                                <li class="nav-item"><a class="nav-link active" id="top-profile-tab"
+                                        data-bs-toggle="tab" href="#top-profile" role="tab"
+                                        aria-controls="top-profile" aria-selected="true"><i data-feather="user"
+                                            class="me-2"></i>Profile</a>
+                                </li>
+                            </ul>
+                            <div class="tab-content" id="top-tabContent">
+                                <div class="tab-pane fade show active" id="top-profile" role="tabpanel"
+                                    aria-labelledby="top-profile-tab">
+                                    <h5 class="f-w-600">Profile</h5>
+
+                                    <form action="/auth/update-account" method="POST">
+                                        <div class="mb-3">
+                                            <label for="firstName" class="form-label">First Name:</label>
+                                            <input type="text" class="form-control" id="fullName" name="fullName" value="<%= user.fullName.split(' ')[0] %>" >
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="lastName" class="form-label">User Name:</label>
+                                            <input type="text" class="form-control" id="username" name="username" value="<%= user.username.split(' ') %>" >
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="email" class="form-label">Email:</label>
+                                            <input type="email" class="form-control" id="email" name="email" value="<%= user.email %>" >
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="role" class="form-label">Role:</label>
+                                            <input type="text" class="form-control" id="role" name="role" value="<%= user.userRole %>" disabled>
+                                        </div>
+
+                                        <button type="submit" class="btn btn-primary">Update Profile</button>
+                                    </form>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Container-fluid Ends-->
+    </div>
+
+    <%- include('../partials/admin/index-footer.ejs') %>
+</div>
