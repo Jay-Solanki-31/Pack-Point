@@ -23,12 +23,12 @@
                                     <div class="product-hover">
                                         <ul>
                                             <li>
-                                                <a href="/admin/edit-product/<%= product._id %>" class="btn">
+                                                <a href="./edit-product/<%= product._id %>" class="btn">
                                                     <i class="icofont icofont-pencil-alt-2"></i>
                                                 </a>
                                             </li>
                                             <li>
-                                                <form action="/admin/delete-product/<%= product._id %>" method="POST">
+                                                <form action="./delete-product/<%= product._id %>" method="POST">
                                                     <button class="btn" type="submit">
                                                         <i class="icofont icofont-trash"></i>                                                    </button>
                                                 </form>
@@ -58,8 +58,6 @@
                 </div>
                 <% }); %>
             </div>
-                    <!-- Existing product grid -->
-
             <div class="pagination-container">
                 <% if (pagination.hasPrevPage) { %>
                     <a href="./products?page=<%= pagination.prevPage %>" class="btn btn-secondary">Previous</a>

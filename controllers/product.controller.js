@@ -49,60 +49,14 @@ const addProductController = async (req, res) => {
 
 
 
-// get all product details 
-const getProductDetails = async (req, res) => {
-    try {
-        const product = await Product.find({});
-        if (!product) {
-            return res.status(401).send({
-                message: "error to grting Data",
-                error,
-            });
-        }
-
-        res.status(200).json({
-            message: true,
-            totalProduct: product.length,
-            product,
-        });
-
-    } catch (error) {
-        // console.log(error),
-        res.status(500).json('Server error');
-        error
-    }
-
-}
-
-
-
-// get product details by food id 
-const getProductById = async (req, res) => {
-    try {
-
-        const ProductId = req.params.id;
-        const getProductDetailsById = await Product.findById(ProductId);
-        if (!getProductDetailsById) {
-            res.status(401).send({
-                message: "error While Geting Product",
-            });
-        }
-        res.status(200).send({
-            message: "Product Getting Success",
-            getProductDetailsById,
-        });
-    } catch (error) {
-        console.log(error),
-            res.status(500).send("Server Error")
-    }
-
-}
 
 
 // update product details 
 const updateProductDetails = async (req, res) => {
     try {
       const productId = req.params.id;
+      console.log(productId);
+      
       const product = await Product.findById(productId);
   
       if (!product) {
@@ -127,11 +81,8 @@ const updateProductDetails = async (req, res) => {
         { new: true }
       );
   
-      res.status(200).send({
-        success: true,
-        message: "Product updated successfully",
-        data: updatedProduct,
-      });
+      return res.redirect("./products").message("Product updated successfully");
+
     } catch (error) {
       console.error(error);
       res.status(500).send("Server Error");
@@ -139,33 +90,7 @@ const updateProductDetails = async (req, res) => {
   };
   
 
-// delete  a product items 
-const deleteProductDetail = async (req, res) => {
-    try {
-        const productId = req.params.id
-        // console.log(productId);
-        const product = await Product.findById(productId);
-        if (!product) { res.status(401).send("Please Provide product Id") };
-
-
-        const deleteproduct = await Product.findByIdAndDelete(productId);
-
-        if (!deleteproduct) { res.status(401).send("Details Not Delete") }
-
-        res.status(200).send({
-            success: true,
-            message: "Product item Delete SuccessFully",
-            deleteproduct
-        })
-
-    } catch (error) {
-        res.status(500).send("Server Error")
-        error
-    }
-}
-
-
  
 
 
-export  { addProductController, getProductDetails, getProductById,updateProductDetails, deleteProductDetail };
+export  { addProductController,updateProductDetails,  };

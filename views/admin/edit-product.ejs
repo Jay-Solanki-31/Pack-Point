@@ -13,7 +13,7 @@
                         <div class="row">
                             <div class="col-lg-6">
                                 <div class="page-header-left">
-                                    <h3>Add Products
+                                    <h3>Upadate Products
                                         <small>PACK POINT Admin panel</small>
                                     </h3>
                                 </div>
@@ -25,7 +25,7 @@
                                             <i data-feather="home"></i>
                                         </a>
                                     </li>
-                                    <li class="breadcrumb-item active">Add Product</li>
+                                    <li class="breadcrumb-item active">Update Product</li>
                                 </ol>
                             </div>
                         </div>
@@ -42,40 +42,62 @@
                                     <h5>General</h5>
                                 </div>
                                 <div class="card-body">
-                                    <form class="digital-add needs-validation" id="productForm" action="./add-product"
+                                    <form class="digital-add needs-validation" id="productForm" action="./updateProduct/:id"
                                         method="POST" enctype="multipart/form-data">
+                                        <input type="hidden" name="id" value="<%= product._id %>">
                                         <div class="form-group">
                                             <label for="validationCustom01" class="col-form-label pt-0"><span>*</span>
                                                 Title</label>
                                             <input class="form-control" id="validationCustom01" type="text" name="title"
-                                                required>
+                                                value="<%= product.title  %>" required>
                                         </div>
 
                                         <div class="form-group">
                                             <label for="validationCustomtitle"
                                                 class="col-form-label pt-0"><span>*</span> SKU</label>
                                             <input class="form-control" id="validationCustomtitle" type="text"
-                                                name="sku" required>
+                                                name="sku" value="<%= product.sku  %>" required>
                                         </div>
 
                                         <div class="form-group">
                                             <label for="validationCustom02" class="col-form-label"><span>*</span>
                                                 Product Price</label>
-                                            <input class="form-control" id="validationCustom02" type="text" name="price"
-                                                required>
+                                            <input class="form-control" value="<%= product.price  %>"
+                                                id="validationCustom02" type="text" name="price" required>
                                         </div>
 
 
-                                        <label class="col-form-label pt-0"> Product Upload (only 5 Images will be
-                                            uploaded)</label>
-                                        <div class="dropzone digits" id="singleFileUpload">
-                                            <div class="dz-message needsclick" id="dropzoneTrigger">
-                                                <i class="fa fa-cloud-upload"></i>
-                                                <h4 class="mb-0 f-w-600">Drop files here or click to upload.</h4>
+
+                                        <div class="form-group">
+                                            <label class="col-form-label">Current Images</label>
+                                            <div class="d-flex flex-wrap gap-2">
+                                                <% product.imgUrls.forEach((imgUrls, index)=> { %>
+                                                    <div class="position-relative">
+                                                        <img src="<%= imgUrls %>" alt="Product image"
+                                                            style="width: 100px; height: auto;">
+                                                        <button type="button"
+                                                            class="btn btn-danger btn-xs position-absolute top-0 end-0"
+                                                            onclick="deleteImage('<%= product._id %>', '<%= imgUrls %>')">
+                                                            ×
+                                                        </button>
+                                                    </div>
+                                                    <% }); %>
                                             </div>
-                                            <input type="file" name="images" multiple accept="image/*" class="d-none"
-                                                id="imageUpload">
                                         </div>
+
+                                        <div class="form-group">
+                                            <label class="col-form-label pt-0"> Product Upload (only 5 Images will be
+                                                uploaded)</label>
+                                            <div class="dropzone digits" id="singleFileUpload">
+                                                <div class="dz-message needsclick" id="dropzoneTrigger">
+                                                    <i class="fa fa-cloud-upload"></i>
+                                                    <h4 class="mb-0 f-w-600">Drop files here or click to upload.</h4>
+                                                </div>
+                                                <input type="file" name="newImages" multiple accept="image/*"
+                                                    class="d-none" id="imageUpload">
+                                            </div>
+                                        </div>
+
                                 </div>
                             </div>
                         </div>
@@ -89,22 +111,23 @@
                                     <div class="digital-add needs-validation">
                                         <div class="form-group mb-0">
                                             <div class="description-sm">
-                                                <textarea id="editor1" name="description" cols="10" rows="4"></textarea>
+                                                <textarea id="editor1" name="description" cols="10" rows="4">
+                                                    <%= product.description %>
+                                                </textarea>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
-                            <!-- Submit & Discard Buttons Inside the Form -->
                             <div class="form-group mb-0">
                                 <div class="product-buttons">
-                                    <button type="submit" class="btn btn-primary">Add</button>
+                                    <button type="submit" class="btn btn-primary">Update</button>
                                     <button type="reset" class="btn btn-light">Discard</button>
                                 </div>
                             </div>
 
-                            </form> <!-- Form Closing Tag Here -->
+                            </form>
                         </div>
                     </div>
                 </div>
