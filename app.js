@@ -1,6 +1,8 @@
 import express from 'express';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
+import flash from 'connect-flash';
+import session from 'express-session';
 
 import userRouter from './routers/user.routes.js';
 import authRouter from './routers/auth.routes.js';
@@ -13,6 +15,12 @@ app.use(cors({ origin: process.env.CORS_ORIGIN, credentials: true }));
 app.use(express.json({ limit: "16kb" }));
 app.use(express.urlencoded({ extended: true, limit: "16kb" }));
 app.use(cookieParser());
+app.use(flash());
+app.use(session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false
+}))
 app.use(express.static("public/assets"));
 app.use(express.static("public/admin/assets"));
 

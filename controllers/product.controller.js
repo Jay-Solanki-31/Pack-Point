@@ -32,9 +32,9 @@ const addProductController = async (req, res) => {
       description,
       price: numericPrice,
       imgUrls,
-      sku,
+          sku,
     });
-
+yy
     await newProduct.save();
 
     return res.redirect("./products");
@@ -53,55 +53,48 @@ const addProductController = async (req, res) => {
 
 // update product details 
 const updateProductDetails = async (req, res) => {
-    try {
+  try {
       const productId = req.params.id;
-      
       const product = await Product.findById(productId);
 
-      // console.log(product);
-    
-  
       if (!product) {
-        return res.status(404).send("Product not found");
+          return res.status(404).send("Product not found");
       }
-  
-      let { title, description, price, code } = req.body;
-      description = description.replace(/<\/?[^>]+(>|$)/g, "");
-      description = description.replace(/&nbsp;/g, " ").trim();
 
-      // console.log(req.body);
+      let { title, description, price, code } = req.body;
       
-  
-      const imgUrls = req.files && req.files.length > 0
-        ? req.files.map((file) => file.path)
-        : product.imgUrls;
-  
-        
+      description = description.replace(/<\/?[^>]+(>|$)/g, "").replace(/&nbsp;/g, " ").trim();
+
+      const newImgUrls = req.files && req.files.length > 0
+          ? req.files.map((file) => file.path)
+          : [];
+
+      const imgUrls = [...product.imgUrls, ...newImgUrls];
+
       const updatedProduct = await Product.findByIdAndUpdate(
-        productId,
-        {
-          title,
-          description,
-          price,
-          imgUrls, 
-          code,
-        },
-        { new: true }
+          productId,
+          {
+              title,
+              description,
+              price,
+              imgUrls,
+              code,
+          },
+          { new: true }
       );
 
       if (!updatedProduct) {
-        return res.status(404).send("Product not found");
+          return res.status(404).send("Product not found");
       }
-  
-      // console.log(updatedProduct);
-  
+
       return res.redirect("/product/products");
 
-    } catch (error) {
+  } catch (error) {
       console.error(error);
       res.status(500).send("Server Error");
-    }
-  };
+  }
+};
+
   
 
  
