@@ -4,7 +4,7 @@ import cookieParser from 'cookie-parser';
 import flash from 'connect-flash';
 import session from 'express-session';
 
-// import userRouter from './routers/user.routes.js';
+import userRouter from './routers/user.routes.js';
 import authRouter from './routers/auth.routes.js';
 import productRouter from './routers/product.routes.js'; 
 import adminRouter from './routers/admin.routes.js';
@@ -23,13 +23,13 @@ app.use(session({
 }));
 
 app.use(express.static("public/admin/assets"));
-app.use(express.static("public/assets"));
+app.use(express.static("public/user"));
 
 
 app.set("view engine", "ejs");
 app.set("views", "./views");
 
-// app.use("/user", userRouter);        
+app.use("/user", userRouter);        
 app.use("/auth", authRouter);        
 app.use("/admin", adminRouter);      
 app.use("/product", productRouter);    

@@ -1,33 +1,34 @@
-// RTl & Ltr
-$('<ul class="custom-theme"><li class="demo-li"><a href="../front-end/index.html" target="_blank">Front end</a></li><li class="btn-rtl">RTL</li><li class="btn-dark-setting">Dark</li></ul>').appendTo($('body'));
-(function () {
-})();
-//live customizer js
+// Append the theme toggle button to the body
+$('<ul class="custom-theme"><li class="btn-dark-setting">Dark</li></ul>').appendTo($('body'));
+
 $(document).ready(function () {
 
-  $('.btn-rtl').on('click', function () {
-    $("html").attr("dir", "");
-    $(this).toggleClass('rtl');
-    if ($('.btn-rtl').hasClass('rtl')) {
-      $('.btn-rtl').text('LTR');
-      $('body').addClass('rtl');
-      $("html").attr("dir", "rtl");
-    } else {
-      $('.btn-rtl').text('RTL');
-      $('body').removeClass('rtl');
-      $("html").attr("dir", "");
-    }
-  });
-  var body_event = $("body");
-  body_event.on("click", ".btn-dark-setting", function () {
-    $(this).toggleClass('dark');
+  // Check localStorage for a saved theme and update the page accordingly
+  if (localStorage.getItem('theme') === 'dark') {
+    $('body').addClass('dark');
+    $('.btn-dark-setting').addClass('dark').text('Light');
+  } else {
+    // Ensure the light theme is active if no dark mode is saved
     $('body').removeClass('dark');
-    if ($('.btn-dark-setting').hasClass('dark')) {
-      $('.btn-dark-setting').text('Light');
+    $('.btn-dark-setting').removeClass('dark').text('Dark');
+  }
+
+  // Toggle dark/light mode on button click
+  $('body').on("click", ".btn-dark-setting", function () {
+    $(this).toggleClass('dark');
+
+    if ($(this).hasClass('dark')) {
+      // Switch to dark mode
+      $(this).text('Light');
       $('body').addClass('dark');
+      // Save the dark mode setting
+      localStorage.setItem('theme', 'dark');
     } else {
-      $('#theme-dark').remove();
-      $('.btn-dark-setting').text('Dark');
+      // Switch to light mode
+      $(this).text('Dark');
+      $('body').removeClass('dark');
+      // Save the light mode setting
+      localStorage.setItem('theme', 'light');
     }
 
     return false;
