@@ -55,36 +55,35 @@ router.get("/edit-product/:id", async (req, res) => {
     }
   });
 
-router.post("/updateProduct/:id", upload, updateProductDetails);
+router.post("/update-product/:id",verifyJWT, verifyRole("admin"), upload, updateProductDetails);
 
 
 // Delete product
-router.post("/admin/delete-product/:id", async (req, res) => {
+router.post("/delete-product/:id", async (req, res) => {
     try {
         await Product.findByIdAndDelete(req.params.id);
-        res.redirect('/admin/products');
+        res.redirect("/product/products");
     } catch (error) {
         res.status(500).json({ message: "Server error", error });
     }
 });
 
 
-
-router.delete('/delete-image/:productId', async (req, res) => {
+router.post("/delete-image", verifyJWT, verifyRole("admin"), async (req, res) => {
     try {
-        const { productId } = req.params;
-        const { imgUrls } = req.body;
+        const { productId, imageUrl } = req.body;
+        const product = await Product.findById(productId);
+        
+        if (!product) return res.status(404).send("Product not found");
 
-        // Remove image from array
-        await Product.findByIdAndUpdate(productId, {
-            $pull: { imgUrls: imgUrls }
-        });
+        product.imgUrls = product.imgUrls.filter(img => img !== imageUrl);
+        await product.save();
 
-        res.sendStatus(200);
+        res.json({ success: true });
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Server error' });
+        res.status(500).send("Server error");
     }
 });
+
 
 export default router;

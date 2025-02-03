@@ -1,20 +1,26 @@
-// RTl & Ltr
 $('<ul class="custom-theme"><li class="btn-dark-setting">Dark</li></ul>').appendTo($('body'));
 
-//live customizer js
 $(document).ready(function () {
 
- 
-  var body_event = $("body");
-  body_event.on("click", ".btn-dark-setting", function () {
-    $(this).toggleClass('dark');
+  if (localStorage.getItem('theme') === 'dark') {
+    $('body').addClass('dark');
+    $('.btn-dark-setting').addClass('dark').text('Light');
+  } else {
     $('body').removeClass('dark');
-    if ($('.btn-dark-setting').hasClass('dark')) {
-      $('.btn-dark-setting').text('Light');
+    $('.btn-dark-setting').removeClass('dark').text('Dark');
+  }
+
+  $('body').on("click", ".btn-dark-setting", function () {
+    $(this).toggleClass('dark');
+
+    if ($(this).hasClass('dark')) {
+      $(this).text('Light');
       $('body').addClass('dark');
+      localStorage.setItem('theme', 'dark');
     } else {
-      $('#theme-dark').remove();
-      $('.btn-dark-setting').text('Dark');
+      $(this).text('Dark');
+      $('body').removeClass('dark');
+      localStorage.setItem('theme', 'light');
     }
 
     return false;

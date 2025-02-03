@@ -21,7 +21,7 @@
                             <div class="col-lg-6">
                                 <ol class="breadcrumb pull-right">
                                     <li class="breadcrumb-item">
-                                        <a href="./add-product">
+                                        <a href="<%= product._id %>">
                                             <i data-feather="home"></i>
                                         </a>
                                     </li>
@@ -42,9 +42,9 @@
                                     <h5>General</h5>
                                 </div>
                                 <div class="card-body">
-                                    <form class="digital-add needs-validation" id="productForm" action="./updateProduct/:id"
-                                        method="POST" enctype="multipart/form-data">
-                                        <input type="hidden" name="id" value="<%= product._id %>">
+                                    <form class="digital-add needs-validation" id="productForm"
+                                        action="/product/update-product/<%= product._id %>" method="POST"
+                                        enctype="multipart/form-data">
                                         <div class="form-group">
                                             <label for="validationCustom01" class="col-form-label pt-0"><span>*</span>
                                                 Title</label>
@@ -74,12 +74,14 @@
                                                 <% product.imgUrls.forEach((imgUrls, index)=> { %>
                                                     <div class="position-relative">
                                                         <img src="<%= imgUrls %>" alt="Product image"
-                                                            style="width: 100px; height: auto;">
-                                                        <button type="button"
+                                                            style="width: 200px; height: auto;">
+                                                            <button type="button"
                                                             class="btn btn-danger btn-xs position-absolute top-0 end-0"
-                                                            onclick="deleteImage('<%= product._id %>', '<%= imgUrls %>')">
+                                                            onclick="deleteImage(event, '<%= product._id %>', '<%= imgUrls %>')">
                                                             ×
                                                         </button>
+                                                        
+
                                                     </div>
                                                     <% }); %>
                                             </div>
@@ -93,8 +95,9 @@
                                                     <i class="fa fa-cloud-upload"></i>
                                                     <h4 class="mb-0 f-w-600">Drop files here or click to upload.</h4>
                                                 </div>
-                                                <input type="file" name="newImages" multiple accept="image/*"
+                                                <input type="file" name="images" multiple accept="image/*"
                                                     class="d-none" id="imageUpload">
+
                                             </div>
                                         </div>
 
@@ -138,3 +141,28 @@
 
 
             <%-include('../partials/admin/index-footer') %>
+            <script>
+                async function deleteImage(event, productId, imageUrl) {
+                    event.preventDefault(); 
+                    try {
+                        const response = await fetch("/product/delete-image", {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json"
+                            },
+                            body: JSON.stringify({ productId, imageUrl })
+                        });
+            
+                        const result = await response.json();
+            
+                        if (result.success) {
+                            event.target.closest(".position-relative").remove();
+                        } else {
+                            alert("Failed to delete image");
+                        }
+                    } catch (error) {
+                        console.error("Error deleting image:", error);
+                    }
+                }
+            </script>
+            

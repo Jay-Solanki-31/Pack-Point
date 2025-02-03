@@ -55,20 +55,28 @@ const addProductController = async (req, res) => {
 const updateProductDetails = async (req, res) => {
     try {
       const productId = req.params.id;
-      console.log(productId);
       
       const product = await Product.findById(productId);
+
+      // console.log(product);
+    
   
       if (!product) {
         return res.status(404).send("Product not found");
       }
   
-      const { title, description, price, code } = req.body;
+      let { title, description, price, code } = req.body;
+      description = description.replace(/<\/?[^>]+(>|$)/g, "");
+      description = description.replace(/&nbsp;/g, " ").trim();
+
+      // console.log(req.body);
+      
   
       const imgUrls = req.files && req.files.length > 0
         ? req.files.map((file) => file.path)
         : product.imgUrls;
   
+        
       const updatedProduct = await Product.findByIdAndUpdate(
         productId,
         {
@@ -80,8 +88,14 @@ const updateProductDetails = async (req, res) => {
         },
         { new: true }
       );
+
+      if (!updatedProduct) {
+        return res.status(404).send("Product not found");
+      }
   
-      return res.redirect("./products").message("Product updated successfully");
+      // console.log(updatedProduct);
+  
+      return res.redirect("/product/products");
 
     } catch (error) {
       console.error(error);
