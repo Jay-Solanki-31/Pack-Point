@@ -4245,7 +4245,7 @@ button.btn.btn-solid:active, button.btn.btn-outline:active {
 }
 .product-box .product-detail .rating i:nth-child(-n+4),
 .product-box .product-info .rating i:nth-child(-n+4) {
-  color: yellow !important;
+  color: #ffa200;
 }
 .product-box .product-detail .rating i:last-child,
 .product-box .product-info .rating i:last-child {

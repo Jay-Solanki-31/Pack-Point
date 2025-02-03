@@ -32,9 +32,8 @@ const addProductController = async (req, res) => {
       description,
       price: numericPrice,
       imgUrls,
-          sku,
+      sku,
     });
-yy
     await newProduct.save();
 
     return res.redirect("./products");
