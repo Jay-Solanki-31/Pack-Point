@@ -19,7 +19,7 @@ export const redirectIfAuthenticated = async (req, res, next) => {
         if (user.userRole === "admin") {
             return res.redirect("/admin/dashboard");
         } else {
-            return res.redirect("/user/home");
+            return res.redirect("/user/index");
         }
     } catch (error) {
         return next(); 

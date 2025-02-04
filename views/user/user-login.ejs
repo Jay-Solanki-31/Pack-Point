@@ -1,8 +1,8 @@
-<%- include('partials/header.ejs')  %>
+<%- include('../partials/header.ejs')  %>
     <main>
         
         <!-- page title area start -->
-        <section class="page__title p-relative d-flex align-items-center" data-background="/img/page-title/page-title-1.jpg">
+        <section class="page__title p-relative d-flex align-items-center" data-background="/assets/img/page-title/page-title-1.jpg">
             <div class="container">
                 <div class="row">
                     <div class="col-xl-12">
@@ -30,7 +30,7 @@
                     <div class="col-lg-8 offset-lg-2">
                         <div class="basic-login">
                             <h3 class="text-center mb-60">Login From Here</h3>
-                            <form action="/login" method="post">
+                            <form action="/auth/login" method="post">
                                 <label for="name">User Name <span>**</span></label>
                                 <input id="name" type="text" name="username" placeholder="User Name..." />
                                 <label for="name">Email Address <span>**</span></label>
@@ -48,7 +48,7 @@
                                 </div>
                                 <button class="os-btn w-100">Login Now</button>
                                 <div class="or-divide"><span>or</span></div>
-                                <a href="/register" class="os-btn os-btn-black w-100">Register Now</a>
+                                <a href="register" class="os-btn os-btn-black w-100">Register Now</a>
                             </form>
                         </div>
                     </div>
@@ -57,5 +57,5 @@
         </section>
         <!-- login Area End-->
     </main>
-<%- include('partials/footer.ejs')  %>
+<%- include('../partials/footer.ejs')  %>
 

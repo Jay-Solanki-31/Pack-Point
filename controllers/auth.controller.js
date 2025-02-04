@@ -44,7 +44,7 @@ const registerUser = asyncHandler(async (req, res) => {
     if (user.userRole === "admin") {
         return res.redirect("/admin");
     } else {
-        return res.redirect("/user/user-login");
+        return res.redirect("/user/login");
     }
 })
 
@@ -82,7 +82,7 @@ const loginUser = asyncHandler(async (req, res) => {
     if (user.userRole === "admin") {
         return res.redirect("/admin/dashboard");
     } else {
-        return res.redirect("/user/dashboard");
+        return res.redirect("/");
     }
 });
 

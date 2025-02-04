@@ -1,9 +1,9 @@
-<%- include('partials/header');  %>
+<%- include('../partials/header')  %>
 <main>
 
     <!-- page title area start -->
     <section class="page__title p-relative d-flex align-items-center"
-        data-background="/img/page-title/page-title-1.jpg">
+        data-background="/assets/img/page-title/page-title-1.jpg">
         <div class="container">
             <div class="row">
                 <div class="col-xl-12">
@@ -31,7 +31,7 @@
                 <div class="col-lg-8 offset-lg-2">
                     <div class="basic-login">
                         <h3 class="text-center mb-60">Signup From Here</h3>
-                        <form action="/register" method="post">
+                        <form action="/auth/register" method="post">
                             <label for="name">Full Name <span>**</span></label>
                             <input id="Fullname" type="text" name="fullName" placeholder="Enter Full Name" />
                             <label for="name">Username <span>**</span></label>
@@ -43,7 +43,7 @@
                             <div class="mt-10"></div>
                             <button class="os-btn w-100">Register Now</button>
                             <div class="or-divide"><span>or</span></div>
-                            <a href="/login" class="os-btn os-btn-black w-100">login Now</a>
+                            <a href="login" class="os-btn os-btn-black w-100">login Now</a>
                         </form>
                     </div>
                 </div>
@@ -52,4 +52,4 @@
     </section>
     <!-- login Area End-->
 </main>
-<%- include('partials/footer');  %>
+<%- include('../partials/footer');  %>

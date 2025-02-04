@@ -1,34 +1,35 @@
 import { Router } from "express";
 import { verifyJWT, verifyRole } from "../middleware/auth.middleware.js";
 import { redirectIfAuthenticated } from "../middleware/redirectIfAuthenticated.js";
+import { Product } from "../models/product.model.js";
 
 export const router = Router();
 
 
-router.get("/Register", verifyJWT, verifyRole("user"), (req, res) => {
-    res.render("user-register");
+
+router.get("/", async (req, res) => {
+    try {
+        const products = await Product.find();
+        console.log(products); 
+        
+        res.render("index", { products }); 
+    } catch (error) {
+        console.error("Error fetching products:", error);
+        res.send('Error while fetching products');
+    }
 });
 
-// router.get("/users", verifyJWT, verifyRole("admin"), (req, res) => {
-//     res.render("admin/users");
-// });
 
 
-// router.get("/profile", verifyJWT, verifyRole("admin"), async (req, res) => {
-//     try {
-//         const user = req.user; 
+router.get("/Register",  (req, res) => {
+    res.render("user/user-register");
+});
 
-//         res.render("admin/profile", {
-//             user: user 
-//         });
-//     } catch (error) {
-//         res.status(500).send("Server Error");
-//     }
-// });
+router.get("/login",  (req, res) => {
+    res.render("user/user-login");
+});
 
 
-// router.get("/logout", verifyJWT, (req, res) => {
-//     res.redirect("/admin"); 
-// });
+
 
 export default router;

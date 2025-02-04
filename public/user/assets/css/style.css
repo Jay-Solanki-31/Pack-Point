@@ -1882,7 +1882,7 @@ p {
 .slider__content h2 {
   font-weight: 600;
   line-height: 1.2;
-  color: #323232;
+  color: ghostwhite;
   margin-bottom: 14px;
 }
 @media (max-width: 575px) {
