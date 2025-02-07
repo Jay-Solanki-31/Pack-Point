@@ -8,6 +8,7 @@ import userRouter from './routers/user.routes.js';
 import authRouter from './routers/auth.routes.js';
 import productRouter from './routers/product.routes.js'; 
 import adminRouter from './routers/admin.routes.js';
+import { verifyJWT } from './middleware/auth.middleware.js';
 
 const app = express();
 
@@ -16,6 +17,7 @@ app.use(express.json({ limit: "16kb" }));
 app.use(express.urlencoded({ extended: true, limit: "16kb" }));
 app.use(cookieParser());
 app.use(flash());
+app.use(verifyJWT)
 app.use(session({
     secret: process.env.SESSION_SECRET,
     resave: false,

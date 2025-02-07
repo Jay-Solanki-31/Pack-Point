@@ -29,6 +29,13 @@ const userSchema = new Schema(
             type: String,
             required: [true, 'Password is required']
         },
+        phone:{
+            type:Number,
+            length:11
+        },
+        address:{
+            type:String,
+        },
         userRole:{
             type: String,
             enum: ["user", "admin"],

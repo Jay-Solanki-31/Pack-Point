@@ -9,24 +9,28 @@ export const verifyJWT = asyncHandler(async (req, res, next) => {
         const token = req.cookies?.accessToken || req.header("Authorization")?.replace("Bearer ", "");
 
         if (!token) {
-            return res.redirect("/admin"); 
+            res.locals.user = null;
+            return next();
         }
 
         const decodedToken = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
         const user = await User.findById(decodedToken?._id).select("-password -refreshToken");
 
         if (!user) {
-            return res.redirect("/admin"); 
+            res.locals.user = null;
+            return next();
         }
 
-        req.user = user;  
-        // console.log(req.user);
-        
+        req.user = user;
+        res.locals.user = user; 
+
         next();
     } catch (error) {
-        return res.redirect("/admin");
+        res.locals.user = null;
+        return next();
     }
 });
+
 
 // Middleware to verify user role
 export const verifyRole = (role) => (req, res, next) => {
@@ -38,5 +42,13 @@ export const verifyRole = (role) => (req, res, next) => {
         return res.redirect(role === "admin" ? "/admin/dashboard" : "/user/user-login"); 
     }
 
+    next();
+};
+
+
+export const requireAuth = (req, res, next) => {
+    if (!req.user) {
+        return res.redirect("/user/login"); // Redirect to login if not authenticated
+    }
     next();
 };

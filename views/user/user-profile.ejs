@@ -1,4 +1,4 @@
-<%- include('partials/index-header')  %>
+<%- include('../partials/header')  %>
 
         <main>
             <!-- profile area start -->
@@ -56,8 +56,12 @@
                                             data-target="#nav-password" type="button" role="tab"
                                             aria-controls="nav-password" aria-selected="false"><i
                                                 class="fa fa-lock"></i>Change Password</button>
-                                        <button class="nav-link"><i class="fa fa-sign-out"></i> Logout</button>
-                                    </div>
+                                                <form action="/auth/logout" method="POST">
+                                                    <button class="nav-link">
+                                                        <i class="fa fa-sign-out"></i> Logout
+                                                    </button>
+                                                </form>
+                                      </div>
                                 </div>
                             </div>
                         </div>
@@ -78,21 +82,21 @@
                                             <div class="profile__info-wrapper white-bg">
                                                 <div class="profile__info-item">
                                                     <p>Name</p>
-                                                    <h4>Samrat Islam Tushar</h4>
+                                                   <h4><%= user.fullName %></h4>
                                                 </div>
                                                 <div class="profile__info-item">
                                                     <p>Email</p>
-                                                    <h4><a href="mailt:outstock@hotmail.com" class="__cf_email__"
-                                                            data-cfemail="94fdfaf2fbd4f1f0e1fff1e6baf7fbf9">outstock@hotmail.com</a>
+                                                    <h4>
+                                                        <%= user.email %>
                                                     </h4>
                                                 </div>
                                                 <div class="profile__info-item">
                                                     <p>Phone</p>
-                                                    <h4>(325) 463-5693</h4>
+                                                    <h4><%= user.phone %></h4>
                                                 </div>
                                                 <div class="profile__info-item">
                                                     <p>Address</p>
-                                                    <h4>Abingdon, Maryland(MD), 21009</h4>
+                                                    <h4><%= user.address  %></h4>
                                                 </div>
                                             </div>
                                         </div>
@@ -156,14 +160,14 @@
                                                 <h3 class="password__change-title">Change Password</h3>
                                             </div>
                                             <div class="password__form white-bg">
-                                                <form action="#">
+                                                <form action="/auth/change-password" method="post">
                                                     <div class="password__input">
                                                         <p>Old Password</p>
-                                                        <input type="password" placeholder="Enter Old Password">
+                                                        <input type="password" id="oldPassword" name="oldPassword" placeholder="Enter Old Password">
                                                     </div>
                                                     <div class="password__input">
                                                         <p>New Password</p>
-                                                        <input type="password" placeholder="Enter New Password">
+                                                        <input type="password" id="newPassword" name="newPassword" placeholder="Enter New Password">
                                                     </div>
                                         
                                                     <div class="password__input">
@@ -193,22 +197,22 @@
                                     <button type="button" class="profile__edit-close-btn" data-dismiss="modal"><i
                                             class="fa fa-times"></i></button>
                                 </div>
-                                <form action="#">
+                                <form action="/auth/update-account" method="post">
                                     <div class="profile__edit-input">
                                         <p>Name</p>
-                                        <input type="text" placeholder="Your Name">
+                                        <input type="text" id="name" name="fullName" placeholder="Your Name">
                                     </div>
                                     <div class="profile__edit-input">
                                         <p>Email</p>
-                                        <input type="text" placeholder="Your Email">
+                                        <input type="text" id="email" name="email" placeholder="Your Email">
                                     </div>
                                     <div class="profile__edit-input">
                                         <p>Phone</p>
-                                        <input type="text" placeholder="Your Phone">
+                                        <input type="text" id="phone" name="phone" placeholder="Your Phone">
                                     </div>
                                     <div class="profile__edit-input">
                                         <p>Address</p>
-                                        <input type="text" placeholder="Your Address">
+                                        <input type="text" id="address" name="address" placeholder="Your Address">
                                     </div>
                                     <div class="profile__edit-input">
                                         <button type="submit" class="os-btn os-btn-black w-100">Update</button>
@@ -220,4 +224,4 @@
                 </div>
             </div>
         </main>
-<%- include('partials/index-footer')  %>
+<%- include('../partials/footer')  %>

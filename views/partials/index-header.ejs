@@ -10,7 +10,7 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Place favicon.ico in the root directory -->
-    
+
     <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.png">
 
     <!-- CSS here -->
@@ -80,24 +80,29 @@
                                             Search</a></li>
                                     <li><a href="javascript:void(0);" class="cart"><i class="ion-bag"></i> Cart
                                             <span>(01)</span></a>
-                                    
+
                                     </li>
-                                    <li> <a href="javascript:void(0);"><i class="far fa-bars"></i></a>
+                                    <li>
+                                        <a href="javascript:void(0);"><i class="far fa-bars"></i></a>
                                         <ul class="extra-info">
                                             <li>
                                                 <div class="my-account">
                                                     <ul>
-                                                        <li><a href="/profile">My Account</a></li>
-                                                        <li><a href="wishlist.html">Wishlist</a></li>
-                                                        <li><a href="cart.html">Cart</a></li>
-                                                        <li><a href="checkout.html">Checkout</a></li>
-                                                        <li><a href="/user/Register">Create Account</a></li>
+                                                        <% if (user) { %>
+                                                            <li><a href="/user/Profile">My Account</a></li>
+                                                            <li><a href="wishlist.html">Wishlist</a></li>
+                                                            <li><a href="cart.html">Cart</a></li>
+                                                            <li><a href="checkout.html">Checkout</a></li>
+                                                        <% } else { %>
+                                                            <li><a href="/user/Register">Create Account</a></li>
+                                                        <% } %>
                                                     </ul>
                                                 </div>
                                             </li>
-                                            </li>
                                         </ul>
                                     </li>
+                                    
+
                                 </ul>
                             </div>
                         </div>
@@ -143,6 +148,6 @@
     <div class="body-overlay transition-3"></div>
     <!-- search area end -->
 
-    
+
     <div class="body-overlay transition-3"></div>
     <!-- extra info area end -->

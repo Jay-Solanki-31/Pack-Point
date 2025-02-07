@@ -195,7 +195,7 @@ const logoutUser = asyncHandler(async (req, res) => {
     if (req.user.userRole === "admin") {
         return res.redirect("/admin");
     } else {
-        return res.redirect("/user/dashboard");
+        return res.redirect("/");
     }
 });
 
@@ -206,6 +206,8 @@ const changeCurrentPassword = asyncHandler(async (req, res) => {
     // console.log(req.body);
 
     const user = await User.findById(req.user?._id)
+    console.log(user);
+    
     const isPasswordCorrect = await user.isPasswordCorrect(oldPassword)
 
     if (!isPasswordCorrect) {
@@ -215,9 +217,11 @@ const changeCurrentPassword = asyncHandler(async (req, res) => {
     user.password = newPassword
     await user.save({ validateBeforeSave: false })
 
-    return res
-        .status(200)
-        .json(new ApiResponse(200, {}, "Password changed successfully"))
+    if (req.user.userRole === "admin") {
+        return res.redirect("/admin");
+    } else {
+        return res.redirect("/user/Profile");
+    }
 })
 
 
@@ -232,16 +236,18 @@ const getCurrentUser = asyncHandler(async (req, res) => {
 })
 
 const updateAccountDetails = asyncHandler(async (req, res) => {
-    const { fullName, email,username } = req.body;
+    const { fullName, email,username,phone,address } = req.body;
 
-    if (!fullName && !email && !username) {
-        throw new ApiError(400, "At least one field (fullName or email or username) must be provided");
-    }
+    // if (!fullName && !email ) {
+    //     throw new ApiError(400, "At least one field (fullName or email) must be provided");
+    // }
 
     let updateFields = {};
     if (fullName) updateFields.fullName = fullName;
     if (email) updateFields.email = email;
     if (username) updateFields.username = username;
+    if (phone) updateFields.phone = phone;
+    if (address) updateFields.address = address;
 
     const user = await User.findByIdAndUpdate(
         req.user?._id,
@@ -257,7 +263,7 @@ const updateAccountDetails = asyncHandler(async (req, res) => {
     if (user.userRole === "admin") {
         return res.redirect("/admin/dashboard");
     } else {
-        return res.redirect("/user/dashboard");
+        return res.redirect("/user/Profile");
     }
 });
 
