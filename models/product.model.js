@@ -20,6 +20,7 @@ const produtSchema = new mongoose.Schema({
     },
     imgUrls: { type: [String], required: true }, 
 
+    
     sku:{
         type:String,
     },

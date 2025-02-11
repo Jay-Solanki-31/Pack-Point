@@ -1,0 +1,140 @@
+<%- include('../partials/header') %>
+    <main>
+        <!-- Page title area start -->
+        <section class="page__title p-relative d-flex align-items-center"
+            data-background="../assets/img/slider/index-slider.jpg">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-12">
+                        <div class="page__title-inner text-center">
+                            <h1>Shop</h1>
+                            <div class="page__title-breadcrumb">
+                                <nav aria-label="breadcrumb">
+                                    <ol class="breadcrumb justify-content-center">
+                                        <li class="breadcrumb-item"><a href="/">Home</a></li>
+                                        <li class="breadcrumb-item active" aria-current="page">Shop</li>
+                                    </ol>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Page title area end -->
+
+        <!-- Shop area start -->
+        <section class="shop__area pt-100 pb-100">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-12">
+                        <div class="shop__content-area">
+                            <div class="shop__header d-sm-flex justify-content-between align-items-center mb-40">
+                                <div class="shop__header-left">
+                                    <div class="show-text bottom">
+                                        <span>Showing <%= (currentPage - 1) * 12 + 1 %>–<%= Math.min(currentPage * 12,
+                                                    totalPages * 12) %> of <%= totalPages * 12 %>
+                                                        results</span>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="tab-content" id="pills-tabContent">
+                                <div class="tab-pane fade show active" id="pills-grid" role="tabpanel"
+                                    aria-labelledby="pills-grid-tab">
+                                    <div class="row custom-row-10">
+                                        <% products.forEach(product=> { %>
+                                            <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 custom-col-10">
+                                                <div class="product__wrapper mb-60">
+                                                    <div class="product__thumb">
+                                                        <a href="/product-details/<%= product._id %>" class="w-img">
+                                                            <img src="<%= product.imgUrls[0] %>" alt="product-img">
+                                                            <% if (product.imgUrls.length> 1) { %>
+                                                                <img class="product__thumb-2"
+                                                                    src="<%= product.imgUrls[1] %>" alt="product-img">
+                                                                <% } %>
+                                                        </a>
+                                                        <div class="product__action transition-3">
+                                                            <a href="/wishlist/add/<%= product._id %>"
+                                                                title="Add to Wishlist">
+                                                                <i class="fal fa-heart"></i>
+                                                            </a>
+
+                                                        </div>
+
+
+                                                    </div>
+                                                    <div class="product__content p-relative">
+                                                        <div class="product__content-inner">
+                                                            <h4><a href="/product-details/<%= product._id %>">
+                                                                    <%= product.title %>
+                                                                </a></h4>
+                                                            <div class="product__price transition-3">
+                                                                <span>₹ <%= product.price %></span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="add-cart p-absolute transition-3">
+                                                            <a href="/cart/add/<%= product._id %>">+ Add to Cart</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <% }) %>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Pagination -->
+                            <div class="row mt-40">
+                                <div class="col-xl-12">
+                                    <div
+                                        class="shop-pagination-wrapper d-md-flex justify-content-between align-items-center">
+                                        <div class="basic-pagination">
+                                            <ul>
+                                                <% if (currentPage> 1) { %>
+                                                    <li><a href="?page=<%= currentPage - 1 %>"><i
+                                                                class="fal fa-angle-left"></i></a></li>
+                                                    <% } else { %>
+                                                        <li class="disabled"><span><i
+                                                                    class="fal fa-angle-left"></i></span></li>
+                                                        <% } %>
+
+                                                            <% for (let i=1; i <=totalPages; i++) { %>
+                                                                <li class="<%= currentPage === i ? 'active' : '' %>">
+                                                                    <a href="?page=<%= i %>">
+                                                                        <%= i %>
+                                                                    </a>
+                                                                </li>
+                                                                <% } %>
+
+                                                                    <% if (currentPage < totalPages) { %>
+                                                                        <li><a href="?page=<%= currentPage + 1 %>"><i
+                                                                                    class="fal fa-angle-right"></i></a>
+                                                                        </li>
+                                                                        <% } else { %>
+                                                                            <li class="disabled"><span><i
+                                                                                        class="fal fa-angle-right"></i></span>
+                                                                            </li>
+                                                                            <% } %>
+                                            </ul>
+                                        </div>
+                                        <div class="shop__header-left">
+                                            <div class="show-text bottom">
+                                                <span>Showing <%= (currentPage - 1) * 12 + 1 %>–<%= Math.min(currentPage
+                                                            * 12, totalPages * 12) %> of <%= totalPages * 12 %>
+                                                                results</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Shop area end -->
+    </main>
+    <%- include('../partials/footer') %>

@@ -1,0 +1,64 @@
+<%- include('../partials/header') %>
+
+<section class="cart-area pt-100 pb-100">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <% if (wishlist.length === 0) { %>
+                    <p>Your wishlist is empty.</p>
+                <% } else { %>
+                    <form action="#">
+                        <div class="table-content table-responsive">
+                            <table class="table" >
+                                <thead>
+                                    <tr>
+                                        <th class="product-thumbnail">Images</th>
+                                        <th class="cart-product-name">Product</th>
+                                        <th class="product-price">Unit Price</th>
+                                        <th class="product-quantity">Add to Cart</th>
+                                        <th class="product-subtotal">Total</th>
+                                        <th class="product-remove">Remove</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% wishlist.forEach(product => { %>
+                                        <tr>
+                                            <td class="product-thumbnail">
+                                                <a href="/product-details/<%= product._id %>">
+                                                    <img src="<%= product.imgUrls[0] %>" alt="">
+                                                </a>
+                                            </td>
+                                            <td class="product-name">
+                                                <a href="/product-details/<%= product._id %>">
+                                                    <%= product.title %>
+                                                </a>
+                                            </td>
+                                            <td class="product-price">
+                                                <span class="amount">₹<%= product.price %></span>
+                                            </td>
+                                            <td class="product-quantity">
+                                                <a href="/cart/add/<%= product._id %>" class="os-btn os-btn-black">
+                                                    Add to Cart
+                                                </a>
+                                            </td>
+                                            <td class="product-subtotal">
+                                                <span class="amount">₹<%= product.price %></span>
+                                            </td>
+                                            <td class="product-remove">
+                                                <a href="/wishlist/remove/<%= product._id %>">
+                                                    <i class="fa fa-times"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    <% }) %>
+                                </tbody>
+                            </table>
+                        </div>
+                    </form>
+                <% } %>
+            </div>
+        </div>
+    </div>
+</section>
+
+<%- include('../partials/footer') %>

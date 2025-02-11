@@ -1970,6 +1970,42 @@ p {
   margin: 0;
   font-weight: 700;
 }
+.product__thumb img {
+  width: 100%;  /* Make images responsive */
+  height: 250px; /* Fixed height */
+  object-fit: cover; /* Prevent distortion */
+  border-radius: 10px;
+}
+
+.product__thumb-2 {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.product__thumb:hover .product__thumb-2 {
+  opacity: 1;
+}
+
+@media (max-width: 768px) {
+  .col-lg-3 {
+      flex: 0 0 50%; /* 2 columns on mobile */
+      max-width: 50%;
+  }
+}
+
+@media (max-width: 576px) {
+  .col-lg-3 {
+      flex: 0 0 100%; /* 1 column on very small screens */
+      max-width: 100%;
+  }
+}
+
 @media only screen and (min-width: 768px) and (max-width: 991px) {
   .slider__content-5 h2 {
     font-size: 50px;

@@ -1,0 +1,110 @@
+<%- include('../partials/header') %>
+<main>
+    <!-- Page Title Area -->
+    <section class="page__title p-relative d-flex align-items-center"
+        data-background="../assets/img/slider/index-slider.jpg">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="page__title-inner text-center">
+                        <h1>Your Cart</h1>
+                        <div class="page__title-breadcrumb">
+                            <nav aria-label="breadcrumb">
+                                <ol class="breadcrumb justify-content-center">
+                                    <li class="breadcrumb-item"><a href="/">Home</a></li>
+                                    <li class="breadcrumb-item active" aria-current="page">Cart</li>
+                                </ol>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Cart Area Start -->
+    <section class="cart-area pt-100 pb-100">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <form action="#">
+                        <div class="table-content table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th class="product-thumbnail">Images</th>
+                                        <th class="cart-product-name">Product</th>
+                                        <th class="product-price">Unit Price</th>
+                                        <th class="product-quantity">Quantity</th>
+                                        <th class="product-subtotal">Total</th>
+                                        <th class="product-remove">Remove</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% if (cartlist.length > 0) { %>
+                                        <% cartlist.forEach(product => { %>
+                                            <tr>
+                                                <td class="product-thumbnail">
+                                                    <a href="/product/<%= product._id %>">
+                                                        <img src="<%= product.imgUrls[0] %>" alt="<%= product.title %>">
+                                                    </a>
+                                                </td>
+                                                <td class="product-name">
+                                                    <a href="/product/<%= product._id %>"><%= product.title %></a>
+                                                </td>
+                                                <td class="product-price">
+                                                    <span class="amount">₹<%= product.price.toFixed(2) %></span>
+                                                </td>
+                                                <td class="product-quantity">
+                                                        <button type="button" class="qty-btn minus">-</button>
+                                                        <input type="text" class="qty-input" value="1" readonly data-price="<%= product.price %>" />
+                                                        <button type="button" class="qty-btn plus">+</button>
+                                                </td>
+                                                <td class="product-subtotal">
+                                                    <span class="amount">₹<span class="subtotal-price"><%= product.price.toFixed(2) %></span></span>
+                                                </td>
+                                                                                                
+                                                
+                                                <td class="product-remove">
+                                                    <a href="/cart/remove/<%= product._id %>">
+                                                        <i class="fa fa-times"></i>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        <% }) %>
+                                    <% } else { %>
+                                        <tr>
+                                            <td colspan="6" class="text-center">
+                                                <h4>Your cart is empty.</h4>
+                                            </td>
+                                        </tr>
+                                    <% } %>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Cart Total -->
+                        <div class="row">
+                            <div class="col-md-5 ml-auto">
+                                <div class="cart-page-total">
+                                    <h2>Cart Totals</h2>
+                                    <ul class="mb-20">
+                                        <li>Total <span>₹<span id="cart-total"><%= cartlist.reduce((acc, product) => acc + product.price, 0).toFixed(2) %></span></span></li>
+                                    </ul>
+                                    <% if (cartlist.length > 0) { %>
+                                        <a class="os-btn" href="/checkout">Proceed to Checkout</a>
+                                    <% } %>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+<%- include('../partials/footer') %>
+
+

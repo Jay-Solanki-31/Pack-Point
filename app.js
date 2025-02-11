@@ -8,6 +8,9 @@ import userRouter from './routers/user.routes.js';
 import authRouter from './routers/auth.routes.js';
 import productRouter from './routers/product.routes.js'; 
 import adminRouter from './routers/admin.routes.js';
+import wishlistRoutes from './routers/whishList.routes.js'
+import cartRoutes from './routers/cart.routes.js';
+import { getProducts } from "./controllers/user.controller.js"; 
 import { verifyJWT } from './middleware/auth.middleware.js';
 
 const app = express();
@@ -35,10 +38,11 @@ app.use("/user", userRouter);
 app.use("/auth", authRouter);        
 app.use("/admin", adminRouter);      
 app.use("/product", productRouter);    
+app.get("/", getProducts); 
+app.use("/wishlist", wishlistRoutes);
+app.use("/cart", cartRoutes);
 
-app.get("/", (req, res) => {
-    res.render("index");
-});
+
 
 app.use((req, res) => {
     res.status(404).send({ success: false, message: "Route not found" });
