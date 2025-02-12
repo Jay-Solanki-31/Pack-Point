@@ -45,12 +45,12 @@
                                         <% cartlist.forEach(product => { %>
                                             <tr>
                                                 <td class="product-thumbnail">
-                                                    <a href="/product/<%= product._id %>">
+                                                    <a href="/product/product-details/<%= product._id %>">
                                                         <img src="<%= product.imgUrls[0] %>" alt="<%= product.title %>">
                                                     </a>
                                                 </td>
                                                 <td class="product-name">
-                                                    <a href="/product/<%= product._id %>"><%= product.title %></a>
+                                                    <a href="/product/product-details/<%= product._id %>"><%= product.title %></a>
                                                 </td>
                                                 <td class="product-price">
                                                     <span class="amount">₹<%= product.price.toFixed(2) %></span>
@@ -75,7 +75,7 @@
                                     <% } else { %>
                                         <tr>
                                             <td colspan="6" class="text-center">
-                                                <h4>Your cart is empty.</h4>
+                                                <h1>Your cart is empty.</h1>
                                             </td>
                                         </tr>
                                     <% } %>

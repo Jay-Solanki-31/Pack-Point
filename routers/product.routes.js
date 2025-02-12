@@ -86,4 +86,15 @@ router.post("/delete-image", verifyJWT, verifyRole("admin"), async (req, res) =>
 });
 
 
+router.get("/product-details/:id", async (req, res) => {
+    try {
+        const product = await Product.findById(req.params.id);
+        // console.log(product);
+        
+        res.render('user/product-details', { product });
+    } catch (error) {
+        res.status(500).json({ message: "Server error", error });
+    }
+  });
+
 export default router;

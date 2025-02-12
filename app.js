@@ -34,11 +34,11 @@ app.use(express.static("public/user"));
 app.set("view engine", "ejs");
 app.set("views", "./views");
 
+app.get("/", getProducts); 
 app.use("/user", userRouter);        
 app.use("/auth", authRouter);        
 app.use("/admin", adminRouter);      
 app.use("/product", productRouter);    
-app.get("/", getProducts); 
 app.use("/wishlist", wishlistRoutes);
 app.use("/cart", cartRoutes);
 
