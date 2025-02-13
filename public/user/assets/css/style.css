@@ -3294,9 +3294,9 @@ p {
 .product__banner-content h4 a:hover {
   color: #bc8246;
 }
-.product__title {
+/* .product__title {
   position: relative;
-}
+} */
 .product__title::after {
   border-top: 1px solid #ebebeb;
   content: "";
@@ -3337,6 +3337,12 @@ p {
   height: 18px;
   background: #ebebeb;
 }
+.features__product-thumb img {
+    width: 70px; /* Adjust as per your layout */
+    height: 70px;
+    object-fit: cover; /* Ensures proper cropping without distortion */
+}
+
 .product__offer-slider .owl-nav div button:hover {
   color: #bc8246;
 }

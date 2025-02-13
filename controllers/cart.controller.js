@@ -1,5 +1,6 @@
 import { Product } from "../models/product.model.js";
 import { Cart } from "../models/cart.model.js";
+import { Order } from "../models/order.model.js";
 
 const getCartList = async (req, res) => {
     try {
@@ -65,4 +66,44 @@ const removeFromCart = async (req, res) => {
     }
 };
 
-export { getCartList, addToCart, removeFromCart };
+
+const proceedToCheckout = async (req, res) => {
+    try {
+        if (!req.user) {
+            return res.redirect("/user/login");
+        }
+
+        const userId = req.user.id;
+        // const {updateproduct} = req.body;
+        // console.log(updateproduct);
+        
+
+        const cart = await Cart.findOne({ userId }).populate("products");
+
+        if (!cart || cart.products.length === 0) {
+            return res.redirect("/cart");
+        }
+
+        const order = new Order({
+            userId,
+            products: cart.products.map(product => ({
+                productId: product._id,
+                quantity: 1,
+                price: product.price,
+            })),
+            totalAmount: cart.products.reduce((acc, product) => acc + product.price, 0),
+        });
+
+        await order.save();
+
+        await Cart.findOneAndUpdate({ userId }, { $set: { products: [] } });
+
+        res.redirect("/checkout");
+    } catch (error) {
+        console.error("Error during checkout:", error);
+        res.redirect("/cart");
+    }
+};
+
+
+export { getCartList, addToCart, removeFromCart,proceedToCheckout };

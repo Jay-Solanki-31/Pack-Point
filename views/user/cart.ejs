@@ -92,7 +92,7 @@
                                         <li>Total <span>₹<span id="cart-total"><%= cartlist.reduce((acc, product) => acc + product.price, 0).toFixed(2) %></span></span></li>
                                     </ul>
                                     <% if (cartlist.length > 0) { %>
-                                        <a class="os-btn" href="/checkout">Proceed to Checkout</a>
+                                        <a class="os-btn" href="/cart/checkout">Proceed to Checkout</a>
                                     <% } %>
                                 </div>
                             </div>

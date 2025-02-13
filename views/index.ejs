@@ -74,7 +74,10 @@
                                                     <h2>Trending Products</h2>
                                                 </div>
                                                 <div class="section__sub-title">
-                                                    <p>whether you're searching for a classic leather handbag,these sites provide</p><p> a convenient way to compare options and find the perfect bag to suit your needs and personal aesthetic</p>
+                                                    <p>whether you're searching for a classic leather handbag,these
+                                                        sites provide</p>
+                                                    <p> a convenient way to compare options and find the perfect bag to
+                                                        suit your needs and personal aesthetic</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -104,7 +107,7 @@
                                                                                 title="Add to Wishlist">
                                                                                 <i class="fal fa-heart"></i>
                                                                             </a>
-                                                                           
+
                                                                         </div>
                                                                     </div>
                                                                     <div class="product__content p-relative">
@@ -118,7 +121,7 @@
                                                                                 <% if (products[j].oldPrice) { %>
                                                                                     <span class="old-price">₹<%=
                                                                                             products[j].oldPrice %>
-                                                                                            </span>
+                                                                                    </span>
                                                                                     <% } %>
                                                                             </div>
                                                                         </div>
@@ -153,461 +156,105 @@
                             <section class="product__offer pb-45">
                                 <div class="container custom-container">
                                     <div class="row">
-                                        <div class="col-xl-4 col-lg-4 col-md-6">
+                                        <div class="col-xl-6 col-lg-6 col-md-12">
                                             <div class="product__offer-inner mb-30">
                                                 <div class="product__title mb-60">
                                                     <h4>Top Seller Products</h4>
                                                 </div>
                                                 <div class="product__offer-slider owl-carousel">
-                                                    <div class="product__offer-wrapper">
-                                                        <div class="sidebar__widget-content">
-                                                            <div class="features__product-wrapper d-flex mb-20">
-                                                                <div class="features__product-thumb mr-15">
-                                                                    <a href="product-details.html"><img
-                                                                            src="assets/img/shop/product/sm/pro-sm-1.jpg"
-                                                                            alt="pro-sm-1"></a>
-                                                                </div>
-                                                                <div class="features__product-content">
-                                                                    <h5><a href="product-details.html">Wooden container
-                                                                            Bowl</a></h5>
-                                                                    <div class="price">
-                                                                        <span>$98</span>
-                                                                        <span class="price-old">$128</span>
-                                                                        <div class="add-cart p-absolute transition-3">
-                                                                            <a href="#">+ Add to Cart</a>
+                                                    <% for (let i=0; i < products.length; i +=3) { %>
+                                                        <div class="product__offer-wrapper">
+                                                            <div class="sidebar__widget-content">
+                                                                <% products.slice(i, i + 3).forEach(product=> { %>
+                                                                    <div class="features__product-wrapper d-flex mb-20">
+                                                                        <div class="features__product-thumb mr-15">
+                                                                            <a
+                                                                                href="/product/product-details/<%= product._id %>">
+                                                                                <img src="<%= product.imgUrls[0]%>"
+                                                                                    alt="<%= product.title %>"> </a>
+                                                                        </div>
+                                                                        <div class="features__product-content">
+                                                                            <a
+                                                                                href="product-details.html?id=<%= product._id %>">
+                                                                                <%= product.title %>
+                                                                            </a>
+                                                                            <div class="price">
+                                                                                <span>$<%= product.price %></span>
+                                                                                <% if (product.oldPrice) { %>
+                                                                                    <span class="price-old">$<%=
+                                                                                            product.oldPrice %></span>
+                                                                                    <% } %>
+                                                                                        <div
+                                                                                            class="add-cart p-absolute transition-3">
+                                                                                            <a
+                                                                                                href="/cart/add/<%= product._id %>">+
+                                                                                                Add to
+                                                                                                Cart</a>
+                                                                                        </div>
+                                                                            </div>
                                                                         </div>
                                                                     </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="features__product-wrapper d-flex mb-20">
-                                                                <div class="features__product-thumb mr-15">
-                                                                    <a href="product-details.html"><img
-                                                                            src="assets/img/shop/product/sm/pro-sm-2.jpg"
-                                                                            alt="pro-sm-1"></a>
-                                                                </div>
-                                                                <div class="features__product-content">
-                                                                    <h5><a href="product-details.html">Wooden container
-                                                                            Bowl</a></h5>
-                                                                    <div class="price">
-                                                                        <span>$50</span>
-                                                                        <div class="add-cart p-absolute transition-3">
-                                                                            <a href="#">+ Add to Cart</a>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="features__product-wrapper d-flex mb-20">
-                                                                <div class="features__product-thumb mr-15">
-                                                                    <a href="product-details.html"><img
-                                                                            src="assets/img/shop/product/sm/pro-sm-3.jpg"
-                                                                            alt="pro-sm-1"></a>
-                                                                </div>
-                                                                <div class="features__product-content">
-                                                                    <h5><a href="product-details.html">Wooden container
-                                                                            Bowl</a></h5>
-                                                                    <div class="price">
-                                                                        <span>$60</span>
-                                                                        <span class="price-old">$70</span>
-                                                                        <div class="add-cart p-absolute transition-3">
-                                                                            <a href="#">+ Add to Cart</a>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
+                                                                    <% }) %>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                    <div class="product__offer-wrapper">
-                                                        <div class="sidebar__widget-content">
-                                                            <div class="features__product-wrapper d-flex mb-20">
-                                                                <div class="features__product-thumb mr-15">
-                                                                    <a href="product-details.html"><img
-                                                                            src="assets/img/shop/product/sm/pro-sm-4.jpg"
-                                                                            alt="pro-sm-1"></a>
-                                                                </div>
-                                                                <div class="features__product-content">
-                                                                    <h5><a href="product-details.html">Wooden container
-                                                                            Bowl</a></h5>
-                                                                    <div class="price">
-                                                                        <span>$200</span>
-                                                                        <div class="add-cart p-absolute transition-3">
-                                                                            <a href="#">+ Add to Cart</a>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="features__product-wrapper d-flex mb-20">
-                                                                <div class="features__product-thumb mr-15">
-                                                                    <a href="product-details.html"><img
-                                                                            src="assets/img/shop/product/sm/pro-sm-5.jpg"
-                                                                            alt="pro-sm-1"></a>
-                                                                </div>
-                                                                <div class="features__product-content">
-                                                                    <h5><a href="product-details.html">Wooden container
-                                                                            Bowl</a></h5>
-                                                                    <div class="price">
-                                                                        <span>$80</span>
-                                                                        <span class="price-old">$120</span>
-                                                                        <div class="add-cart p-absolute transition-3">
-                                                                            <a href="#">+ Add to Cart</a>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="features__product-wrapper d-flex mb-20">
-                                                                <div class="features__product-thumb mr-15">
-                                                                    <a href="product-details.html"><img
-                                                                            src="assets/img/shop/product/sm/pro-sm-6.jpg"
-                                                                            alt="pro-sm-1"></a>
-                                                                </div>
-                                                                <div class="features__product-content">
-                                                                    <h5><a href="product-details.html">Wooden container
-                                                                            Bowl</a></h5>
-                                                                    <div class="price">
-                                                                        <span>$150</span>
-                                                                        <div class="add-cart p-absolute transition-3">
-                                                                            <a href="#">+ Add to Cart</a>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                                        <% } %>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-xl-4 col-lg-4 col-md-6">
-                                            <div class="product__offer-inner mb-30">
-                                                <div class="product__title mb-60">
-                                                    <h4>On Sale Products</h4>
-                                                </div>
-                                                <div class="product__offer-slider owl-carousel">
-                                                    <div class="product__offer-wrapper">
-                                                        <div class="sidebar__widget-content">
-                                                            <div class="features__product-wrapper d-flex mb-20">
-                                                                <div class="features__product-thumb mr-15">
-                                                                    <a href="product-details.html"><img
-                                                                            src="assets/img/shop/product/sm/pro-sm-4.jpg"
-                                                                            alt="pro-sm-1"></a>
-                                                                </div>
-                                                                <div class="features__product-content">
-                                                                    <h5><a href="product-details.html">Wooden container
-                                                                            Bowl</a></h5>
-                                                                    <div class="price">
-                                                                        <span>$30</span>
-                                                                        <span class="price-old">$45</span>
-                                                                        <div class="add-cart p-absolute transition-3">
-                                                                            <a href="#">+ Add to Cart</a>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="features__product-wrapper d-flex mb-20">
-                                                                <div class="features__product-thumb mr-15">
-                                                                    <a href="product-details.html"><img
-                                                                            src="assets/img/shop/product/sm/pro-sm-5.jpg"
-                                                                            alt="pro-sm-1"></a>
-                                                                </div>
-                                                                <div class="features__product-content">
-                                                                    <h5><a href="product-details.html">Wooden container
-                                                                            Bowl</a></h5>
-                                                                    <div class="price">
-                                                                        <span>$102</span>
-                                                                        <span class="price-old">$122</span>
-                                                                        <div class="add-cart p-absolute transition-3">
-                                                                            <a href="#">+ Add to Cart</a>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="features__product-wrapper d-flex mb-20">
-                                                                <div class="features__product-thumb mr-15">
-                                                                    <a href="product-details.html"><img
-                                                                            src="assets/img/shop/product/sm/pro-sm-6.jpg"
-                                                                            alt="pro-sm-1"></a>
-                                                                </div>
-                                                                <div class="features__product-content">
-                                                                    <h5><a href="product-details.html">Wooden container
-                                                                            Bowl</a></h5>
-                                                                    <div class="price">
-                                                                        <span>$60</span>
-                                                                        <span class="price-old">$88</span>
-                                                                        <div class="add-cart p-absolute transition-3">
-                                                                            <a href="#">+ Add to Cart</a>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="product__offer-wrapper">
-                                                        <div class="sidebar__widget-content">
-                                                            <div class="features__product-wrapper d-flex mb-20">
-                                                                <div class="features__product-thumb mr-15">
-                                                                    <a href="product-details.html"><img
-                                                                            src="assets/img/shop/product/sm/pro-sm-3.jpg"
-                                                                            alt="pro-sm-1"></a>
-                                                                </div>
-                                                                <div class="features__product-content">
-                                                                    <h5><a href="product-details.html">Wooden container
-                                                                            Bowl</a></h5>
-                                                                    <div class="price">
-                                                                        <span>$140</span>
-                                                                        <span class="price-old">$150</span>
-                                                                        <div class="add-cart p-absolute transition-3">
-                                                                            <a href="#">+ Add to Cart</a>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="features__product-wrapper d-flex mb-20">
-                                                                <div class="features__product-thumb mr-15">
-                                                                    <a href="product-details.html"><img
-                                                                            src="assets/img/shop/product/sm/pro-sm-2.jpg"
-                                                                            alt="pro-sm-1"></a>
-                                                                </div>
-                                                                <div class="features__product-content">
-                                                                    <h5><a href="product-details.html">Wooden container
-                                                                            Bowl</a></h5>
-                                                                    <div class="price">
-                                                                        <span>$40</span>
-                                                                        <span class="price-old">$50</span>
-                                                                        <div class="add-cart p-absolute transition-3">
-                                                                            <a href="#">+ Add to Cart</a>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="features__product-wrapper d-flex mb-20">
-                                                                <div class="features__product-thumb mr-15">
-                                                                    <a href="product-details.html"><img
-                                                                            src="assets/img/shop/product/sm/pro-sm-1.jpg"
-                                                                            alt="pro-sm-1"></a>
-                                                                </div>
-                                                                <div class="features__product-content">
-                                                                    <h5><a href="product-details.html">Wooden container
-                                                                            Bowl</a></h5>
-                                                                    <div class="price">
-                                                                        <span>$300</span>
-                                                                        <span class="price-old">$350</span>
-                                                                        <div class="add-cart p-absolute transition-3">
-                                                                            <a href="#">+ Add to Cart</a>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-xl-4 col-lg-4 col-md-6">
+
+
+                                        <div class="col-xl-6 col-lg-6 col-md-12">
                                             <div class="product__offer-inner mb-30">
                                                 <div class="product__title mb-60">
                                                     <h4>Top Rated Products</h4>
                                                 </div>
                                                 <div class="product__offer-slider owl-carousel">
+                                                    <% for (let i = 0; i < products.length; i += 3) { %>
                                                     <div class="product__offer-wrapper">
-                                                        <div class="sidebar__widget-content">
-                                                            <div class="features__product-wrapper d-flex mb-20">
-                                                                <div class="features__product-thumb mr-15">
-                                                                    <a href="product-details.html"><img
-                                                                            src="assets/img/shop/product/sm/pro-sm-7.jpg"
-                                                                            alt="pro-sm-1"></a>
-                                                                </div>
-                                                                <div class="features__product-content">
-                                                                    <h5><a href="product-details.html">Wooden container
-                                                                            Bowl</a></h5>
-                                                                    <div class="rating rating-shop mb-5">
-                                                                        <ul>
-                                                                            <li><span><i class="fas fa-star"></i></span>
-                                                                            </li>
-                                                                            <li><span><i class="fas fa-star"></i></span>
-                                                                            </li>
-                                                                            <li><span><i class="fas fa-star"></i></span>
-                                                                            </li>
-                                                                            <li><span><i class="fas fa-star"></i></span>
-                                                                            </li>
-                                                                            <li><span><i class="fal fa-star"></i></span>
-                                                                            </li>
-                                                                        </ul>
-                                                                    </div>
-                                                                    <div class="price">
-                                                                        <span>$20</span>
-                                                                        <span class="price-old">$40</span>
-                                                                        <div class="add-cart p-absolute transition-3">
-                                                                            <a href="#">+ Add to Cart</a>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
+                                                        <% products.slice(i, i + 3).forEach(product => { %>
+                                                        <div class="features__product-wrapper d-flex mb-20">
+                                                            <div class="features__product-thumb mr-15">
+                                                                <a href="/product/product-details/<%= product._id %>">
+                                                                    <img src="<%= product.imgUrls[0] || 'assets/img/shop/product/default.jpg' %>" alt="<%= product.title %>">
+                                                                </a>
                                                             </div>
-                                                            <div class="features__product-wrapper d-flex mb-20">
-                                                                <div class="features__product-thumb mr-15">
-                                                                    <a href="product-details.html"><img
-                                                                            src="assets/img/shop/product/sm/pro-sm-8.jpg"
-                                                                            alt="pro-sm-1"></a>
+                                                            <div class="features__product-content">
+                                                                <h5>
+                                                                    <a href="product-details.html?id=<%= product._id %>">
+                                                                        <%= product.title %>
+                                                                    </a>
+                                                                </h5>
+                                                                <div class="rating rating-shop mb-5">
+                                                                    <ul>
+                                                                        <% for (let i = 1; i <= 5; i++) { %>
+                                                                        <li>
+                                                                            <span>
+                                                                                <i class="<%= i <= product.rating ? 'fas fa-star' : 'fal fa-star' %>"></i>
+                                                                            </span>
+                                                                        </li>
+                                                                        <% } %>
+                                                                    </ul>
                                                                 </div>
-                                                                <div class="features__product-content">
-                                                                    <h5><a href="product-details.html">Wooden container
-                                                                            Bowl</a></h5>
-                                                                    <div class="rating rating-shop mb-5">
-                                                                        <ul>
-                                                                            <li><span><i class="fas fa-star"></i></span>
-                                                                            </li>
-                                                                            <li><span><i class="fas fa-star"></i></span>
-                                                                            </li>
-                                                                            <li><span><i class="fas fa-star"></i></span>
-                                                                            </li>
-                                                                            <li><span><i class="fas fa-star"></i></span>
-                                                                            </li>
-                                                                            <li><span><i class="fal fa-star"></i></span>
-                                                                            </li>
-                                                                        </ul>
-                                                                    </div>
-                                                                    <div class="price">
-                                                                        <span>$35</span>
-                                                                        <span class="price-old">$40</span>
-                                                                        <div class="add-cart p-absolute transition-3">
-                                                                            <a href="#">+ Add to Cart</a>
-                                                                        </div>
+                                                                <div class="price">
+                                                                    <span>$<%= product.price %></span>
+                                                                    <% if (product.oldPrice) { %>
+                                                                    <span class="price-old">$<%= product.oldPrice %></span>
+                                                                    <% } %>
+                                                                    <div class="add-cart p-absolute transition-3">
+                                                                        <a href="/cart/add/<%= product._id %>">+ Add to Cart</a>
                                                                     </div>
                                                                 </div>
+                                                               
                                                             </div>
-                                                            <div class="features__product-wrapper d-flex mb-20">
-                                                                <div class="features__product-thumb mr-15">
-                                                                    <a href="product-details.html"><img
-                                                                            src="assets/img/shop/product/sm/pro-sm-9.jpg"
-                                                                            alt="pro-sm-1"></a>
-                                                                </div>
-                                                                <div class="features__product-content">
-                                                                    <h5><a href="product-details.html">Wooden container
-                                                                            Bowl</a></h5>
-                                                                    <div class="rating rating-shop mb-5">
-                                                                        <ul>
-                                                                            <li><span><i class="fas fa-star"></i></span>
-                                                                            </li>
-                                                                            <li><span><i class="fas fa-star"></i></span>
-                                                                            </li>
-                                                                            <li><span><i class="fas fa-star"></i></span>
-                                                                            </li>
-                                                                            <li><span><i class="fas fa-star"></i></span>
-                                                                            </li>
-                                                                            <li><span><i class="fal fa-star"></i></span>
-                                                                            </li>
-                                                                        </ul>
-                                                                    </div>
-                                                                    <div class="price">
-                                                                        <span>$65</span>
-                                                                        <div class="add-cart p-absolute transition-3">
-                                                                            <a href="#">+ Add to Cart</a>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
+                                                            
                                                         </div>
+                                                        <% }); %>
                                                     </div>
-                                                    <div class="product__offer-wrapper">
-                                                        <div class="sidebar__widget-content">
-                                                            <div class="features__product-wrapper d-flex mb-20">
-                                                                <div class="features__product-thumb mr-15">
-                                                                    <a href="product-details.html"><img
-                                                                            src="assets/img/shop/product/sm/pro-sm-3.jpg"
-                                                                            alt="pro-sm-1"></a>
-                                                                </div>
-                                                                <div class="features__product-content">
-                                                                    <h5><a href="product-details.html">Wooden container
-                                                                            Bowl</a></h5>
-                                                                    <div class="rating rating-shop mb-5">
-                                                                        <ul>
-                                                                            <li><span><i class="fas fa-star"></i></span>
-                                                                            </li>
-                                                                            <li><span><i class="fas fa-star"></i></span>
-                                                                            </li>
-                                                                            <li><span><i class="fas fa-star"></i></span>
-                                                                            </li>
-                                                                            <li><span><i class="fas fa-star"></i></span>
-                                                                            </li>
-                                                                            <li><span><i class="fal fa-star"></i></span>
-                                                                            </li>
-                                                                        </ul>
-                                                                    </div>
-                                                                    <div class="price">
-                                                                        <span>$98</span>
-                                                                        <span class="price-old">$128</span>
-                                                                        <div class="add-cart p-absolute transition-3">
-                                                                            <a href="#">+ Add to Cart</a>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="features__product-wrapper d-flex mb-20">
-                                                                <div class="features__product-thumb mr-15">
-                                                                    <a href="product-details.html"><img
-                                                                            src="assets/img/shop/product/sm/pro-sm-2.jpg"
-                                                                            alt="pro-sm-1"></a>
-                                                                </div>
-                                                                <div class="features__product-content">
-                                                                    <h5><a href="product-details.html">Wooden container
-                                                                            Bowl</a></h5>
-                                                                    <div class="rating rating-shop mb-5">
-                                                                        <ul>
-                                                                            <li><span><i class="fas fa-star"></i></span>
-                                                                            </li>
-                                                                            <li><span><i class="fas fa-star"></i></span>
-                                                                            </li>
-                                                                            <li><span><i class="fas fa-star"></i></span>
-                                                                            </li>
-                                                                            <li><span><i class="fas fa-star"></i></span>
-                                                                            </li>
-                                                                            <li><span><i class="fal fa-star"></i></span>
-                                                                            </li>
-                                                                        </ul>
-                                                                    </div>
-                                                                    <div class="price">
-                                                                        <span>$98</span>
-                                                                        <span class="price-old">$128</span>
-                                                                        <div class="add-cart p-absolute transition-3">
-                                                                            <a href="#">+ Add to Cart</a>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="features__product-wrapper d-flex mb-20">
-                                                                <div class="features__product-thumb mr-15">
-                                                                    <a href="product-details.html"><img
-                                                                            src="assets/img/shop/product/sm/pro-sm-1.jpg"
-                                                                            alt="pro-sm-1"></a>
-                                                                </div>
-                                                                <div class="features__product-content">
-                                                                    <h5><a href="product-details.html">Wooden container
-                                                                            Bowl</a></h5>
-                                                                    <div class="rating rating-shop mb-5">
-                                                                        <ul>
-                                                                            <li><span><i class="fas fa-star"></i></span>
-                                                                            </li>
-                                                                            <li><span><i class="fas fa-star"></i></span>
-                                                                            </li>
-                                                                            <li><span><i class="fas fa-star"></i></span>
-                                                                            </li>
-                                                                            <li><span><i class="fas fa-star"></i></span>
-                                                                            </li>
-                                                                            <li><span><i class="fal fa-star"></i></span>
-                                                                            </li>
-                                                                        </ul>
-                                                                    </div>
-                                                                    <div class="price">
-                                                                        <span>$98</span>
-                                                                        <span class="price-old">$128</span>
-                                                                        <div class="add-cart p-absolute transition-3">
-                                                                            <a href="#">+ Add to Cart</a>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                                    <% } %>
                                                 </div>
                                             </div>
                                         </div>
+                                        
                                     </div>
                                 </div>
                             </section>
