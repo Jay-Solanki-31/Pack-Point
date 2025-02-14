@@ -30,7 +30,7 @@ const addToCart = async (req, res) => {
         let cart = await Cart.findOne({ userId });
 
         if (!cart) {
-            cart = new Cart({ userId, products: [productId] });
+            cart = new Cart({ userId, products: [productId], });
         } else {
             if (!cart.products.includes(productId)) {
                 cart.products.push(productId);

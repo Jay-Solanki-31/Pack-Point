@@ -61,9 +61,11 @@
                                         </li>
                                         <li class="mega-menu "><a href="/user/shop">Shop</a>
                                         </li>
-
-
                                         <li><a href="contact.html">Contact</a></li>
+                                        <% if (user) { %>
+                                            <li><a href="/wishlist">Wishlist</a></li>
+                                            <li><a href="/cart">Cart</a></li>
+                                        <% } %>
                                     </ul>
                                 </nav>
                             </div>
