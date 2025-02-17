@@ -9,7 +9,8 @@ const addProductController = async (req, res) => {
     let { title, description, price, sku } = req.body;
 
     if (!title || !description || !price || !sku || !req.files || req.files.length === 0) {
-      return res.status(400).send("Please provide all required fields, including at least one image.");
+      req.session.toastMessage = { type: "error", text: "All fields are required." };
+      return res.redirect("./products");
     }
 
     description = description.replace(/<\/?[^>]+(>|$)/g, "");
@@ -17,12 +18,14 @@ const addProductController = async (req, res) => {
 
     const numericPrice = Number(price);
     if (isNaN(numericPrice) || numericPrice <= 0) {
-      return res.status(400).send("Price must be a valid positive number.");
+      req.session.toastMessage = { type: "error", text: "Price must be a positive number." };
+      return res.redirect("./products");
     }
 
     const existingProduct = await Product.findOne({ sku });
     if (existingProduct) {
-      return res.status(400).send("Product with this SKU already exists.");
+      req.session.toastMessage = { type: "error", text: "Product with the same SKU already exists." };
+      return res.redirect("./products");
     }
 
     const imgUrls = req.files.map((file) => file.path);
@@ -36,11 +39,12 @@ const addProductController = async (req, res) => {
     });
     await newProduct.save();
 
+    req.session.toastMessage = { type: "success", text: "Product added successfully." };
     return res.redirect("./products");
 
   } catch (error) {
-    console.error("Error in addProductController:", error);
-    return res.status(500).send("An error occurred while adding the product.");
+    req.session.toastMessage = { type: "error", text: "Error adding product." };
+    return res.redirect("./products"); 
   }
 };
 
@@ -57,7 +61,8 @@ const updateProductDetails = async (req, res) => {
       const product = await Product.findById(productId);
 
       if (!product) {
-          return res.status(404).send("Product not found");
+        req.session.toastMessage = { type: "error", text: "Product not found" };
+        return res.redirect("/product/products");
       }
 
       let { title, description, price, code } = req.body;
@@ -83,9 +88,11 @@ const updateProductDetails = async (req, res) => {
       );
 
       if (!updatedProduct) {
-          return res.status(404).send("Product not found");
+        req.session.toastMessage = { type: "error", text: "Error updating product" };
+        return res.redirect("/product/products");
       }
 
+      req.session.toastMessage = { type: "success", text: "Product updated successfully" };
       return res.redirect("/product/products");
 
   } catch (error) {

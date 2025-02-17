@@ -28,9 +28,17 @@ app.use(session({
     saveUninitialized: false
 }));
 
+
 app.use(express.static("public/admin/assets"));
 app.use(express.static("public/user"));
 
+app.use((req, res, next) => {
+    res.locals.toastMessage = req.session.toastMessage || null;
+    req.session.toastMessage = null;
+    next();
+});
+
+  
 
 app.set("view engine", "ejs");
 app.set("views", "./views");

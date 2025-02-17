@@ -37,7 +37,8 @@ const addToWishlist = async (req, res) => {
         }
 
         await wishlist.save();
-        res.redirect("/wishlist");
+        req.session.toastMessage = { type: "success", text: "Product added to wishlist successfully" };
+        res.redirect("/user/shop");
     } catch (error) {
         console.error("Error adding to wishlist:", error);
         res.redirect("/wishlist");
@@ -53,7 +54,7 @@ const removeFromWishlist = async (req, res) => {
             { userId },
             { $pull: { products: productId } }
         );  
-
+        req.session.toastMessage = { type: "success", text: "Product removed from wishlist" };
         res.redirect("/wishlist");
     } catch (error) {
         console.error("Error removing from wishlist:", error);

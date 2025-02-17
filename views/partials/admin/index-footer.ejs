@@ -88,15 +88,36 @@
 
 <!-- lazyload js-->
 <script src="/js/lazysizes.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+
 
 <!--script admin-->
 <script src="/js/admin-script.js"></script>
-</body>
+
 
 <script>
     document.getElementById("dropzoneTrigger").addEventListener("click", function () {
         document.getElementById("imageUpload").click();
     });
+</script>    
+
+<script>
+    const toastMessage = <%- JSON.stringify(toastMessage || null) %>;
+    if (toastMessage) {
+        Toastify({
+            text: toastMessage.text,
+            duration: 3000,
+            gravity: "top",
+            position: "right",
+            backgroundColor: toastMessage.type === "error" ? "red" : "green",
+        }).showToast();
+    }
 </script>
+</body>
+
+
+
+
+
 
 </html>

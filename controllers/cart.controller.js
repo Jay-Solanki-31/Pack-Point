@@ -38,9 +38,10 @@ const addToCart = async (req, res) => {
         }
 
         await cart.save();
+        req.session.toastMessage = { type: "success", text: "Product added to cart" };
         res.redirect("/cart");
     } catch (error) {
-        console.error("Error adding to cart:", error);
+        req.session.toastMessage = { type: "error", text: "Error adding to cart" };
         res.redirect("/cart");
     }
 };
@@ -58,10 +59,10 @@ const removeFromCart = async (req, res) => {
             { userId },
             { $pull: { products: productId } }
         );
-
+        req.session.toastMessage = { type: "success", text: "Product removed from cart" };
         res.redirect("/cart");
     } catch (error) {
-        console.error("Error removing from cart:", error);
+        req,session.toastMessage = { type: "error", text: "Error removing from cart" };
         res.redirect("/cart");
     }
 };

@@ -1,7 +1,5 @@
 import { User } from "../models/user.model.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
-import { ApiError } from "../utils/ApiError.js";
-import { ApiResponse } from "../utils/ApiResponce.js";
 import jwt from "jsonwebtoken";
 
 
@@ -9,10 +7,15 @@ import jwt from "jsonwebtoken";
 const registerUser = asyncHandler(async (req, res) => {
 
     const { fullName, email, username, password, userRole } = req.body
-    console.log(req.body);
+    // console.log(req.body);
 
     if ([fullName, email, username, password].some((field) => field?.trim() === "")) {
-        throw new ApiError(400, "All fields are required")
+        req.session.toastMessage = { type: "error", text: "All Fields Require" };
+        if (user.userRole === "admin") {
+            return res.redirect("/admin");
+        } else {
+            return res.redirect("/user/login");
+        }
     }
 
     const existedUser = await User.findOne({
@@ -21,7 +24,12 @@ const registerUser = asyncHandler(async (req, res) => {
     })
 
     if (existedUser) {
-        throw new ApiError(409, "User with email or username already exists");
+        req.session.toastMessage = {type:error, text:"User AlreadyExists"}
+        if (user.userRole === "admin") {
+            return res.redirect("/admin");
+        } else {
+            return res.redirect("/user/login");
+        }
     }
     //console.log(req.files);
 
@@ -38,51 +46,67 @@ const registerUser = asyncHandler(async (req, res) => {
     )
 
     if (!createdUser) {
-        throw new ApiError(500, "Something went wrong while registering the user")
+        req.session.toastMessage = { type: "error", text: "User not Created" };
     }
 
     if (user.userRole === "admin") {
+        req.session.toastMessage = { type: "success", text: "Admin Registered" };
         return res.redirect("/admin");
     } else {
+        req.session.toastMessage = { type: "success", text: "User Registered" };
         return res.redirect("/user/login");
     }
 })
 
-
 const loginUser = asyncHandler(async (req, res) => {
     const { email, username, password } = req.body;
 
-    if (!username && !email) {
-        throw new ApiError(400, "Username or email is required");
-    }
+    try {
+        if (!username && !email) {
+            req.session.toastMessage = { type: "error", text: "Username or email is required" };
+            if (user.userRole === "admin") {
+                return res.redirect("/admin");
+            } else {
+                return res.redirect("/user/login");
+            }
+        }
 
-    const user = await User.findOne({
-        $or: [{ username }, { email }]
-    });
+        const user = await User.findOne({
+            $or: [{ username }, { email }]
+        });
 
-    if (!user) {
-        throw new ApiError(404, "User does not exist");
-    }
+        if (!user) {
+            req.session.toastMessage = { type: "error", text: "User does not exist" };
+            return res.redirect("/login");
+        }
 
-    const isPasswordValid = await user.isPasswordCorrect(password);
-    if (!isPasswordValid) {
-        throw new ApiError(401, "Invalid credentials");
-    }
+        const isPasswordValid = await user.isPasswordCorrect(password);
+        if (!isPasswordValid) {
+            req.session.toastMessage = { type: "error", text: "Invalid credentials" };
+            return res.redirect("/login");
+        }
 
-    const { accessToken, refreshToken } = await generateAccessAndRefereshTokens(user._id);
+        const { accessToken, refreshToken } = await generateAccessAndRefereshTokens(user._id);
 
-    const options = {
-        httpOnly: true,
-        secure: true
-    };
+        const options = {
+            httpOnly: true,
+            secure: true
+        };
 
-    res.cookie("accessToken", accessToken, options);
-    res.cookie("refreshToken", refreshToken, options);
+        res.cookie("accessToken", accessToken, options);
+        res.cookie("refreshToken", refreshToken, options);
 
-    if (user.userRole === "admin") {
-        return res.redirect("/admin/dashboard");
-    } else {
-        return res.redirect("/");
+        // Redirect based on user role
+        if (user.userRole === "admin") {
+            req.session.toastMessage = { type: "success", text: "Welcome Admin!" };
+            return res.redirect("/admin/dashboard");
+        } else {
+            req.session.toastMessage = { type: "success", text: "Login successful" };
+            return res.redirect("/");
+        }
+    } catch (error) {
+        req.session.toastMessage = { type: "error", text: error.message };
+        return res.redirect("/login");
     }
 });
 
@@ -167,7 +191,12 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
 
 const logoutUser = asyncHandler(async (req, res) => {
     if (!req.user || !req.user._id) {
-        return res.status(400).json({ message: "User not found" });
+        req.session.toastMessage = { type: "error", text: "User not logged in" };
+        if (user.userRole === "admin") {
+            return res.redirect("/admin");
+        } else {
+            return res.redirect("/user/login");
+        }
     }
 
     // Remove refresh token from database
@@ -178,8 +207,14 @@ const logoutUser = asyncHandler(async (req, res) => {
     );
 
     if (!updatedUser) {
-        return res.status(404).json({ message: "User not found" });
+        req.session.toastMessage = { type: "error", text: "User not found" };
+        if (user.userRole === "admin") {
+            return res.redirect("/admin");
+        } else {
+            return res.redirect("/user/login");
+        }
     }
+
 
     // Clear authentication cookies
     const options = {
@@ -193,8 +228,10 @@ const logoutUser = asyncHandler(async (req, res) => {
 
     // Redirect based on user role
     if (req.user.userRole === "admin") {
+        req.session.toastMessage = { type: "success", text: "Logout successful" };
         return res.redirect("/admin");
     } else {
+        req.session.toastMessage = { type: "success", text: "Logout successful" };
         return res.redirect("/");
     }
 });
@@ -206,20 +243,22 @@ const changeCurrentPassword = asyncHandler(async (req, res) => {
     // console.log(req.body);
 
     const user = await User.findById(req.user?._id)
-    console.log(user);
+    // console.log(user);
     
     const isPasswordCorrect = await user.isPasswordCorrect(oldPassword)
 
     if (!isPasswordCorrect) {
-        throw new ApiError(400, "Invalid old password")
+        req.session.toastMessage = { type: "error", text: "Old password is incorrect" };
     }
 
     user.password = newPassword
     await user.save({ validateBeforeSave: false })
 
     if (req.user.userRole === "admin") {
+        req.session.toastMessage = { type: "success", text: "Password changed successfully" };
         return res.redirect("/admin");
     } else {
+        req.session.toastMessage = { type: "success", text: "Password changed successfully" };
         return res.redirect("/user/Profile");
     }
 })
@@ -256,13 +295,15 @@ const updateAccountDetails = asyncHandler(async (req, res) => {
     ).select("-password");
 
     if (!user) {
-        throw new ApiError(404, "User not found");
+        req.session.toastMessage = { type: "error", text: "User not found" };
     }
 
     // Redirect based on user role
     if (user.userRole === "admin") {
+        req.session.toastMessage = { type: "success", text: "Account details updated successfully" };
         return res.redirect("/admin/dashboard");
     } else {
+        req.session.toastMessage = { type: "success", text: "Account details updated successfully" };
         return res.redirect("/user/Profile");
     }
 });

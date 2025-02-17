@@ -99,7 +99,23 @@
     <script src="assets/js/ajax-form.js"></script>
     <script src="assets/js/wow.min.js"></script>
     <script src="assets/js/imagesloaded.pkgd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+
     <script src="assets/js/main.js"></script>
+    <script>
+        const toastMessage = <%- JSON.stringify(toastMessage || null) %>;
+        if (toastMessage) {
+            Toastify({
+                text: toastMessage.text,
+                duration: 3000,
+                gravity: "top",
+                position: "right",
+                backgroundColor: toastMessage.type === "error" ? "red" : "green",
+            }).showToast();
+        }
+    </script>
+
+    
 </body>
 
 <!-- Mirrored from html.storebuild.shop/outstock-prv/outstock/index-4.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 24 Jan 2025 10:57:58 GMT -->
