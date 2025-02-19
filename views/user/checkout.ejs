@@ -51,55 +51,38 @@
                                     <div class="col-md-6">
                                         <div class="checkout-form-list">
                                             <label>First Name <span class="required">*</span></label>
-                                            <input type="text" placeholder="" />
+                                            <input type="text" name="firstname" placeholder="" />
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="checkout-form-list">
                                             <label>Last Name <span class="required">*</span></label>
-                                            <input type="text" placeholder="" />
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <div class="checkout-form-list">
-                                            <label>Company Name</label>
-                                            <input type="text" placeholder="" />
+                                            <input type="text" name="lastname" placeholder="" />
                                         </div>
                                     </div>
                                     <div class="col-md-12">
                                         <div class="checkout-form-list">
                                             <label>Address <span class="required">*</span></label>
-                                            <input type="text" placeholder=" address" />
+                                            <input type="text" name="address" placeholder=" address" />
                                         </div>
                                     </div>
-                                    <div class="col-md-12">
-                                        <div class="checkout-form-list">
-                                            <label>Town / City <span class="required">*</span></label>
-                                            <input type="text" placeholder="Town / City" />
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="checkout-form-list">
-                                            <label>State / County <span class="required">*</span></label>
-                                            <input type="text" placeholder="" />
-                                        </div>
-                                    </div>
+                                   
                                     <div class="col-md-6">
                                         <div class="checkout-form-list">
                                             <label>Postcode / Zip <span class="required">*</span></label>
-                                            <input type="text" placeholder="Postcode / Zip" />
+                                            <input type="text" name="postcode" placeholder="Postcode / Zip" />
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="checkout-form-list">
                                             <label>Email Address <span class="required">*</span></label>
-                                            <input type="email" placeholder="" />
+                                            <input type="email" name="email" placeholder="" />
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="checkout-form-list">
                                             <label>Phone <span class="required">*</span></label>
-                                            <input type="text" placeholder="Postcode / Zip" />
+                                            <input type="text" name="phone" placeholder="Phone" />
                                         </div>
                                     </div>
                                     
@@ -141,24 +124,7 @@
                                                 <th>Cart Subtotal</th>
                                                 <td><span class="amount">$215.00</span></td>
                                             </tr>
-                                            <tr class="shipping">
-                                                <th>Shipping</th>
-                                                <td>
-                                                    <ul>
-                                                        <li>
-                                                            <input type="radio" />
-                                                            <label>
-                                                                Flat Rate: <span class="amount">$7.00</span>
-                                                            </label>
-                                                        </li>
-                                                        <li>
-                                                            <input type="radio" />
-                                                            <label>Free Shipping:</label>
-                                                        </li>
-                                                        <li></li>
-                                                    </ul>
-                                                </td>
-                                            </tr>
+                                            
                                             <tr class="order-total">
                                                 <th>Order Total</th>
                                                 <td><strong><span class="amount">$215.00</span></strong>
@@ -169,66 +135,6 @@
                                 </div>
 
                                 <div class="payment-method">
-                                    <div class="accordion" id="accordionExample">
-                                        <div class="card">
-                                            <div class="card-header" id="headingOne">
-                                                <h5 class="mb-0">
-                                                    <button class="btn-link" type="button" data-toggle="collapse"
-                                                        data-target="#collapseOne" aria-expanded="true"
-                                                        aria-controls="collapseOne">
-                                                        Direct Bank Transfer
-                                                    </button>
-                                                </h5>
-                                            </div>
-
-                                            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
-                                                data-parent="#accordionExample">
-                                                <div class="card-body">
-                                                    Make your payment directly into our bank account. Please use your Order ID
-                                                    as the payment
-                                                    reference. Your order won’t be
-                                                    shipped until the funds have cleared in our account.
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="card">
-                                            <div class="card-header" id="headingTwo">
-                                                <h5 class="mb-0">
-                                                    <button class="btn-link collapsed" type="button" data-toggle="collapse"
-                                                        data-target="#collapseTwo" aria-expanded="false"
-                                                        aria-controls="collapseTwo">
-                                                        Cheque Payment
-                                                    </button>
-                                                </h5>
-                                            </div>
-                                            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
-                                                data-parent="#accordionExample">
-                                                <div class="card-body">
-                                                    Please send your cheque to Store Name, Store Street, Store Town, Store
-                                                    State / County, Store
-                                                    Postcode.
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="card">
-                                            <div class="card-header" id="headingThree">
-                                                <h5 class="mb-0">
-                                                    <button class="btn-link collapsed" type="button" data-toggle="collapse"
-                                                        data-target="#collapseThree" aria-expanded="false"
-                                                        aria-controls="collapseThree">
-                                                        PayPal
-                                                    </button>
-                                                </h5>
-                                            </div>
-                                            <div id="collapseThree" class="collapse" aria-labelledby="headingThree"
-                                                data-parent="#accordionExample">
-                                                <div class="card-body">
-                                                    Pay via PayPal; you can pay with your credit card if you don’t have a
-                                                    PayPal account.
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
                                     <div class="order-button-payment mt-20">
                                         <button type="submit" class="os-btn os-btn-black">Place order</button>
                                     </div>

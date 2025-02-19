@@ -1,11 +1,14 @@
-import express from "express";
+// import express from "express";
 
-// import { getWishlist, addToWishlist ,removeFromWishlist } from "../controllers/whishList.controller.js";
-import { verifyJWT } from "../middleware/auth.middleware.js";
+// import { verifyJWT } from "../middleware/auth.middleware.js";
+// import { getCartData } from "../controllers/order.controller.js";
 
-const router = express.Router();
-router.get("/", verifyJWT, (req,res)=>{
-    res.render('user/checkout')
-});
 
-export default  router;
+// const router = express.Router();
+// router.get("/", verifyJWT,getCartData , (req,res)=>{
+//     res.render('user/checkout')
+// });
+
+// // router.get('/')
+
+// export default  router;

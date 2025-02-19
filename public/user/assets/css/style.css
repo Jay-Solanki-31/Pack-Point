@@ -3939,7 +3939,7 @@ p.checkout-coupon input[type=text] {
 }
 
 .country-select::before {
-  content: "\f107";
+  /* content: "\f107"; */
   right: 15px;
   top: 38px;
   position: absolute;

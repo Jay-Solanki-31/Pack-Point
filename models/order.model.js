@@ -7,31 +7,32 @@ const OrderSchema = new Schema(
             ref: "User",
             required: true,
         },
-        products: [
-            {
-                productId: {
-                    type: Schema.Types.ObjectId,
-                    ref: "Product",
-                    required: true,
-                },
-                quantity: {
-                    type: Number,
-                    default: 1,
-                },
-                price: {
-                    type: Number,
-                    required: true,
-                },
-            },
-        ],
-        totalAmount: {
-            type: Number,
-            required: true,
+        fullname:{
+            type:String,
+            require:true
         },
-        status: {
-            type: String,
-            default: "Pending", 
+        lastname:{
+            type:String,
+            require:true,
         },
+        address:{
+            type:String,
+            require:true
+        },
+        city:{
+            type:String,
+            require:true,
+        },
+        phone:{
+            type:Number,
+            require:true
+        },
+        email:{
+            type:Number,
+            require:true
+        }
+
+
     },
     { timestamps: true }
 );
