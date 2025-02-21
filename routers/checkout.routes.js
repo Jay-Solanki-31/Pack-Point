@@ -1,14 +1,13 @@
-// import express from "express";
+import express from "express";
 
-// import { verifyJWT } from "../middleware/auth.middleware.js";
-// import { getCartData } from "../controllers/order.controller.js";
+import { verifyJWT } from "../middleware/auth.middleware.js";
+import { getOrderList ,placeOrder,handlePaymentSuccess } from "../controllers/checkout.controller.js";
 
 
-// const router = express.Router();
-// router.get("/", verifyJWT,getCartData , (req,res)=>{
-//     res.render('user/checkout')
-// });
+const router = express.Router();
+router.get("/", verifyJWT ,getOrderList);
+router.post("/place-order", verifyJWT, placeOrder);
+router.post("/payment/success", verifyJWT, handlePaymentSuccess);
 
-// // router.get('/')
 
-// export default  router;
+export default  router;

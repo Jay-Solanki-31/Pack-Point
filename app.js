@@ -10,7 +10,7 @@ import productRouter from './routers/product.routes.js';
 import adminRouter from './routers/admin.routes.js';
 import wishlistRoutes from './routers/whishList.routes.js'
 import cartRoutes from './routers/cart.routes.js';
-// import checkoutRoutes from './routers/checkout.routes.js'
+import checkoutRoutes from './routers/checkout.routes.js'
 import { getProducts } from "./controllers/user.controller.js"; 
 import { verifyJWT } from './middleware/auth.middleware.js';
 
@@ -50,7 +50,7 @@ app.use("/admin", adminRouter);
 app.use("/product", productRouter);    
 app.use("/wishlist", wishlistRoutes);
 app.use("/cart", cartRoutes);
-// app.use('/checkout',checkoutRoutes);
+app.use("/checkout", checkoutRoutes);
 
 
 

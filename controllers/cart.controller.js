@@ -29,7 +29,7 @@ const addToCart = async (req, res) => {
     if (!cart) {
       cart = new Cart({
         userId,
-        products: [{ product: productId, quantity: 1, price: product.price }],
+        products: [{ product: productId, quantity: 1, price: product.price, name:product.title }],
       });
     } else {
       cart.products = cart.products.filter(
@@ -42,7 +42,7 @@ const addToCart = async (req, res) => {
         cart.products[index].quantity += 1;
         cart.products[index].price = product.price;
       } else {
-        cart.products.push({ product: productId, quantity: 1, price: product.price });
+        cart.products.push({ product: productId, quantity: 1, price: product.price,name:product.title }); 
       }
     }
 
