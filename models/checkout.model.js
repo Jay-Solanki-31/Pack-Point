@@ -17,6 +17,10 @@ const OrderSchema = new mongoose.Schema({
     ],
     total: { type: Number, required: true },
     paymentStatus: { type: String, default: "Pending" },
+      razorpayOrderId: String,
+  razorpayPaymentId: String,
+  razorpaySignature: String,
+
     createdAt: { type: Date, default: Date.now },
   });
   

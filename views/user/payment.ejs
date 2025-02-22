@@ -116,12 +116,16 @@
       description: "Order Payment",
       order_id: "<%= orderId %>",
       handler: function (response) {
+        console.log(response);
+        
+        
         document.querySelector(".loading").style.display = "block";
 
-        fetch("/payment/success", {
+        fetch("/checkout/payment/success", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(response),
+
         })
           .then((res) => res.json())
           .then(() => {
@@ -131,8 +135,7 @@
             }, 2000);
           })
           .catch((err) => {
-            console.error("Error during payment callback:", err);
-            toastr.error("An error occurred. Please try again.");
+            res.status(200).json({ success: true, message: "Payment verified" });
           })
           .finally(() => {
             document.querySelector(".loading").style.display = "none";
