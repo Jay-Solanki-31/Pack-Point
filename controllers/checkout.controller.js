@@ -19,6 +19,9 @@ const getOrderList = async (req, res) => {
     res.status(500).send({ success: false, message: "Error fetching cart items" });
   }
 };
+
+
+
 const placeOrder = async (req, res) => {
   try {
     if (!req.user) return res.redirect("/user/login");
@@ -37,6 +40,7 @@ const placeOrder = async (req, res) => {
           throw new Error("Invalid product data in the cart.");
         }
         return {
+          productId:product.productId,
           name: product.name,
           quantity: product.quantity,
           price: product.price,
@@ -69,7 +73,7 @@ const placeOrder = async (req, res) => {
     savedOrder.razorpayOrderId = razorpayOrder.id;
     await savedOrder.save();
 
-
+    await Cart.deleteMany({ userId: req.user._id });
 
     res.render("user/payment", {
       razorpayKey: process.env.RAZOR_PAY_KEY,

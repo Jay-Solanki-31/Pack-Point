@@ -1,5 +1,6 @@
 import { Product } from "../models/product.model.js";
 import { Cart } from "../models/cart.model.js";
+import { WhishList } from "../models/whislist.model.js";
 
 const getCartList = async (req, res) => {
   try {
@@ -29,7 +30,7 @@ const addToCart = async (req, res) => {
     if (!cart) {
       cart = new Cart({
         userId,
-        products: [{ product: productId, quantity: 1, price: product.price, name:product.title }],
+        products: [{ product: productId, quantity: 1, price: product.price, name: product.title }],
       });
     } else {
       cart.products = cart.products.filter(
@@ -42,11 +43,17 @@ const addToCart = async (req, res) => {
         cart.products[index].quantity += 1;
         cart.products[index].price = product.price;
       } else {
-        cart.products.push({ product: productId, quantity: 1, price: product.price,name:product.title }); 
+        cart.products.push({ product: productId, quantity: 1, price: product.price, name: product.title });
       }
     }
 
-    await cart.save(); 
+    await cart.save();
+
+    await WhishList.findOneAndUpdate(
+      { userId },
+      { $pull: { products: productId } }
+    );
+
     req.session.toastMessage = { type: "success", text: "Product added to cart" };
     res.redirect("/cart");
   } catch (error) {

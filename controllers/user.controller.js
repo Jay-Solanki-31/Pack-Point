@@ -1,4 +1,5 @@
 import { Product } from "../models/product.model.js";
+import { Order } from "../models/checkout.model.js";
  const getProducts = async (req, res) => {
     try {
         const products = await Product.find().limit(8); 
@@ -35,4 +36,21 @@ const getAllProducts = async (req, res) => {
     }
 };
 
-export {getProducts , getAllProducts}
+const getUserOrderData = async (req, res) => {
+    try {
+        if (!req.user) return res.redirect("/user/login");
+
+        // Fetch orders using userId instead of email
+        const getOrderList = await Order.find({ userId: req.user._id });
+
+        console.log("Fetched Orders:", getOrderList); // Debugging step
+
+        // Ensure orders is always passed, even if empty
+        res.render("user/user-profile", { orders: getOrderList || [] });
+    } catch (error) {
+        console.error("Error fetching user orders:", error);
+        res.status(500).send({ success: false, message: "Error fetching user orders" });
+    }
+};
+
+export {getProducts , getAllProducts,getUserOrderData}
