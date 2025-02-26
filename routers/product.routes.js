@@ -99,19 +99,18 @@ router.get("/product-details/:id", async (req, res) => {
 
 
 // search product based on title and get all data and send to product-details page with prodduct id
-
 router.get("/search", async (req, res) => {
     try {
         const search = req.query.search; 
-        console.log(search);
+        // console.log(search);
         
         const products = await Product.find({ title: { $regex: search, $options: "i" } });
-        console.log(products);
+        // console.log(products);
         
 
-        if (products.length === 1) {
-            return res.redirect(`/product/product-details/${products[0]._id}`);
-        }
+        // if (products.length === 1) {
+        //     return res.redirect(`/product/product-details/${products[0]._id}`);
+        // }
 
         res.render('user/search-results', { products }); 
 

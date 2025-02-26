@@ -167,7 +167,7 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
 
 
         const { accessToken, newRefreshToken } = await generateAccessAndRefereshTokens(user._id)
-        console.log(newRefreshToken);
+        // console.log(newRefreshToken);
 
 
         return res

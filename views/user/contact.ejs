@@ -1,0 +1,137 @@
+
+<%- include('../partials/header') %>
+        <main>
+
+            <!-- page title area start -->
+            <section class="page__title p-relative d-flex align-items-center" data-background="../assets/img/slider/index-slider.jpg">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="page__title-inner text-center">
+                                <h1>Contact Us</h1>
+                                <div class="page__title-breadcrumb">                                 
+                                    <nav aria-label="breadcrumb">
+                                    <ol class="breadcrumb justify-content-center">
+                                        <li class="breadcrumb-item"><a href="/">Home</a></li>
+                                        <li class="breadcrumb-item active" aria-current="page"> Contact</li>
+                                    </ol>
+                                    </nav>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- page title area end -->
+
+            <!-- contact area start -->
+            <section class="contact__area pb-100 pt-95">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xl-6 col-lg-6">
+                            <div class="contact__info">
+                                <h3>Find us here.</h3>
+                                <ul class="mb-55">
+                                    <li class="d-flex mb-35">
+                                        <div class="contact__info-icon mr-20">
+                                            <i class="fal fa-map-marker-alt"></i>
+                                        </div>
+                                        <div class="contact__info-content">
+                                            <h6>Address:</h6>
+                                            <span>1234 Heaven Stress, Beverly Hill, Surat, India.</span>
+                                        </div>
+                                    </li>
+                                    <li class="d-flex mb-35">
+                                        <div class="contact__info-icon mr-20">
+                                            <i class="fal fa-envelope-open-text"></i>
+                                        </div>
+                                        <div class="contact__info-content">
+                                            <h6>Email:</h6>
+                                            <span>PackPoint@mail.com</span>
+                                        </div>
+                                    </li>
+                                    <li class="d-flex mb-35">
+                                        <div class="contact__info-icon mr-20">
+                                            <i class="fal fa-phone-alt"></i>
+                                        </div>
+                                        <div class="contact__info-content">
+                                            <h6>Number Phone:</h6>
+                                            <span>(+91) 123 456 789, (+91) 987 654 321</span>
+                                        </div>
+                                    </li>
+                                </ul>
+                                <p>PackPoint is the best online destination to purchase high-quality bags. We offer a wide range of stylish, durable, and affordable bags to suit every need, whether for travel, work, school, or everyday use. Our commitment to quality and customer satisfaction ensures you get the best products at the best prices. For any inquiries, feel free to reach out to us—we’re here to help! </p>
+
+                                <div class="contact__social">
+                                    <ul>
+                                        <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
+                                        <li><a href="#"><i class="fab fa-twitter"></i></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-6 col-lg-6">
+                            <div class="contact__form">
+                                <h3>Contact Us.</h3>
+                                <form action="/contact/addcontact" method="post">
+                                    <div class="row">
+                                        <div class="col-xl-6 col-lg-6">
+                                            <div class="contact__input">
+                                                <label>Name <span class="required">*</span></label>
+                                                <input  name="name" type="text">
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-6 col-lg-6">
+                                            <div class="contact__input">
+                                                <label>Email <span class="required">*</span></label>
+                                                <input name="email" type="email">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xl-12">
+                                            <div class="contact__input">
+                                                <label>Subject <span class="required">*</span></label>
+                                                <input name="subject" type="text">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xl-12">
+                                            <div class="contact__input">
+                                                <label>Message</label>
+                                                <textarea name="message cols="30" rows="10"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xl-12">
+                                            <div class="contact__submit">
+                                                <button type="submit" class="os-btn os-btn-black">Send Message</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- contact area end -->
+
+            <!-- contact map area start -->
+            <section class="contact__map">
+                <div class="container-fluid p-0">
+                    <div class="row no-gutters">
+                        <div class="col-xl-12">
+                            <div class="contact__map-wrapper p-relative">
+                                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d112059.5304592415!2d72.74091474514626!3d21.159466188527983!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be04e59411d1563%3A0xfe4558290938b042!2sSurat%2C%20Gujarat!5e0!3m2!1sen!2sin!4v1740565550338!5m2!1sen!2sin" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- contact map area end -->
+          
+        </main>
+<%- include('../partials/footer')  %>

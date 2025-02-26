@@ -107,9 +107,7 @@
                                     <div class="order__info">
                                         <div class="order__info-top d-flex justify-content-between align-items-center">
                                             <h3 class="order__info-title">My Orders</h3>
-
                                         </div>
-
                                         <div class="order__list white-bg table-responsive">
                                             <table class="table ">
                                                 <thead>
@@ -122,36 +120,32 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <% if (typeof orders !=="undefined" && orders.length> 0) { %>
-                                                        <% orders.forEach(order=> { %>
-                                                            <tr>
-                                                                <td class="order__id">#<%= order._id %>
-                                                                </td>
-                                                                <td>
-                                                                    <ul>
-                                                                        <% order.products.forEach(product=> { %>
-                                                                            <li>
-                                                                                <strong>
-                                                                                    <%= product.name %>
-                                                                                </strong>
-                                                                            </li>
-                                                                         <td> <%= product.quantity %> </td>
-                                                                         <% }) %>
-                                                                     </ul>
-                                                                </td>
-                                                                    <td>₹ <%= order.total %> </td>
-                                                                    <td>
-                                                                        <%= order.paymentStatus %>
-                                                                    </td>
-                                                            </tr>
+                                                    <% if (typeof orders !== "undefined" && orders.length > 0) { %>
+                                                        <% orders.forEach(order => { %>
+                                                            <% order.products.forEach((product, index) => { %>
+                                                                <tr>
+                                                                    <% if (index === 0) { %> 
+                                                                        <td class="order__id" rowspan="<%= order.products.length %>">#<%= order._id %></td>
+                                                                    <% } %>
+                                                                    
+                                                                    <td><strong><%= product.name %></strong></td>
+                                                                    <td><%= product.quantity %></td>
+                                                                    <td>₹ <%= product.price * product.quantity %></td> 
+                                                
+                                                                    <% if (index === 0) { %> 
+                                                                        <td rowspan="<%= order.products.length %>"><%= order.paymentStatus %></td>
+                                                                    <% } %>
+                                                                </tr>
+                                                            <% }) %>
                                                         <% }) %>
-                                                    <% } 
-                                                    else { %>
-                                                    <tr>
-                                                        <td colspan="5" class="text-center">No orders found.</td>
-                                                    </tr>
+                                                    <% } else { %>
+                                                        <tr>
+                                                            <td colspan="5" class="text-center">No orders found.</td>
+                                                        </tr>
                                                     <% } %>
                                                 </tbody>
+                                                
+                                                
                                             </table>
                                         </div>
 

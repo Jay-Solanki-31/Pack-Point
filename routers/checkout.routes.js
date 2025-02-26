@@ -8,7 +8,7 @@ const router = express.Router();
 router.get("/", verifyJWT ,getOrderList);
 router.post("/place-order", verifyJWT, placeOrder);
 router.post("/payment/success", (req, res, next) => {
-    console.log("📢 Payment Success Route Hit! Data:", req.body);
+    // console.log("📢 Payment Success Route Hit! Data:", req.body);
     next();
   }, handlePaymentSuccess);
   

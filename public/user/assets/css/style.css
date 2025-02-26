@@ -5590,7 +5590,7 @@ p.checkout-coupon input[type=text] {
   margin-bottom: 0;
 }
 .order__list {
-  padding: 35px 70px 5px;
+  padding: 19px 9px 18px;
 }
 @media (max-width: 575px) {
   .order__list {
