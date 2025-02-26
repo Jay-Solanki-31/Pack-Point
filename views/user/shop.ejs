@@ -96,39 +96,37 @@
                                                     <li><a href="?page=<%= currentPage - 1 %>"><i
                                                                 class="fal fa-angle-left"></i></a></li>
                                                     <% } else { %>
-                                                        <li class="disabled"><span><i
-                                                                    class="fal fa-angle-left"></i></span></li>
-                                                        <% } %>
+                                                        <li class="disabled"><span>
+                                                            <i class="fal fa-angle-left"></i></span></li>
+                                                    <% } %>
 
-                                                            <% for (let i=1; i <=totalPages; i++) { %>
-                                                                <li class="<%= currentPage === i ? 'active' : '' %>">
-                                                                    <a href="?page=<%= i %>">
-                                                                        <%= i %>
-                                                                    </a>
-                                                                </li>
-                                                                <% } %>
+                                                <% for (let i=1; i <=totalPages; i++) { %>
+                                                    <li class="<%= currentPage === i ? 'active' : '' %>">
+                                                         <a href="?page=<%= i %>"> <%= i %> </a>
+                                                    </li>
+                                                <% } %>
 
-                                                                    <% if (currentPage < totalPages) { %>
-                                                                        <li><a href="?page=<%= currentPage + 1 %>"><i
-                                                                                    class="fal fa-angle-right"></i></a>
-                                                                        </li>
-                                                                        <% } else { %>
-                                                                            <li class="disabled"><span><i
-                                                                                        class="fal fa-angle-right"></i></span>
-                                                                            </li>
-                                                                            <% } %>
-                                            </ul>
+                                                <% if (currentPage < totalPages) { %>
+                                                    <li><a href="?page=<%= currentPage + 1 %>">
+                                                        <i class="fal fa-angle-right"></i></a>
+                                                    </li>
+                                                <% } else { %>
+                                                    <li class="disabled"><span>
+                                                        <i class="fal fa-angle-right"></i></span>
+                                                    </li>
+                                                <% } %>
+                                             </ul>
                                         </div>
                                         <div class="shop__header-left">
                                             <div class="show-text bottom">
                                                 <span>Showing <%= (currentPage - 1) * 12 + 1 %>–<%= Math.min(currentPage
-                                                            * 12, totalPages * 12) %> of <%= totalPages * 12 %>
-                                                                results</span>
+                                                            * 12, totalPages * 12) %> of <%= totalPages * 12 %> results
+                                                </span>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div>`
 
                         </div>
                     </div>
