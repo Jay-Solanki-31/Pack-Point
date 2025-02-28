@@ -1,0 +1,84 @@
+<%-include('../partials/admin/index-header.ejs') %>
+<div class="page-body-wrapper">
+<%-include('../partials/admin/index-sidebar.ejs') %>
+            <div class="page-body">
+                <!-- Container-fluid starts-->
+                <div class="container-fluid">
+                    <div class="page-header">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="page-header-left">
+                                    <h3>Order List
+                                        <small>PACK POINT Admin panel</small>
+                                    </h3>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <ol class="breadcrumb pull-right">
+                                    <li class="breadcrumb-item">
+                                        <a href="/admin/dashboard">
+                                            <i data-feather="home"></i>
+                                        </a>
+                                    </li>
+                                    <li class="breadcrumb-item">Menus</li>
+                                    <li class="breadcrumb-item active">Order List</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Container-fluid Ends-->
+
+                <!-- Container-fluid starts-->
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <form class="form-inline search-form search-box">
+                                        <div class="form-group">
+                                            <input class="form-control-plaintext" type="search" placeholder="Search..">
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive table-desi">
+                                        <table class="table all-package order-list-table" id="editableTable">
+                                            <thead>
+                                                <tr>
+                                                    <th>User Name</th>
+                                                    <th>Order Code</th>
+                                                    <th>Date</th>
+                                                    <th>PaymentStatus </th>
+                                                    <th>Amount</th>
+                                                    <th>Details</th>
+                                                </tr>
+                                            </thead>
+
+                                            <tbody>
+                                                    <% orderList.forEach(order => { %>
+                                                <tr>
+                                                    <td><%= order.firstName  %></td>
+                                                    <td><%= order._id %></td>
+                                                    <td><span><%= new Date(order.createdAt).toDateString() %></span></td>
+                                                    <td class="order-success">
+                                                        <span><%= order.paymentStatus %></span>
+                                                    </td>
+                                                    <td ><%= order.total %></td>
+                                                    <td>
+                                                        <a href="/admin/order-details/<%= order._id %>" class="btn btn-primary">Details</a>
+                                                    </td>
+                                                </tr>
+                                                <% }) %>
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Container-fluid Ends-->
+            </div>
+<%-include('../partials/admin/index-footer.ejs') %>

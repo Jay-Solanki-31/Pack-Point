@@ -2,6 +2,7 @@ import { Cart } from "../models/cart.model.js";
 import { Order } from "../models/checkout.model.js";
 import Razorpay from "razorpay";
 import crypto from "crypto";
+import { mongoose } from "mongoose";
 
 const razorpayInstance = new Razorpay({
   key_id: process.env.RAZOR_PAY_KEY,
@@ -29,24 +30,17 @@ const placeOrder = async (req, res) => {
     const { firstName, lastName, email, phone, address, postcode, country, totalAmount } = req.body;
 
     const cartItems = await Cart.find({ userId: req.user._id });
+
     if (!cartItems.length) return res.redirect("/cart");
 
-    const products = cartItems.flatMap((item) => {
-      if (!item.products || !item.products.length) {
-        throw new Error("Invalid product data in the cart.");
-      }
-      return item.products.map((product) => {
-        if (!product.name || !product.quantity || !product.price) {
-          throw new Error("Invalid product data in the cart.");
-        }
-        return {
-          productId:product.productId,
-          name: product.name,
-          quantity: product.quantity,
-          price: product.price,
-        };
-      });
-    });
+    const products = cartItems.flatMap((item) =>
+      item.products.map((product) => ({
+        productId: new mongoose.Types.ObjectId(product.product), 
+        name: product.name,
+        quantity: product.quantity,
+        price: product.price,
+      }))
+    );
 
     const newOrder = new Order({
       userId: req.user._id,
@@ -60,10 +54,10 @@ const placeOrder = async (req, res) => {
       products,
       total: totalAmount,
       paymentStatus: "Pending",
-
     });
 
     const savedOrder = await newOrder.save();
+
     const razorpayOrder = await razorpayInstance.orders.create({
       amount: totalAmount * 100,
       currency: "INR",
@@ -87,6 +81,7 @@ const placeOrder = async (req, res) => {
     res.status(500).send({ success: false, message: "Error placing order" });
   }
 };
+
 const handlePaymentSuccess = async (req, res) => {
   try {
     const { razorpay_payment_id, razorpay_order_id, razorpay_signature } = req.body;
@@ -119,7 +114,95 @@ const handlePaymentSuccess = async (req, res) => {
   }
 };
 
+const  getAllProductData  = async(req,res) => {
+  try {
+        const orderList = await Order.find().sort({ createdAt: -1 });
+        res.render("admin/order-list", { orderList });
+  } catch (error) {
+    res.status(500).json({ success: false , message:"error  data not found "})
+  }
+}
+ 
 
 
+const getorderDetails =  async(req,res)=>{
+  try {
+    const orderId = req.params.id;
 
-export { getOrderList, placeOrder, handlePaymentSuccess };
+    const orderDetails = await Order.aggregate([
+      { $match: { _id: new mongoose.Types.ObjectId(orderId) } },
+      { $unwind: "$products" },
+      {
+        $lookup: {
+          from: "products",
+          localField: "products.productId",
+          foreignField: "_id",
+          as: "productDetails",
+        },
+      },
+      { $unwind: { path: "$productDetails", preserveNullAndEmptyArrays: true } },
+      {
+        $project: {
+          _id: 1,
+          firstName: 1,
+          lastName: 1,
+          email: 1,
+          phone: 1,
+          address: 1,
+          postcode: 1,
+          country: 1,
+          total: 1,
+          paymentStatus: 1,
+          createdAt: 1,
+          "products.productId": 1,
+          "products.name": 1,
+          "products.quantity": 1,
+          "products.price": 1,
+          imageUrl: {
+            $arrayElemAt: ["$productDetails.imgUrls", 0], 
+          },
+        },
+      },
+      {
+        $group: {
+          _id: "$_id",
+          firstName: { $first: "$firstName" },
+          lastName: { $first: "$lastName" },
+          email: { $first: "$email" },
+          phone: { $first: "$phone" },
+          address: { $first: "$address" },
+          postcode: { $first: "$postcode" },
+          country: { $first: "$country" },
+          total: { $first: "$total" },
+          paymentStatus: { $first: "$paymentStatus" },
+          createdAt: { $first: "$createdAt" },
+          products: {
+            $push: {
+              productId: "$products.productId",
+              name: "$products.name",
+              quantity: "$products.quantity",
+              price: "$products.price",
+              imageUrl: {
+                $ifNull: ["$imageUrl", "/assets/images/no-image.jpg"], 
+              },
+            },
+          },
+        },
+      },
+    ]);
+
+    if (!orderDetails.length) {
+      return res.status(404).json({ message: "Order not found" });
+    }
+
+    res.render("admin/order-details", { order: orderDetails[0] });
+
+  } catch (error) {
+    console.error("Error fetching order details:", error);
+    res.status(500).json({ message: "Server error", error });
+  }
+
+}
+
+export { getOrderList, placeOrder, handlePaymentSuccess ,getAllProductData ,getorderDetails };
+

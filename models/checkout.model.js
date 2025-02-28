@@ -1,7 +1,7 @@
 import mongoose, { Schema } from "mongoose";
 
 const OrderSchema = new mongoose.Schema({
-  userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true }, // Add this
+  userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true }, 
   firstName: { type: String, required: true },
   lastName: { type: String, required: true },
   email: { type: String, required: true },
@@ -11,7 +11,7 @@ const OrderSchema = new mongoose.Schema({
   country: { type: String, required: true },
   products: [
     {
-      productId: { type: mongoose.Schema.Types.ObjectId, ref: "Product", require: true },
+      productId: { type: mongoose.Schema.Types.ObjectId, ref: "Product", required: true },
       name: { type: String, required: true },
       quantity: { type: Number, required: true },
       price: { type: Number, required: true },

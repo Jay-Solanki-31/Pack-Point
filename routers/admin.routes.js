@@ -2,6 +2,7 @@ import { Router } from "express";
 import { verifyJWT, verifyRole } from "../middleware/auth.middleware.js";
 import { redirectIfAuthenticated } from "../middleware/redirectIfAuthenticated.js";
 import { deleteUser, getRegisterUserData } from "../controllers/user.controller.js";
+import { getAllProductData, getorderDetails } from "../controllers/checkout.controller.js";
 
 export const router = Router();
 
@@ -19,10 +20,11 @@ router.get("/add-user", verifyJWT, verifyRole("admin"), (req, res) => {
 
 router.get("/user-list", verifyJWT, verifyRole("admin"), getRegisterUserData);
 
-// router.get("/product-details", verifyJWT, verifyRole("admin"), getRegisterUserData);
-
+router.get('/order-list',verifyJWT,verifyRole("admin"),getAllProductData)
 
 router.post("/delete-user", verifyJWT, verifyRole("admin"), deleteUser);
+
+router.get("/order-details/:id", getorderDetails);
 
 
 router.get("/profile", verifyJWT, verifyRole("admin"), async (req, res) => {
