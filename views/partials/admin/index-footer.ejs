@@ -30,6 +30,12 @@
 <!-- Sidebar jquery-->
 <script src="/js/sidebar-menu.js"></script>
 
+    <!-- Touchspin Js-->
+    <script src="/js/touchspin/vendors.min.js"></script>
+    <script src="/js/touchspin/touchspin.js"></script>
+    <script src="/js/touchspin/input-groups.min.js"></script>
+
+
 <!--dropzone js-->
 <script src="/js/dropzone/dropzone.js"></script>
 <script src="/js/dropzone/dropzone-script.js"></script>
@@ -90,12 +96,46 @@
 <script src="/js/lazysizes.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
 
 <!--script admin-->
 <script src="/js/admin-script.js"></script>
 
 
 <script>
+
+$(document).ready(function(){
+    var sync1 = $("#sync1");
+    var sync2 = $("#sync2");
+
+    sync1.owlCarousel({
+        items: 1,
+        nav: true,
+        dots: false,
+        loop: true,
+        responsiveRefreshRate: 200,
+    }).on('changed.owl.carousel', syncPosition);
+
+    sync2.owlCarousel({
+        items: 4,
+        margin: 10,
+        dots: false,
+        nav: false,
+        responsiveRefreshRate: 100,
+        center: true
+    }).on("click", ".item", function () {
+        var index = $(this).index();
+        sync1.trigger("to.owl.carousel", [index, 300, true]);
+    });
+
+    function syncPosition(el) {
+        var index = el.item.index;
+        sync2.find(".item").removeClass("active");
+        sync2.find(".item").eq(index).addClass("active");
+    }
+});
+
     document.getElementById("dropzoneTrigger").addEventListener("click", function () {
         document.getElementById("imageUpload").click();
     });

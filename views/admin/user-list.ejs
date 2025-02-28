@@ -1,0 +1,95 @@
+<%-include('../partials/admin/index-header.ejs') %>
+        <!-- Page Body Start-->
+        <div class="page-body-wrapper">
+<%-include('../partials/admin/index-sidebar.ejs') %>
+     <div class="page-body">
+                <!-- Container-fluid starts-->
+                <div class="container-fluid">
+                    <div class="page-header">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="page-header-left">
+                                    <h3>User List
+                                        <small>PACK POINT Admin panel</small>
+                                    </h3>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <ol class="breadcrumb pull-right">
+                                    <li class="breadcrumb-item">
+                                        <a href="/admin/dashboard">
+                                            <i data-feather="home"></i>
+                                        </a>
+                                    </li>
+                                    <li class="breadcrumb-item">Users</li>
+                                    <li class="breadcrumb-item active">User List</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Container-fluid Ends-->
+
+                <!-- Container-fluid starts-->
+                <div class="container-fluid">
+                    <div class="card">
+                        <div class="card-header">
+                            <form class="form-inline search-form search-box">
+                                <div class="form-group">
+                                    <input class="form-control-plaintext" type="search" placeholder="Search.."><span
+                                        class="d-sm-none mobile-search"><i data-feather="search"></i></span>
+                                </div>
+                            </form>
+
+                            <a href="/admin/add-user" class="btn btn-primary mt-md-0 mt-2">Create User</a>
+                        </div>
+
+                        <div class="card-body">
+                            <div class="table-responsive table-desi">
+                                <form id="deleteUsersForm" action="/admin/delete-user" method="POST">
+                                    <table class="all-package coupon-table media-table table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>
+                                                    <button type="submit" class="btn btn-primary delete-selected">Delete</button>
+                                                </th>
+                                                <th>User Name</th>
+                                                <th>Full Name</th>
+                                                <th>Email</th>
+                                                <th>Role</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <% users.forEach(user => { %>
+                                                <tr>
+                                                    <td><input type="checkbox" name="userIds[]" value="<%= user._id %>"></td>
+                                                    <td><%= user.username %></td>
+                                                    <td><%= user.fullName %></td>
+                                                    <td><%= user.email %></td>
+                                                    <td><%= user.userRole %></td>
+                                                </tr>
+                                            <% }) %>
+                                        </tbody>
+                                    </table>
+                                </form>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Container-fluid Ends-->
+            </div>
+
+            <script>
+                document.getElementById("deleteUsersForm").addEventListener("submit", function (event) {
+                const selectedUsers = document.querySelectorAll('input[name="userIds[]"]:checked');
+                if (selectedUsers.length === 0) {
+                    alert("Please select at least one user to delete.");
+                    event.preventDefault(); 
+                } else if (!confirm("Are you sure you want to delete the selected users?")) {
+                    event.preventDefault(); 
+                }
+            });
+            
+            </script>
+            <%-include('../partials/admin/index-footer.ejs') %>

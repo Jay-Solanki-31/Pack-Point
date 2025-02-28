@@ -1,0 +1,67 @@
+<%-include('../partials/admin/index-header.ejs') %>
+    <!-- Page Body Start-->
+    <div class="page-body-wrapper">
+        <%-include('../partials/admin/index-sidebar.ejs') %>
+            <div class="page-body">
+                <!-- Container-fluid starts-->
+                <div class="container-fluid">
+                    <div class="page-header">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="page-header-left">
+                                    <h3>Product Detail
+                                        <small>PACK POINT Admin panel</small>
+                                    </h3>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <ol class="breadcrumb pull-right">
+                                    <li class="breadcrumb-item">
+                                        <a href="/admin/dashboard">
+                                            <i data-feather="home"></i>
+                                        </a>
+                                    </li>
+                                    <li class="breadcrumb-item active">Product Detail</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Container-fluid Ends-->
+
+                <!-- Container-fluid starts-->
+                <div class="container-fluid">
+                    <div class="card">
+                        <div class="row product-page-main card-body">
+                            <div class="col-xl-4">
+                                <div class="product-slider owl-carousel owl-theme" id="sync1">
+                                    <% if (product.imgUrls && product.imgUrls.length) { %>
+                                        <% product.imgUrls.forEach(img => { %>                
+                                            <div class="item"><img src="<%= img %>" class="blur-up lazyloaded"></div>
+                                        <% }) %>
+                                    <% } %>
+                                </div>
+
+                                
+                            </div>
+                            <div class="col-xl-8">
+                                <div class="product-page-details product-right mb-0">
+                                    <h2><%= product.title%></h2>
+                                    <div class="rating">
+                                        <% for(let i = 0; i < product.rating; i++) { %>
+                                            <i class="icofont icofont-star" style="color: yellow !important;"></i>
+                                        <% } %>
+                                    </div>
+                                    <h6 class="product-title">product details</h6>
+                                    <p><%= product.description%></p>
+                                    <div class="product-price digits mt-2">
+                                        <h3>₹<%= product.price %></h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Container-fluid Ends-->
+            </div>
+            <%-include('../partials/admin/index-footer.ejs') %>

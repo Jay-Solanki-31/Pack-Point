@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { verifyJWT, verifyRole } from "../middleware/auth.middleware.js";
 import { redirectIfAuthenticated } from "../middleware/redirectIfAuthenticated.js";
+import { deleteUser, getRegisterUserData } from "../controllers/user.controller.js";
 
 export const router = Router();
 
@@ -12,9 +13,16 @@ router.get("/dashboard", verifyJWT, verifyRole("admin"), (req, res) => {
     res.render("admin/dashboard");
 });
 
-router.get("/users", verifyJWT, verifyRole("admin"), (req, res) => {
-    res.render("admin/users");
+router.get("/add-user", verifyJWT, verifyRole("admin"), (req, res) => {
+    res.render("admin/add-user");
 });
+
+router.get("/user-list", verifyJWT, verifyRole("admin"), getRegisterUserData);
+
+// router.get("/product-details", verifyJWT, verifyRole("admin"), getRegisterUserData);
+
+
+router.post("/delete-user", verifyJWT, verifyRole("admin"), deleteUser);
 
 
 router.get("/profile", verifyJWT, verifyRole("admin"), async (req, res) => {

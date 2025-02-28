@@ -1,5 +1,6 @@
 import { Product } from "../models/product.model.js";
 import { Order } from "../models/checkout.model.js";
+import { User } from "../models/user.model.js";
  const getProducts = async (req, res) => {
     try {
         const products = await Product.find().limit(8); 
@@ -40,12 +41,10 @@ const getUserOrderData = async (req, res) => {
     try {
         if (!req.user) return res.redirect("/user/login");
 
-        // Fetch orders using userId instead of email
         const getOrderList = await Order.find({ userId: req.user._id });
 
-        console.log("Fetched Orders:", getOrderList); // Debugging step
+        // console.log("Fetched Orders:", getOrderList); 
 
-        // Ensure orders is always passed, even if empty
         res.render("user/user-profile", { orders: getOrderList || [] });
     } catch (error) {
         console.error("Error fetching user orders:", error);
@@ -53,4 +52,37 @@ const getUserOrderData = async (req, res) => {
     }
 };
 
-export {getProducts , getAllProducts,getUserOrderData}
+
+
+const getRegisterUserData = async (req, res) => {
+    try {
+        const users = await User.find({ userRole: "user" }); 
+        // console.log(users); 
+        
+        res.render("admin/user-list", { users });
+    } catch (error) {
+        console.error("Error while fetching user data:", error);
+        res.status(500).send({ success: false, message: "Error fetching user data" });
+    }
+};
+
+const deleteUser = async (req, res) => {
+    try {
+        const userIds = req.body.userIds; 
+        console.log(userIds);
+        
+        if (!userIds || userIds.length === 0) {
+            return res.status(400).send({ success: false, message: "No users selected for deletion" });
+        }
+
+        await User.deleteMany({ _id: { $in: userIds } }); 
+
+        res.redirect("/admin/user-list");
+    } catch (error) {
+        console.error("Error while deleting users:", error);
+        res.status(500).send({ success: false, message: "Error deleting users" });
+    }
+};
+
+
+export {getProducts , getAllProducts,getUserOrderData, getRegisterUserData, deleteUser}

@@ -1,0 +1,102 @@
+<%- include('../partials/admin/index-header.ejs') %>
+    <!-- Page Body Start-->
+    <div class="page-body-wrapper">
+
+        <%-include('../partials/admin/index-sidebar.ejs') %>
+
+
+
+            <div class="page-body">
+                <!-- Container-fluid starts-->
+                <div class="container-fluid">
+                    <div class="page-header">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="page-header-left">
+                                    <h3>Create User
+                                        <small>PACK POINT Admin panel</small>
+                                    </h3>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <ol class="breadcrumb pull-right">
+                                    <li class="breadcrumb-item">
+                                        <a href="/admin/dashboard">
+                                            <i data-feather="home"></i>
+                                        </a>
+                                    </li>
+                                    <li class="breadcrumb-item">Users </li>
+                                    <li class="breadcrumb-item active">Create User </li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Container-fluid Ends-->
+
+                <!-- Container-fluid starts-->
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="card tab2-card">
+                                <div class="card-body">
+                                    <ul class="nav nav-tabs tab-coupon" id="myTab" role="tablist">
+                                        <li class="nav-item"><a class="nav-link active show" id="account-tab"
+                                                data-bs-toggle="tab" href="#account" role="tab" aria-controls="account"
+                                                aria-selected="true" data-original-title="" title="">Account</a></li>
+                                      
+                                    </ul>
+                                    <div class="tab-content" id="myTabContent">
+                                        <div class="tab-pane fade active show" id="account" role="tabpanel"
+                                            aria-labelledby="account-tab">
+                                            <form class="needs-validation user-add" action="/auth/register" method="post">
+                                                <h4>Account Details</h4>
+                                            
+                                                <div class="form-group row">
+                                                    <label for="validationCustom0" class="col-xl-3 col-md-4"><span>*</span> Full Name</label>
+                                                    <div class="col-xl-8 col-md-7">
+                                                        <input class="form-control" name="fullName" id="validationCustom0" type="text" required>
+                                                    </div>
+                                                </div>
+                                            
+                                                <div class="form-group row">
+                                                    <label for="validationCustom1" class="col-xl-3 col-md-4"><span>*</span> User Name</label>
+                                                    <div class="col-xl-8 col-md-7">
+                                                        <input class="form-control" name="username" id="validationCustom1" type="text" required>
+                                                    </div>
+                                                </div>
+                                            
+                                                <div class="form-group row">
+                                                    <label for="validationCustom2" class="col-xl-3 col-md-4"><span>*</span> Email</label>
+                                                    <div class="col-xl-8 col-md-7">
+                                                        <input class="form-control" name="email" id="validationCustom2" type="email" required>
+                                                    </div>
+                                                </div>
+                                            
+                                                <div class="form-group row">
+                                                    <label for="validationCustom3" class="col-xl-3 col-md-4"><span>*</span> Password</label>
+                                                    <div class="col-xl-8 col-md-7">
+                                                        <input class="form-control" id="validationCustom3" type="password" name="password" required>
+                                                    </div>
+                                                </div>
+                                            
+                                                
+                                            
+                                                <div class="pull-right">
+                                                    <input class="btn btn-primary" type="submit" value="Submit">
+                                                </div>
+                                            </form>                                            
+                                        </div>                                  
+
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Container-fluid Ends-->
+            </div>
+
+            <%- include('../partials/admin/index-footer') %>

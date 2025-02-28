@@ -12659,3 +12659,17 @@ body.rtl .table-category tbody tr td:first-child {
   }
 }
 /*# sourceMappingURL=style.css.map */
+
+
+#sync2 .item img {
+  width: 80px; /* Adjust size as needed */
+  height: 80px;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: border 0.3s ease-in-out;
+}
+
+#sync2 .item img:hover,
+#sync2 .item.active img {
+  border: 2px solid #007bff; /* Highlight effect */
+}
