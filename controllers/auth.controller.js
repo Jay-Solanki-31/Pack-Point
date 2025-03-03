@@ -24,7 +24,7 @@ const registerUser = asyncHandler(async (req, res) => {
     })
 
     if (existedUser) {
-        req.session.toastMessage = {type:error, text:"User AlreadyExists"}
+        req.session.toastMessage = {type:"error", text:"User AlreadyExists"}
         if (user.userRole === "admin") {
             return res.redirect("/admin");
         } else {

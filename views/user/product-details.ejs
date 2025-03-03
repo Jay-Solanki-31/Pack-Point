@@ -1,129 +1,137 @@
 <%- include('../partials/header') %>
 
-    <main>
+<main>
 
-        <!-- page title area start -->
-        <section class="page__title p-relative d-flex align-items-center"
+    <!-- page title area start -->
+    <section class="page__title p-relative d-flex align-items-center"
         data-background="/assets/img/slider/index-slider.jpg">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="page__title-inner text-center">
+                        <h1>Product Details</h1>
+                        <div class="page__title-breadcrumb">
+                            <nav aria-label="breadcrumb">
+                                <ol class="breadcrumb justify-content-center">
+                                    <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                                    <li class="breadcrumb-item active" aria-current="page"> Product details</li>
+                                </ol>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- page title area end -->
+
+    <section class="shop__area pb-65">
+        <div class="shop__top grey-bg-6 pt-100 pb-90">
             <div class="container">
                 <div class="row">
-                    <div class="col-xl-12">
-                        <div class="page__title-inner text-center">
-                            <h1>Product Details</h1>
-                            <div class="page__title-breadcrumb">
-                                <nav aria-label="breadcrumb">
-                                    <ol class="breadcrumb justify-content-center">
-                                        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                                        <li class="breadcrumb-item active" aria-current="page"> Product details</li>
-                                    </ol>
-                                </nav>
-                            </div>
+                    <!-- Thumbnail Images -->
+                    <div class="col-xl-2 col-lg-2">
+                        <div class="product__modal-nav mr-20">
+                            <nav>
+                                <div class="nav nav-tabs" id="product-details" role="tablist">
+                                    <% if (Array.isArray(product.imgUrls) && product.imgUrls.length) { %>
+                                        <% product.imgUrls.forEach((url, index) => { %>
+                                            <a class="nav-item nav-link <%= index === 0 ? 'active' : '' %>"
+                                                id="pro-<%= index %>-tab"
+                                                data-toggle="tab"
+                                                href="#pro-<%= index %>"
+                                                role="tab"
+                                                aria-controls="pro-<%= index %>"
+                                                aria-selected="<%= index === 0 %>">
+                                                <div class="product__nav-img w-img">
+                                                    <img src="<%= url %>"
+                                                        alt="Thumbnail <%= index + 1 %>"
+                                                        style="width: 100px; height: 100px; object-fit: cover;" />
+                                                </div>
+                                            </a>
+                                        <% }) %>
+                                    <% } else { %>
+                                        <p>No images available</p>
+                                    <% } %>
+                                </div>
+                            </nav>
                         </div>
                     </div>
-                </div>
-            </div>
-        </section>
-        <!-- page title area end -->
 
-
-        <section class="shop__area pb-65">
-            <div class="shop__top grey-bg-6 pt-100 pb-90">
-              <div class="container">
-                <div class="row">
-                  <div class="col-xl-2 col-lg-2">
-                    <div class="product__modal-nav mr-20">
-                      <nav>
-                        <div class="nav nav-tabs" id="product-details" role="tablist">
-                          <% product.imgUrls.forEach((url, index) => { %>
-                            <a
-                              class="nav-item nav-link <%= index === 0 ? 'active' : '' %>"
-                              id="pro-<%= index %>-tab"
-                              data-toggle="tab"
-                              href="#pro-<%= index %>"
-                              role="tab"
-                              aria-controls="pro-<%= index %>"
-                              aria-selected="<%= index === 0 %>"
-                            >
-                              <div class="product__nav-img w-img">
-                                <img
-                                  src="<%= url %>"
-                                  alt="Thumbnail <%= index + 1 %>"
-                                  style="width: 100px; height: 100px; object-fit: cover;"
-                                />
-                              </div>
-                            </a>
-                          <% }) %>
-                        </div>
-                      </nav>
-                    </div>
-                  </div>
-          
-                  <div class="col-xl-4 col-lg-4">
-                    <div class="tab-content mb-20" id="product-detailsContent">
-                      <% product.imgUrls.forEach((url, index) => { %>
-                        <div
-                          class="tab-pane fade <%= index === 0 ? 'show active' : '' %>"
-                          id="pro-<%= index %>"
-                          role="tabpanel"
-                          aria-labelledby="pro-<%= index %>-tab"
-                        >
-                          <div class="product__modal-img product__thumb w-img">
-                            <img
-                              src="<%= url %>"
-                              alt="Large Image <%= index + 1 %>"
-                              style="width: 100%; height: auto; border-radius: 5px;"
-                            />
-                            <% if (index === 0) { %>
-                              <div class="product__sale">
-                                <span class="new">new</span>
-                                <span class="percent">-16%</span>
-                              </div>
+                    <!-- Main Product Image -->
+                    <div class="col-xl-4 col-lg-4">
+                        <div class="tab-content mb-20" id="product-detailsContent">
+                            <% if (Array.isArray(product.imgUrls) && product.imgUrls.length) { %>
+                                <% product.imgUrls.forEach((url, index) => { %>
+                                    <div class="tab-pane fade <%= index === 0 ? 'show active' : '' %>"
+                                        id="pro-<%= index %>"
+                                        role="tabpanel"
+                                        aria-labelledby="pro-<%= index %>-tab">
+                                        <div class="product__modal-img product__thumb w-img">
+                                            <img src="<%= url %>"
+                                                alt="Large Image <%= index + 1 %>"
+                                                style="width: 100%; height: auto; border-radius: 5px;" />
+                                            <% if (index === 0) { %>
+                                                <div class="product__sale">
+                                                    <span class="new">new</span>
+                                                    <span class="percent">-16%</span>
+                                                </div>
+                                            <% } %>
+                                        </div>
+                                    </div>
+                                <% }) %>
                             <% } %>
-                          </div>
                         </div>
-                      <% }) %>
                     </div>
-                  </div>
-          
-                  <div class="col-xl-6 col-lg-6">
-                    <div class="product__modal-content product__modal-content-2">
-                      <h4><%= product.title %></h4>
-          
-                      <div class="rating rating-shop mb-15">
-                        <ul>
-                          <% for (let i = 1; i <= 5; i++) { %>
-                            <li>
-                              <span>
-                                <i class="fa<%= i <= product.rating ? 's' : '1' %> fa-star"></i>
-                              </span>
-                            </li>
-                          <% } %>
-                        </ul>
-                        <span class="rating-no ml-10 rating-left"><%= product.rating %> rating(s)</span>
-                        <span class="review rating-left"><a href="#">Add your Review</a></span>
-                      </div>
-          
-                      <div class="product__price-2 mb-25">
-                        <span>₹<%= product.price %></span>
-                      </div>
-          
-                      <div class="product__modal-des mb-30">
-                        <p><%= product. %></p>
-                      </div>
-                      <div class="pro-cart-btn ml-20">
-                        <a href="/cart/add/<%= product._id %>"class="add-cart-btn mr-10">+ Add to Cart</a>
+
+                    <!-- Product Details -->
+                    <div class="col-xl-6 col-lg-6">
+                        <div class="product__modal-content product__modal-content-2">
+                            <h4><%= product.title %></h4>
+
+                            <!-- Product Rating -->
+                            <div class="rating rating-shop mb-15">
+                                <ul>
+                                    <% for (let i = 1; i <= 5; i++) { %>
+                                        <li>
+                                            <span>
+                                                <i class="fa<%= i <= product.rating ? 's' : 'r' %> fa-star"></i>
+                                            </span>
+                                        </li>
+                                    <% } %>
+                                </ul>
+                                <span class="rating-no ml-10 rating-left">
+                                    <%= product.rating %> rating(s)
+                                </span>
+                                <span class="review rating-left">
+                                    <a href="#">Add your Review</a>
+                                </span>
+                            </div>
+
+                            <!-- Product Price -->
+                            <div class="product__price-2 mb-25">
+                                <span>₹<%= product.price %></span>
+                            </div>
+
+                            <!-- Product Description -->
+                            <div class="product__modal-des mb-30">
+                                <p><%= product.description %></p>
+                            </div>
+
+                            <!-- Add to Cart Button -->
+                            <div class="pro-cart-btn ml-20">
+                                <a href="/cart/add/<%= product._id %>" class="add-cart-btn mr-10">
+                                    + Add to Cart
+                                </a>
+                            </div>
+
+                        </div>
                     </div>
-                    </div>
-                  </div>
                 </div>
-              </div>
             </div>
-            
-          </section>
-          
-      
+        </div>
+    </section>
 
-       
-    </main>
+</main>
 
-    <%- include('../partials/footer') %>
+<%- include('../partials/footer') %>
