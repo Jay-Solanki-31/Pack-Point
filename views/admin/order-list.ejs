@@ -35,11 +35,16 @@
                         <div class="col-sm-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <form class="form-inline search-form search-box">
+                                    <form class="form-inline search-form search-box" action="search" method="get">
                                         <div class="form-group">
-                                            <input class="form-control-plaintext" type="search" placeholder="Search..">
+                                            <input class="form-control" type="search" name="search" 
+                                                   placeholder="Search by Name...">
+                                            <button type="submit" class="btn btn-primary">Search</button>
                                         </div>
                                     </form>
+                                                                        
+                                    
+                                    
                                 </div>
                                 <div class="card-body">
                                     <div class="table-responsive table-desi">
@@ -54,24 +59,30 @@
                                                     <th>Details</th>
                                                 </tr>
                                             </thead>
-
                                             <tbody>
+                                                <% if (orderList.length > 0) { %>
                                                     <% orderList.forEach(order => { %>
-                                                <tr>
-                                                    <td><%= order.firstName  %></td>
-                                                    <td><%= order._id %></td>
-                                                    <td><span><%= new Date(order.createdAt).toDateString() %></span></td>
-                                                    <td class="order-success">
-                                                        <span><%= order.paymentStatus %></span>
-                                                    </td>
-                                                    <td ><%= order.total %></td>
-                                                    <td>
-                                                        <a href="/admin/order-details/<%= order._id %>" class="btn btn-primary">Details</a>
-                                                    </td>
-                                                </tr>
-                                                <% }) %>
-
+                                                        <tr>
+                                                            <td><%= order.firstName  %></td>
+                                                            <td><%= order._id %></td>
+                                                            <td><span><%= new Date(order.createdAt).toDateString() %></span></td>
+                                                            <td class="order-success">
+                                                                <span><%= order.paymentStatus %></span>
+                                                            </td>
+                                                            <td><%= order.total %></td>
+                                                            <td>
+                                                                <a href="/admin/order-details/<%= order._id %>" class="btn btn-primary">Details</a>
+                                                            </td>
+                                                        </tr>
+                                                    <% }) %>
+                                                <% } else { %>
+                                                    <tr>
+                                                        <td colspan="6" class="text-center">No Orders Found</td>
+                                                    </tr>
+                                                <% } %>
                                             </tbody>
+                                    
+                                            
                                         </table>
                                     </div>
                                 </div>

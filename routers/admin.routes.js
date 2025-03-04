@@ -2,17 +2,23 @@ import { Router } from "express";
 import { verifyJWT, verifyRole } from "../middleware/auth.middleware.js";
 import { redirectIfAuthenticated } from "../middleware/redirectIfAuthenticated.js";
 import { deleteUser, getRegisterUserData } from "../controllers/user.controller.js";
-import { getAllProductData, getorderDetails } from "../controllers/checkout.controller.js";
+import { getAllProductData, getorderDetails, latestOrder, TotalOrder, TotalProduct, TotalUser,  } from "../controllers/checkout.controller.js";
+import { Order } from "../models/checkout.model.js";
 
 export const router = Router();
+
 
 router.get("/", redirectIfAuthenticated, (req, res) => {
     res.render("admin/login");
 });
 
-router.get("/dashboard", verifyJWT, verifyRole("admin"), (req, res) => {
-    res.render("admin/dashboard");
-});
+router.get("/dashboard", verifyJWT, verifyRole("admin"), 
+TotalUser,
+TotalProduct,
+TotalOrder,
+latestOrder,
+);
+
 
 router.get("/add-user", verifyJWT, verifyRole("admin"), (req, res) => {
     res.render("admin/add-user");
@@ -38,6 +44,8 @@ router.get("/profile", verifyJWT, verifyRole("admin"), async (req, res) => {
         res.status(500).send("Server Error");
     }
 });
+
+
 
 
 router.get("/logout", verifyJWT, (req, res) => {

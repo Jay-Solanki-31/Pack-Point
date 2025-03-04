@@ -43,13 +43,12 @@
                                         <div class="icons-widgets">
                                             <div class="align-self-center text-center">
                                                 <i data-feather="navigation" class="font-warning"></i>
+                                                
                                             </div>
                                         </div>
                                         <div class="media-body media-doller">
                                             <span class="m-0">Earnings</span>
-                                            <h3 class="mb-0">$ <span class="counter">6659</span><small> This
-                                                    Month</small>
-                                            </h3>
+                                            <h3 class="mb-0">₹ <span class="counter"><%= total %></span><small> This Month</small></h3>
                                         </div>
                                     </div>
                                 </div>
@@ -61,14 +60,29 @@
                                     <div class="media static-top-widget align-items-center">
                                         <div class="icons-widgets">
                                             <div class="align-self-center text-center">
-                                                <i data-feather="box" class="font-secondary"></i>
+                                                <i data-feather="package" class="font-secondary"></i>
                                             </div>
                                         </div>
                                         <div class="media-body media-doller">
                                             <span class="m-0">Products</span>
-                                            <h3 class="mb-0">$ <span class="counter">9856</span><small> This
-                                                    Month</small>
+                                            <h3 class="mb-0"> <span class="counter"><%= product %></span><small> Total 
+                                                Product    </small>
                                             </h3>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xxl-3 col-md-6 xl-50">
+                            <div class="card o-hidden">
+                                <div class="primary-box card-body">
+                                    <div class="media static-top-widget align-items-center">
+                                        <div class="icons-widgets">
+                                            <div class="align-self-center text-center"><i data-feather="users"
+                                                    class="font-primary"></i></div>
+                                        </div>
+                                        <div class="media-body media-doller"><span class="m-0">User</span>
+                                            <h3 class="mb-0"> <span class="counter"><%= User %></span><small> No of User</small></h3>
                                         </div>
                                     </div>
                                 </div>
@@ -82,8 +96,8 @@
                                             <div class="align-self-center text-center"><i data-feather="message-square"
                                                     class="font-primary"></i></div>
                                         </div>
-                                        <div class="media-body media-doller"><span class="m-0">Messages</span>
-                                            <h3 class="mb-0">$ <span class="counter">893</span><small> This
+                                        <div class="media-body media-doller"><span class="m-0">Orders</span>
+                                            <h3 class="mb-0"> <span class="counter"><%= totalOrder %></span><small> This
                                                     Month</small></h3>
                                         </div>
                                     </div>
@@ -99,7 +113,6 @@
                                     <div class="card-header-right">
                                         <ul class="list-unstyled card-option">
                                             <li><i class="icofont icofont-simple-left"></i></li>
-                                            <li><i class="view-html fa fa-code"></i></li>
                                             <li><i class="icofont icofont-maximize full-card"></i></li>
                                             <li><i class="icofont icofont-minus minimize-card"></i></li>
                                             <li><i class="icofont icofont-refresh reload-card"></i></li>
@@ -113,42 +126,22 @@
                                             <thead>
                                                 <tr>
                                                     <th scope="col">Order ID</th>
+                                                    <th scope="col">User Name </th>
                                                     <th scope="col">Order Total</th>
-                                                    <th scope="col">Payment Method</th>
-                                                    <th scope="col">Status</th>
+                                                    <th scope="col">Payment Status</th>
+                                                    <!-- <th scope="col">U</th> -->
                                                 </tr>
                                             </thead>
                                             <tbody>
+                                                <% order.forEach(Order => { %>
+                                                
                                                 <tr>
-                                                    <td>1</td>
-                                                    <td class="digits">$120.00</td>
-                                                    <td class="font-danger">Bank Transfers</td>
-                                                    <td class="digits">On Way</td>
+                                                    <td><%= Order._id  %> </td>
+                                                    <td><%= Order.firstName %></td>
+                                                    <td class="digits">₹<%= Order.total %></td>
+                                                    <td class="font-danger"><%= Order.paymentStatus %></td>
                                                 </tr>
-                                                <tr>
-                                                    <td>2</td>
-                                                    <td class="digits">$90.00</td>
-                                                    <td class="font-secondary">Ewallets</td>
-                                                    <td class="digits">Delivered</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>3</td>
-                                                    <td class="digits">$240.00</td>
-                                                    <td class="font-warning">Cash</td>
-                                                    <td class="digits">Delivered</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>4</td>
-                                                    <td class="digits">$120.00</td>
-                                                    <td class="font-primary">Direct Deposit</td>
-                                                    <td class="digits">$6523</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>5</td>
-                                                    <td class="digits">$50.00</td>
-                                                    <td class="font-primary">Bank Transfers</td>
-                                                    <td class="digits">Delivered</td>
-                                                </tr>
+                                                <% }) %>
                                             </tbody>
                                         </table>
                                         <a href="/admin/order-list" class="btn btn-primary mt-4">View All Orders</a>

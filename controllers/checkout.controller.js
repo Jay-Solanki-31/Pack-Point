@@ -1,5 +1,7 @@
 import { Cart } from "../models/cart.model.js";
 import { Order } from "../models/checkout.model.js";
+import { Product } from "../models/product.model.js";
+import { User } from "../models/user.model.js";
 import Razorpay from "razorpay";
 import crypto from "crypto";
 import { mongoose } from "mongoose";
@@ -204,5 +206,93 @@ const getorderDetails =  async(req,res)=>{
 
 }
 
-export { getOrderList, placeOrder, handlePaymentSuccess ,getAllProductData ,getorderDetails };
+
+
+// get latest order
+const latestOrder = async (req, res, next) => {
+  try {
+    const order = await Order.find({}).limit(5);
+
+    res.render("admin/dashboard", { 
+      order, 
+      total: req.total, 
+      product: req.product,
+      totalOrder: req.totalOrder,
+      User:req.User,
+    });
+  } catch (error) {
+    console.error("Error fetching order details:", error);
+    res.status(500).json({ message: "Server error", error });
+  }
+};
+
+
+
+const TotalOrder = async (req, res, next) => {
+  try {
+    const total = await Order.aggregate([
+      {
+        $group: {
+          _id: null,
+          total: { $sum: "$total" },
+          totalOrder: { $sum: 1 },
+        },
+
+      },
+    ]);
+
+    // console.log(TotalOrder);
+    
+
+    req.total = total.length > 0 ? total[0].total : 0; 
+    req.totalOrder = total.length > 0 ? total[0].totalOrder : 0;
+
+    next();
+  } catch (error) {
+    console.error("Error fetching total order details:", error);
+    res.status(500).json({ message: "Server error", error });
+  }
+};
+
+
+const TotalProduct = async (req, res, next) => {
+  try {
+    const productCount = await Product.countDocuments(); 
+    req.product = productCount; 
+
+    // console.log(req.product); 
+
+    next(); 
+  } catch (error) {
+    console.error("Error fetching total product count:", error);
+    res.status(500).json({ message: "Server error", error });
+  }
+};
+
+const TotalUser = async(req,res,next) =>{
+  try {
+    // console.log('total user is running');
+    
+      const userCount = await User.countDocuments({ userRole: "user" }); 
+      // console.log( typeof userCount ,userCount);
+      req.User = userCount; 
+      next();
+    
+  } catch (error) {
+    console.error("Error fetching total product count:", error);
+    res.status(500).json({ message: "Server error", error });
+  }
+}
+
+
+export { getOrderList,
+  placeOrder,
+  handlePaymentSuccess,
+  getAllProductData,
+  getorderDetails,
+  latestOrder,
+  TotalOrder,
+  TotalProduct,
+  TotalUser
+  };
 

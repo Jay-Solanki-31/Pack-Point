@@ -6,6 +6,8 @@ import { User } from "../models/user.model.js";
 // Middleware to verify JWT token
 export const verifyJWT = asyncHandler(async (req, res, next) => {
     try {
+        // console.log('verify jwt is running.....');
+        
         const token = req.cookies?.accessToken || req.header("Authorization")?.replace("Bearer ", "");
 
         if (!token) {
@@ -34,6 +36,9 @@ export const verifyJWT = asyncHandler(async (req, res, next) => {
 
 // Middleware to verify user role
 export const verifyRole = (role) => (req, res, next) => {
+    // console.log('verify role is running.....');
+    
+    
     if (!req.user) {
         return res.redirect("/admin"); 
     }
