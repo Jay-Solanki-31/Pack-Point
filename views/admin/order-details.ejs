@@ -41,6 +41,7 @@
                                                 <div class="card-details-title">
                                                     <h3>Order Number <span><%= order._id %></span></h3>
                                                 </div>
+                                                
                                                 <div class="table-responsive table-details">
                                                     <table class="table cart-table table-borderless">
                                                         <thead>
@@ -107,6 +108,12 @@
 
                                             <div class="col-xl-4">
                                                 <div class="row g-4">
+                                                    <div class="text-center mt-3">
+                                                        <a href="/checkout/order/<%= order._id %>/generate-report" target="_blank" class="btn btn-primary">
+                                                            <i class="fa fa-file-pdf"></i> Generate Report
+                                                        </a>
+                                                        
+                                                    </div>
                                                     <div class="col-12">
                                                         <div class="order-success">
                                                             <h4>summery</h4>
