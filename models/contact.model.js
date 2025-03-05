@@ -2,7 +2,7 @@ import mongoose, {Schema} from "mongoose";
 
 
 const ContactSchema = new mongoose.Schema({
-    username:{
+    name:{
         type:String,
     },
     email:{
@@ -13,7 +13,11 @@ const ContactSchema = new mongoose.Schema({
     },
     message:{
         type:String
+    },
+    Phone:{
+        type:Number
     }
+
 }, {timestamps:true});
 
 export const Contact = mongoose.model('Contact', ContactSchema);

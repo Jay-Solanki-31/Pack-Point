@@ -85,20 +85,25 @@ router.post("/delete-image", verifyJWT, verifyRole("admin"), async (req, res) =>
     }
 });
 
-
 router.get("/product-details/:id", async (req, res) => {
     try {
         const product = await Product.findById(req.params.id);
-        if(req.user.userRole == 'admin'){
-        res.render('admin/product-details', { product });
+        if (!product) {
+            return res.status(404).json({ message: "Product not found" });
         }
-        else{
-            res.render('user/product-details', { product });
+
+        let view = "user/product-details";
+
+        if (req.user && req.user.userRole === "admin") {
+            view = "admin/product-details";
         }
+
+        res.render(view, { product });
+
     } catch (error) {
         res.status(500).json({ message: "Server error", error });
     }
-  });
+});
 
 
 // search product based on title and get all data and send to product-details page with prodduct id

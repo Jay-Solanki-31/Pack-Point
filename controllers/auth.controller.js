@@ -11,11 +11,7 @@ const registerUser = asyncHandler(async (req, res) => {
 
     if ([fullName, email, username, password].some((field) => field?.trim() === "")) {
         req.session.toastMessage = { type: "error", text: "All Fields Require" };
-        if (user.userRole === "admin") {
-            return res.redirect("/admin");
-        } else {
-            return res.redirect("/user/login");
-        }
+        return res.redirect("/user/login");
     }
 
     const existedUser = await User.findOne({
@@ -24,12 +20,8 @@ const registerUser = asyncHandler(async (req, res) => {
     })
 
     if (existedUser) {
-        req.session.toastMessage = {type:"error", text:"User AlreadyExists"}
-        if (user.userRole === "admin") {
-            return res.redirect("/admin");
-        } else {
-            return res.redirect("/user/login");
-        }
+        req.session.toastMessage = { type: "error", text: "User AlreadyExists" }
+        return res.redirect("/user/login");
     }
     //console.log(req.files);
 
@@ -48,15 +40,9 @@ const registerUser = asyncHandler(async (req, res) => {
     if (!createdUser) {
         req.session.toastMessage = { type: "error", text: "User not Created" };
     }
-
-    if (user.userRole === "admin") {
-        req.session.toastMessage = { type: "success", text: "Admin Registered" };
-        return res.redirect("/admin");
-    } else {
-        req.session.toastMessage = { type: "success", text: "User Registered" };
-        return res.redirect("/user/login");
-    }
-})
+    req.session.toastMessage = { type: "success", text: "User Registered" };
+    return res.redirect("/user/login");
+});
 
 const loginUser = asyncHandler(async (req, res) => {
     const { email, username, password } = req.body;
@@ -244,7 +230,7 @@ const changeCurrentPassword = asyncHandler(async (req, res) => {
 
     const user = await User.findById(req.user?._id)
     // console.log(user);
-    
+
     const isPasswordCorrect = await user.isPasswordCorrect(oldPassword)
 
     if (!isPasswordCorrect) {
@@ -275,7 +261,7 @@ const getCurrentUser = asyncHandler(async (req, res) => {
 })
 
 const updateAccountDetails = asyncHandler(async (req, res) => {
-    const { fullName, email,username,phone,address } = req.body;
+    const { fullName, email, username, phone, address } = req.body;
 
     // if (!fullName && !email ) {
     //     throw new ApiError(400, "At least one field (fullName or email) must be provided");

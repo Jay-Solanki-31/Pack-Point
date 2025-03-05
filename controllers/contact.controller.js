@@ -3,25 +3,33 @@ import { Contact  } from "../models/contact.model.js";
 const getconatct  = async (req, res) => {
     try {
         const  contact = await Contact.find();        
-        res.render("user/contact", { contact });
+        res.render("admin/contact-list", { contact });
     } catch (error) {
         console.error("Error fetching contact:", error);
-        res.redirect("/admin/contact");
     }
 };
 // add data to conatct
 const Addcontact = async (req, res) => {
     try {
     
-         const  {name,email,subject,message} = req.body
-         console.log(req.body);
+         const  {name,email,subject,message,Phone} = req.body
+        //  console.log(req.body);
+
+        if (!name || !email || !subject || !message || !Phone) {
+            req.session.toastMessage = { type: "error", text: "All Fields Require" };
+            return res.redirect("/contact");
+        }
+
+
 
         const data = await Contact.create({
-            name,
+            name ,
             email,
+            Phone,
             subject,
-            message
-        })
+            message,
+        });
+        // console.log('stored data' , data)
         if(!data){
         req.session.toastMessage = { type: "success", text: "error while contact" };
         }
