@@ -1,7 +1,5 @@
 import { Product } from "../models/product.model.js";
-import { asyncHandler } from "../utils/asyncHandler.js";
-import { ApiError } from "../utils/ApiError.js";
-import { render } from "ejs";
+
 
 
 const addProductController = async (req, res) => {

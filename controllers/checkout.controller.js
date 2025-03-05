@@ -118,9 +118,19 @@ const handlePaymentSuccess = async (req, res) => {
 
 const  getAllProductData  = async(req,res) => {
   try {
-        const orderList = await Order.find().sort({ createdAt: -1 });
-        res.render("admin/order-list", { orderList });
-  } catch (error) {
+    const search = req.query.search || ""; 
+
+    let orderList;
+    if (search.trim() !== "") {
+      orderList = await Order.find({
+        firstName: { $regex: search, $options: "i" }
+      }).sort({ createdAt: -1 });
+    } else {
+      orderList = await Order.find().sort({ createdAt: -1 }); 
+    }
+
+    res.render("admin/order-list", { orderList });
+  }  catch (error) {
     res.status(500).json({ success: false , message:"error  data not found "})
   }
 }
