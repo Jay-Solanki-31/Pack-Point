@@ -3,6 +3,7 @@ import { Order } from "../models/checkout.model.js";
 import { Product } from "../models/product.model.js";
 import { User } from "../models/user.model.js";
 import Razorpay from "razorpay";
+import path from "path";
 import crypto from "crypto";
 import PDFDocument from "pdfkit";
 import fs from "fs";
@@ -297,99 +298,108 @@ const TotalUser = async (req, res, next) => {
 }
 
 
-
 const generateOrderReport = async (req, res) => {
   try {
-    const orderId = req.params.orderId;
+    const { orderId } = req.params;
     const order = await Order.findById(orderId);
 
     if (!order) {
-        return res.status(404).send("Order not found");
+      return res.status(404).json({ message: "Order not found" });
     }
 
-    // Set response headers to open PDF in a new tab
-    res.setHeader("Content-Disposition", `inline; filename=Order_${orderId}.pdf`);
-    res.setHeader("Content-Type", "application/pdf");
-
-    // Create PDF Document
-    const doc = new PDFDocument({ margin: 50 });
-    doc.pipe(res);
-
-    // **Header: PACK POINT**
-    doc.fontSize(24).fillColor("blue").text("PACK POINT", { align: "center" });
-    doc.moveDown(2);
-
-    // **Order Report Title**
-    doc.fontSize(20).fillColor("black").text("Order Report", { align: "center", underline: true });
-    doc.moveDown(2);
-
-    // **Order Details (Now in a Separate Row)**
-    doc.fontSize(14).text(`Order ID: ${order._id}`);
-    doc.text(`Order Date: ${new Date(order.createdAt).toDateString()}`);
-    doc.text(`Customer: ${order.firstName} ${order.lastName}`);
-    doc.text(`Phone: ${order.phone} `);
-    doc.moveDown();
-
-    // **Create Table for Products**
-    const tableTop = doc.y; // Track starting position
-    const itemX = 50;
-    const qtyX = 250;
-    const priceX = 350;
-    const totalX = 450;
-    const paymentX = 330;
-
-    // **Table Headers**
-    doc.fontSize(14).text("Product", itemX, tableTop, { bold: true });
-    doc.text("Qty", qtyX, tableTop);
-    doc.text("Price", priceX, tableTop);
-    doc.text("Total", totalX, tableTop);
-    doc.moveDown(0.5);
-
-    // **Draw Header Line**
-    doc.moveTo(50, doc.y).lineTo(550, doc.y).stroke();
-    doc.moveDown(0.5);
-
-    // **Loop through products and add them to the table**
-    order.products.forEach((product, index) => {
-        let yPos = tableTop + 25 + index * 25; // Adjust row spacing
-
-        doc.fontSize(12).text(product.name, itemX, yPos);
-        doc.text(product.quantity.toString(), qtyX, yPos);
-        doc.text(product.price.toString(), priceX, yPos);
-        doc.text((product.quantity * product.price).toString(), totalX, yPos);
-    });
-
-    doc.moveDown(2);
-
-    // **Draw Line Before Total**
-    doc.moveTo(50, doc.y).lineTo(550, doc.y).stroke();
-    doc.moveDown(0.5);
-
-    // **Total Amount**
-    doc.fontSize(14).text(`Total Amount: ${order.total}`, totalX, doc.y, { bold: true });
-    doc.fontSize(14).text(`Payment Status: ${order.paymentStatus}`, itemX, doc.y, { bold: true });
-
-    doc.moveDown(2);
-
-
-    // **Shipping Address (Now in a Row Format)**
-    const addressText = `${order.firstName} ${order.lastName}, ${order.address}, ${order.country}, ${order.postcode}, Contact No: ${order.phone}`;
-
-    // Set a fixed position for Shipping Address
-    doc.fontSize(14).text("Shipping Address:", 50, doc.y, {width: 500, bold: true });
-    doc.fontSize(12).text(addressText, 170, doc.y); // Align right side
-    
-    // mes feel free to purchase order
-    doc.moveDown(2);
-    doc.fontSize(14).text("Thank you for your purchase!", 50, doc.y, { width: 500, bold: true });
-    
-    doc.end(); // Finish the document
-
-} catch (error) {
+    // Call function to generate PDF
+    generateInvoicePDF(order, res);
+  } catch (error) {
     console.error("Error generating PDF:", error);
     res.status(500).send("Server error");
-}
+  }
 };
+
+// ✅ **PDF Generation Function**
+const generateInvoicePDF = (order, res) => {
+  const doc = new PDFDocument({ size: "A4", margin: 50 });
+
+  // **Set Response Headers**
+  res.setHeader("Content-Type", "application/pdf");
+  res.setHeader("Content-Disposition", `inline; filename="order_${order._id}.pdf"`);
+
+  doc.pipe(res); // Stream PDF directly to browser
+
+  // **1. Add Logo & Title**
+  // const logoPath = path.resolve("public", "logo.png"); // Adjust path
+  // doc.image(logoPath, 50, 30, { width: 100 });
+  doc.fontSize(20).text("PACK POINT - Order Invoice", 200, 50, { align: "center", bold: true });
+  doc.moveTo(50, 80).lineTo(550, 80).stroke();
+
+  doc.moveDown();
+  // **2. Order Summary (Table Format)**
+  doc.fontSize(14).text("Order Summary", 50, doc.y, { bold: true });
+  doc.moveDown();
+
+  doc.fontSize(12).text(`Order ID: ${order._id}`, 50, doc.y);
+  doc.moveDown(); // Moves to the next line
+
+  doc.text(`Date: ${new Date(order.createdAt).toDateString()}`, 50, doc.y);
+  doc.moveDown(); // Moves to the next line
+
+  doc.text(`Payment Status: ${order.paymentStatus}`, 50, doc.y);
+  doc.moveDown(); // Moves to the next line
+
+  doc.text(`Total Amount: ${order.total}`, 50, doc.y);
+  doc.moveDown(); // Moves to the next line
+
+  doc.moveTo(50, doc.y).lineTo(550, doc.y).stroke();
+  doc.moveDown();
+
+
+  // **3. Ordered Items Table**
+  doc.fontSize(14).text("Ordered Items", 50, doc.y, { bold: true });
+  doc.moveDown();
+
+  // Table Headers
+  doc.fontSize(12).text("Product Name", 50, doc.y, { bold: true });
+  doc.text("Qty", 250, doc.y, { bold: true });
+  doc.text("Unit Price", 350, doc.y, { bold: true });
+  doc.text("Subtotal", 450, doc.y, { bold: true });
+
+  doc.moveTo(50, doc.y + 5).lineTo(550, doc.y + 5).stroke();
+  doc.moveDown();
+
+  // List Products in Table
+  order.products.forEach(product => {
+    doc.fontSize(12).text(product.name, 50, doc.y);
+    doc.text(`${product.quantity}`, 250, doc.y);
+    doc.text(`${product.price}`, 350, doc.y);
+    doc.text(`${product.price * product.quantity}`, 450, doc.y);
+    doc.moveDown();
+  });
+
+  doc.moveDown();
+  doc.moveTo(50, doc.y).lineTo(550, doc.y).stroke();
+  doc.moveDown();
+
+  // **4. Shipping Address (Row Format)**
+  doc.fontSize(14).text("Shipping Address", 50, doc.y, { bold: true });
+  doc.moveDown();
+
+  // Correctly formatting shipping details
+  doc.fontSize(12).text(`${order.firstName} ${order.lastName}`, 50, doc.y);
+  doc.text(`${order.address}`, 50, doc.y + 15);
+  doc.text(`${order.country}, ${order.postcode}`, 50, doc.y + 30);
+  doc.text(`Contact No: ${order.phone}`, 50, doc.y + 45);
+
+  doc.moveDown();
+  doc.moveTo(50, doc.y).lineTo(550, doc.y).stroke();
+  doc.moveDown();
+
+  // **5. Footer (Thank You Note & Support Info)**
+  doc.fontSize(14).text("Thank you for your order!", 50, doc.y, { bold: true });
+  doc.fontSize(12).text("For any support, contact us at support@packpoint.com", 50, doc.y + 20);
+
+  doc.end(); // Close PDF
+};
+
+
 
 
 
