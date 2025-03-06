@@ -304,8 +304,7 @@ const generateOrderReport = async (req, res) => {
     if (!order) {
       return res.status(404).json({ message: "Order not found" });
     }
-
-    // Call function to generate PDF
+    // call to this function in the utils in pdfReport
     generateInvoicePDF(order, res);
   } catch (error) {
     console.error("Error generating PDF:", error);

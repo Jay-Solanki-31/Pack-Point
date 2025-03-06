@@ -1,6 +1,12 @@
 import { User } from "../models/user.model.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import jwt from "jsonwebtoken";
+import bcrypt from "bcrypt";
+import crypto from "crypto";
+import { sendEmail } from "../utils/emailService.js";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 
 
@@ -293,8 +299,68 @@ const updateAccountDetails = asyncHandler(async (req, res) => {
         return res.redirect("/user/Profile");
     }
 });
+const forgotPassword = async (req, res) => {
+    try {
+        const { email } = req.body;
+        // console.log(email);
+        const user = await User.findOne({ email });
+        // console.log(user);/
 
+        if (!user) {
+            req.session.toastMessage = { type: "error", text: "User not found" };
+            return res.status(404).json({ message: "User not found" });
+        }
 
+        const resetToken = crypto.randomBytes(32).toString("hex");
+        user.resetPasswordToken = resetToken;
+        user.resetPasswordExpires = Date.now() + 3600000; 
+        await user.save();
+
+        const resetUrl = `${process.env.CLIENT_URL}/user/reset-password/${resetToken}`;
+
+        const subject = "Reset Your Password";
+        const text = `You requested a password reset. Click the link below:\n\n${resetUrl}`;
+        const html = `<p>You requested a password reset. Click the link below:</p><a href="${resetUrl}">${resetUrl}</a>`;
+
+        await sendEmail(user.email, subject, text, html);
+
+        req.session.toastMessage = { type: "success", text: "Reset password link sent to your email." };
+        return res.redirect("/user/login");
+    } catch (error) {
+        console.error("❌ Forgot Password Error:", error);
+        res.status(500).json({ message: "Server error" });
+    }
+};
+
+const resetPassword = async (req, res) => {
+    try {
+        const { token } = req.params;
+        // console.log(token);
+        const { newPassword } = req.body;
+        // console.log(newPassword);
+
+        const user = await User.findOne({
+            resetPasswordToken: token,            
+            resetPasswordExpires: { $gt: Date.now() }, 
+        });
+
+        if (!user) {
+            req.session.toastMessage = { type: "error", text: "Invalid or expired token" };
+            return res.redirect("/user/login");
+        }
+
+        user.password = newPassword;
+        user.resetPasswordToken = null;
+        user.resetPasswordExpires = null;
+        await user.save();
+
+        req.session.toastMessage = { type: "success", text: "Password reset successfully. Please log in." };
+        return res.redirect("/user/login");
+    } catch (error) {
+        console.error("❌ Reset Password Error:", error);
+        res.status(500).json({ message: "Server error" });
+    }
+};
 
 
 
@@ -305,6 +371,8 @@ export {
     updateAccountDetails,
     getCurrentUser,
     changeCurrentPassword,
-    logoutUser
+    logoutUser,
+    forgotPassword,
+    resetPassword
 
 }

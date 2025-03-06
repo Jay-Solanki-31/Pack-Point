@@ -7,6 +7,8 @@ import {
     getCurrentUser,
     updateAccountDetails,
     changeCurrentPassword,
+    forgotPassword,
+    resetPassword
 } from "../controllers/auth.controller.js";
 import { verifyJWT } from "../middleware/auth.middleware.js";
 import { redirectIfAuthenticated } from "../middleware/redirectIfAuthenticated.js";
@@ -27,5 +29,8 @@ router.get("/current-user", verifyJWT, getCurrentUser);
 router.post("/update-account", verifyJWT, updateAccountDetails);
 
 router.post("/change-password", verifyJWT, changeCurrentPassword);
+
+router.post("/forgot-password", forgotPassword);
+router.post("/reset-password/:token", resetPassword);
 
 export default router;

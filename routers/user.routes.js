@@ -14,6 +14,16 @@ router.get("/login", (req, res) => {
     res.render("user/user-login");
 });
 
+router.get('/forgot-password', (req, res) => {
+    res.render('user/forgot-password');
+});
+
+router.get("/reset-password/:token", (req, res) => {
+    const { token } = req.params;
+    res.render("user/reset-password", { token }); 
+});
+
+
 router.get("/Profile", verifyJWT, requireAuth, async (req, res) => {
     try {
         const user = req.user;
