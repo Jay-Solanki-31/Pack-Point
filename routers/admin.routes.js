@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { verifyJWT, verifyRole } from "../middleware/auth.middleware.js";
 import { redirectIfAuthenticated } from "../middleware/redirectIfAuthenticated.js";
-import { deleteUser, getRegisterUserData } from "../controllers/user.controller.js";
+import { deleteUser, getRegisterUserData, getSalesReport } from "../controllers/user.controller.js";
 import { getAllProductData, getorderDetails, latestOrder, TotalOrder, TotalProduct, TotalUser,  } from "../controllers/checkout.controller.js";
 import { Order } from "../models/checkout.model.js";
 
@@ -46,6 +46,8 @@ router.get("/profile", verifyJWT, verifyRole("admin"), async (req, res) => {
 });
 
 
+
+router.get("/reports", getSalesReport)
 
 
 router.get("/logout", verifyJWT, (req, res) => {

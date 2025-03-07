@@ -19,7 +19,7 @@ router.get("/products",
     async (req, res) => {
         try {
             const page = parseInt(req.query.page) || 1;
-            const limit = 8;
+            const limit = 12;
 
             const totalProducts = await Product.countDocuments();
             const pagination = getPagination(totalProducts, page, limit);
@@ -27,6 +27,7 @@ router.get("/products",
             const products = await Product.find({})
                 .skip((pagination.currentPage - 1) * limit)
                 .limit(limit)
+                .sort({ createdAt: -1 })
                 .exec();
 
             res.render('admin/products', {

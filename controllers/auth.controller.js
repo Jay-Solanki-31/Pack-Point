@@ -50,7 +50,7 @@ const registerUser = asyncHandler(async (req, res) => {
     return res.redirect("/user/login");
 });
 
-const loginUser = asyncHandler(async (req, res) => {
+const   loginUser = asyncHandler(async (req, res) => {
     const { email, username, password } = req.body;
 
     try {
@@ -93,7 +93,7 @@ const loginUser = asyncHandler(async (req, res) => {
             req.session.toastMessage = { type: "success", text: "Welcome Admin!" };
             return res.redirect("/admin/dashboard");
         } else {
-            req.session.toastMessage = { type: "success", text: "Login successful" };
+            req.session.toastMessage = { type: "success", text: "Welcome To Your Account!" };
             return res.redirect("/");
         }
     } catch (error) {

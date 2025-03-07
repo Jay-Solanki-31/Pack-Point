@@ -17,10 +17,10 @@ import { User } from "../models/user.model.js";
 const getAllProducts = async (req, res) => {
     try {
         let page = parseInt(req.query.page) || 1;
-        let limit = 8;
+        let limit = 12;
         let skip = (page - 1) * limit; 
 
-        const products = await Product.find().skip(skip).limit(limit);
+        const products = await Product.find().skip(skip).limit(limit).sort({ createdAt: -1 });
 
         const totalProducts = await Product.countDocuments();
 
@@ -85,4 +85,29 @@ const deleteUser = async (req, res) => {
 };
 
 
-export {getProducts , getAllProducts,getUserOrderData, getRegisterUserData, deleteUser}
+const getSalesReport = async (req, res) => {
+    try {
+      const orders = await Order.find();
+  
+      const productSales = {};
+  
+      orders.forEach((order) => {
+        order.products.forEach((product) => {
+          if (productSales[product.name]) {
+            productSales[product.name] += product.quantity * product.price;
+          } else {
+            productSales[product.name] = product.quantity * product.price;
+          }
+        });
+      });
+  
+      res.render("admin/reports", { productSales }); 
+    } catch (error) {
+      console.error("Error fetching sales data:", error);
+      res.status(500).send("Internal Server Error");
+    }
+  };
+  
+
+
+export {getProducts , getAllProducts,getUserOrderData, getRegisterUserData, deleteUser , getSalesReport};
