@@ -7,35 +7,41 @@ const userSchema = new Schema(
     {
         username: {
             type: String,
-            required: true,
+            required: [true, "Username is required"],
             unique: true,
             lowercase: true,
             trim: true,
+            minlength: [3, "Username must be at least 3 characters long."],
             index: true
         },
         email: {
             type: String,
-            required: true,
+            required: [true, "Email is required"],
             unique: true,
-            lowercase: true, 
-            trim: true
+            lowercase: true,
+            trim: true,
+            match: [/.+\@.+\..+/, "Please enter a valid email address."]
         },
         fullName: {
             type: String,
-            required: true,
+            required: [true, "Full name is required"],
             trim: true,
+            minlength: [3, "Full name must be at least 3 characters long."],
             index: true
         },
         password: {
             type: String,
-            required: [true, "Password is required"]
+            required: [true, "Password is required"],
+            minlength: [6, "Password must be at least 6 characters long."]
         },
         phone: {
-            type: Number,
-            length: 11
+            type: String,
+            required: [true, "Phone number is required"],
+            match: [/^\d{10,15}$/, "Please enter a valid phone number."]
         },
         address: {
-            type: String
+            type: String,
+            trim: true
         },
         userRole: {
             type: String,
@@ -45,8 +51,12 @@ const userSchema = new Schema(
         refreshToken: {
             type: String
         },
-        resetPasswordToken: { type: String }, 
-        resetPasswordExpires: { type: Date }
+        resetPasswordToken: { 
+            type: String 
+        }, 
+        resetPasswordExpires: { 
+            type: Date 
+        }
     },
     {
         timestamps: true
@@ -74,7 +84,7 @@ userSchema.methods.generateAccessToken = function () {
         },
         process.env.ACCESS_TOKEN_SECRET,
         {
-            expiresIn: process.env.ACCESS_TOKEN_EXPIRY
+            expiresIn: process.env.ACCESS_TOKEN_EXPIRY || "15m"
         }
     );
 };
@@ -86,7 +96,7 @@ userSchema.methods.generateRefreshToken = function () {
         },
         process.env.REFRESH_TOKEN_SECRET,
         {
-            expiresIn: process.env.REFRESH_TOKEN_EXPIRY
+            expiresIn: process.env.REFRESH_TOKEN_EXPIRY || "7d"
         }
     );
 };
@@ -94,7 +104,7 @@ userSchema.methods.generateRefreshToken = function () {
 userSchema.methods.generatePasswordResetToken = function () {
     const resetToken = crypto.randomBytes(32).toString("hex");
     this.resetPasswordToken = crypto.createHash("sha256").update(resetToken).digest("hex"); 
-    this.resetPasswordExpires = Date.now() + 3600000; 
+    this.resetPasswordExpires = Date.now() + 3600000; // Token expires in 1 hour
     return resetToken; 
 };
 

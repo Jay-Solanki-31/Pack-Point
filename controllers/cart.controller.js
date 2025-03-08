@@ -114,6 +114,7 @@ const updateCartQuantity = async (req, res) => {
     res.json({ success: true, updatedTotal: cart.total });
   } catch (error) {
     console.error("Error updating cart:", error);
+    req.session.toastMessage = { type: "error", text: "Error updating cart" };
     res.status(500).json({ success: false, error: "Internal Server Error" });
   }
 };

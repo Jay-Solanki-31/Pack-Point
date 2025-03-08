@@ -14,6 +14,7 @@ import contactRoutes from './routers/contact.routes.js'
 import checkoutRoutes from './routers/checkout.routes.js'
 import { getProducts } from "./controllers/user.controller.js"; 
 import { verifyJWT } from './middleware/auth.middleware.js';
+import { errorHandler } from './middleware/errorHandler.js';
 
 const app = express();
 
@@ -39,6 +40,7 @@ app.use((req, res, next) => {
     next();
 });
 
+app.use(errorHandler)
   
 
 app.set("view engine", "ejs");
@@ -56,8 +58,6 @@ app.use("/contact", contactRoutes);
 
 
 
-app.use((req, res) => {
-    res.status(404).render('error');
-});
+
 
 export { app };

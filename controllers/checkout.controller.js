@@ -81,8 +81,8 @@ const placeOrder = async (req, res) => {
 
   } catch (error) {
     console.error("Error placing order:", error);
-    res.status(500).send({ success: false, message: "Error placing order" });
-  }
+    req.session.toastMessage = { type: "error", text: "Error placing order" };
+    res.redirect("/cart");}
 };
 
 const handlePaymentSuccess = async (req, res) => {
@@ -113,8 +113,10 @@ const handlePaymentSuccess = async (req, res) => {
 
     res.status(200).json({ success: true, message: "Payment verified", order });
   } catch (error) {
-    res.status(500).json({ success: false, message: "Payment verification failed" });
-  }
+    console.error("Error verifying payment:", error);
+    res.status(500).json({ success: false, message: "Error verifying payment" });
+    
+    }
 };
 
 const getAllProductData = async (req, res) => {

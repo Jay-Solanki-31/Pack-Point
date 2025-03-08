@@ -11,46 +11,52 @@ dotenv.config();
 
 
 const registerUser = asyncHandler(async (req, res) => {
+    try {
 
-    const { fullName, email, username, password, userRole } = req.body
-    // console.log(req.body);
+        const { fullName, email, username, password, userRole } = req.body
+        // console.log(req.body);
 
-    if ([fullName, email, username, password].some((field) => field?.trim() === "")) {
-        req.session.toastMessage = { type: "error", text: "All Fields Require" };
+        if ([fullName, email, username, password].some((field) => field?.trim() === "")) {
+            req.session.toastMessage = { type: "error", text: "All Fields Require" };
+            return res.redirect("/user/login");
+        }
+
+        const existedUser = await User.findOne({
+            $or: [{ username }, { email }],
+
+        })
+
+        if (existedUser) {
+            req.session.toastMessage = { type: "error", text: "User AlreadyExists" }
+            return res.redirect("/user/login");
+        }
+        //console.log(req.files);
+
+        const user = await User.create({
+            fullName,
+            email,
+            password,
+            userRole,
+            username: username.toLowerCase()
+        })
+
+        const createdUser = await User.findById(user._id).select(
+            "-password -refreshToken"
+        )
+
+        if (!createdUser) {
+            req.session.toastMessage = { type: "error", text: "User not Created" };
+        }
+        req.session.toastMessage = { type: "success", text: "User Registered" };
+        return res.redirect("/user/login");
+
+    } catch (error) {
+        req.session.toastMessage = { type: "error", text: "Error Registering User" };
         return res.redirect("/user/login");
     }
-
-    const existedUser = await User.findOne({
-        $or: [{ username }, { email }],
-
-    })
-
-    if (existedUser) {
-        req.session.toastMessage = { type: "error", text: "User AlreadyExists" }
-        return res.redirect("/user/login");
-    }
-    //console.log(req.files);
-
-    const user = await User.create({
-        fullName,
-        email,
-        password,
-        userRole,
-        username: username.toLowerCase()
-    })
-
-    const createdUser = await User.findById(user._id).select(
-        "-password -refreshToken"
-    )
-
-    if (!createdUser) {
-        req.session.toastMessage = { type: "error", text: "User not Created" };
-    }
-    req.session.toastMessage = { type: "success", text: "User Registered" };
-    return res.redirect("/user/login");
 });
 
-const   loginUser = asyncHandler(async (req, res) => {
+const loginUser = asyncHandler(async (req, res) => {
     const { email, username, password } = req.body;
 
     try {
@@ -182,77 +188,97 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
 
 
 const logoutUser = asyncHandler(async (req, res) => {
-    if (!req.user || !req.user._id) {
-        req.session.toastMessage = { type: "error", text: "User not logged in" };
+    try {
+        if (!req.user || !req.user._id) {
+            req.session.toastMessage = { type: "error", text: "User not logged in" };
+            if (user.userRole === "admin") {
+                return res.redirect("/admin");
+            } else {
+                return res.redirect("/user/login");
+            }
+        }
+
+        // Remove refresh token from database
+        const updatedUser = await User.findByIdAndUpdate(
+            req.user._id,
+            { $unset: { refreshToken: 1 } },
+            { new: true }
+        );
+
+        if (!updatedUser) {
+            req.session.toastMessage = { type: "error", text: "User not found" };
+            if (user.userRole === "admin") {
+                return res.redirect("/admin");
+            } else {
+                return res.redirect("/user/login");
+            }
+        }
+
+
+        // Clear authentication cookies
+        const options = {
+            httpOnly: true,
+            secure: true,
+            sameSite: "Strict",
+        };
+
+        res.clearCookie("accessToken", options);
+        res.clearCookie("refreshToken", options);
+
+        // Redirect based on user role
+        if (req.user.userRole === "admin") {
+            req.session.toastMessage = { type: "success", text: "Logout successful" };
+            return res.redirect("/admin");
+        } else {
+            req.session.toastMessage = { type: "success", text: "Logout successful" };
+            return res.redirect("/");
+        }
+    } catch (error) {
+        req.session.toastMessage = { type: "error", text: error.message };
         if (user.userRole === "admin") {
             return res.redirect("/admin");
         } else {
             return res.redirect("/user/login");
         }
-    }
-
-    // Remove refresh token from database
-    const updatedUser = await User.findByIdAndUpdate(
-        req.user._id,
-        { $unset: { refreshToken: 1 } },
-        { new: true }
-    );
-
-    if (!updatedUser) {
-        req.session.toastMessage = { type: "error", text: "User not found" };
-        if (user.userRole === "admin") {
-            return res.redirect("/admin");
-        } else {
-            return res.redirect("/user/login");
-        }
-    }
-
-
-    // Clear authentication cookies
-    const options = {
-        httpOnly: true,
-        secure: true,
-        sameSite: "Strict",
-    };
-
-    res.clearCookie("accessToken", options);
-    res.clearCookie("refreshToken", options);
-
-    // Redirect based on user role
-    if (req.user.userRole === "admin") {
-        req.session.toastMessage = { type: "success", text: "Logout successful" };
-        return res.redirect("/admin");
-    } else {
-        req.session.toastMessage = { type: "success", text: "Logout successful" };
-        return res.redirect("/");
     }
 });
 
 
 
 const changeCurrentPassword = asyncHandler(async (req, res) => {
-    const { oldPassword, newPassword } = req.body
-    // console.log(req.body);
+    try {
+        const { oldPassword, newPassword } = req.body
+        // console.log(req.body);
 
-    const user = await User.findById(req.user?._id)
-    // console.log(user);
+        const user = await User.findById(req.user?._id)
+        // console.log(user);
 
-    const isPasswordCorrect = await user.isPasswordCorrect(oldPassword)
+        const isPasswordCorrect = await user.isPasswordCorrect(oldPassword)
 
-    if (!isPasswordCorrect) {
-        req.session.toastMessage = { type: "error", text: "Old password is incorrect" };
+        if (!isPasswordCorrect) {
+            req.session.toastMessage = { type: "error", text: "Old password is incorrect" };
+        }
+
+        user.password = newPassword
+        await user.save({ validateBeforeSave: false })
+
+        if (req.user.userRole === "admin") {
+            req.session.toastMessage = { type: "success", text: "Password changed successfully" };
+            return res.redirect("/admin");
+        } else {
+            req.session.toastMessage = { type: "success", text: "Password changed successfully" };
+            return res.redirect("/user/Profile");
+        }
+    } catch (error) {
+        req.session.toastMessage = { type: "error", text: error.message };
+        if (user.userRole === "admin") {
+            return res.redirect("/admin");
+        } else {
+            return res.redirect("/user/Profile");
+        }
     }
 
-    user.password = newPassword
-    await user.save({ validateBeforeSave: false })
 
-    if (req.user.userRole === "admin") {
-        req.session.toastMessage = { type: "success", text: "Password changed successfully" };
-        return res.redirect("/admin");
-    } else {
-        req.session.toastMessage = { type: "success", text: "Password changed successfully" };
-        return res.redirect("/user/Profile");
-    }
 })
 
 
@@ -267,6 +293,7 @@ const getCurrentUser = asyncHandler(async (req, res) => {
 })
 
 const updateAccountDetails = asyncHandler(async (req, res) => {
+    try {
     const { fullName, email, username, phone, address } = req.body;
 
     // if (!fullName && !email ) {
@@ -297,6 +324,14 @@ const updateAccountDetails = asyncHandler(async (req, res) => {
     } else {
         req.session.toastMessage = { type: "success", text: "Account details updated successfully" };
         return res.redirect("/user/Profile");
+        }
+    } catch (error) {
+        req.session.toastMessage = { type: "error", text: error.message };
+        if (user.userRole === "admin") {
+            return res.redirect("/admin/dashboard");
+        } else {
+            return res.redirect("/user/Profile");
+        }
     }
 });
 const forgotPassword = async (req, res) => {
@@ -313,7 +348,7 @@ const forgotPassword = async (req, res) => {
 
         const resetToken = crypto.randomBytes(32).toString("hex");
         user.resetPasswordToken = resetToken;
-        user.resetPasswordExpires = Date.now() + 3600000; 
+        user.resetPasswordExpires = Date.now() + 3600000;
         await user.save();
 
         const resetUrl = `${process.env.CLIENT_URL}/user/reset-password/${resetToken}`;
@@ -327,8 +362,8 @@ const forgotPassword = async (req, res) => {
         req.session.toastMessage = { type: "success", text: "Reset password link sent to your email." };
         return res.redirect("/user/login");
     } catch (error) {
-        console.error("❌ Forgot Password Error:", error);
-        res.status(500).json({ message: "Server error" });
+        req.session.toastMessage = { type: "error", text: "Server error" };
+        return res.status(500).json({ message: "Server error" });
     }
 };
 
@@ -340,8 +375,8 @@ const resetPassword = async (req, res) => {
         // console.log(newPassword);
 
         const user = await User.findOne({
-            resetPasswordToken: token,            
-            resetPasswordExpires: { $gt: Date.now() }, 
+            resetPasswordToken: token,
+            resetPasswordExpires: { $gt: Date.now() },
         });
 
         if (!user) {
@@ -357,8 +392,9 @@ const resetPassword = async (req, res) => {
         req.session.toastMessage = { type: "success", text: "Password reset successfully. Please log in." };
         return res.redirect("/user/login");
     } catch (error) {
-        console.error("❌ Reset Password Error:", error);
-        res.status(500).json({ message: "Server error" });
+        req.session.toastMessage = { type: "error", text: "Server error" };
+        return res.status(500).json({ message: "Server error" });
+        
     }
 };
 

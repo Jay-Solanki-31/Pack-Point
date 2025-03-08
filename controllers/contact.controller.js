@@ -6,6 +6,9 @@ const getconatct  = async (req, res) => {
         res.render("admin/contact-list", { contact });
     } catch (error) {
         console.error("Error fetching contact:", error);
+        req.session.toastMessage = { type: "error", text: "Error fetching contact" };
+        res.redirect("/contact");
+
     }
 };
 // add data to conatct
@@ -38,6 +41,7 @@ const Addcontact = async (req, res) => {
 
     } catch (error) {
         console.error("Error adding to wishlist:", error);
+        req.session.toastMessage = { type: "error", text: "Error adding to wishlist" };
         res.redirect("/contact");
     }
 };

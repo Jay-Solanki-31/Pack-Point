@@ -94,8 +94,9 @@ const updateProductDetails = async (req, res) => {
       return res.redirect("/product/products");
 
   } catch (error) {
-      console.error(error);
-      res.status(500).send("Server Error");
+    console.error(error);
+    req.session.toastMessage = { type: "error", text: "Error updating product" };
+    return res.redirect("/product/products");
   }
 };
 

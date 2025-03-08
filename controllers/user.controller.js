@@ -9,7 +9,8 @@ import { User } from "../models/user.model.js";
         res.render("index", { products });
     } catch (error) {
         console.error("Error fetching products:", error);
-        res.status(500).send({ success: false, message: "Error fetching products" });
+        req.session.toastMessage = { type: "error", text: "Error fetching products" };
+        res.redirect("/");
     }
 };
 
@@ -32,8 +33,8 @@ const getAllProducts = async (req, res) => {
             totalPages,
         });
     } catch (error) {
-        console.error("Error fetching products:", error);
-        res.status(500).send("Server Error");
+        req.session.toastMessage = { type: "error", text: "Error fetching products" };
+        res.redirect("/");
     }
 };
 
@@ -47,8 +48,8 @@ const getUserOrderData = async (req, res) => {
 
         res.render("user/user-profile", { orders: getOrderList || [] });
     } catch (error) {
-        console.error("Error fetching user orders:", error);
-        res.status(500).send({ success: false, message: "Error fetching user orders" });
+        req.session.toastMessage = { type: "error", text: "Error fetching orders" };
+        res.redirect("/");
     }
 };
 
@@ -61,8 +62,8 @@ const getRegisterUserData = async (req, res) => {
         
         res.render("admin/user-list", { users });
     } catch (error) {
-        console.error("Error while fetching user data:", error);
-        res.status(500).send({ success: false, message: "Error fetching user data" });
+        req.session.toastMessage = { type: "error", text: "Error fetching users" };
+        res.redirect("/admin/user-list");
     }
 };
 
@@ -79,8 +80,8 @@ const deleteUser = async (req, res) => {
 
         res.redirect("/admin/user-list");
     } catch (error) {
-        console.error("Error while deleting users:", error);
-        res.status(500).send({ success: false, message: "Error deleting users" });
+        req.session.toastMessage = { type: "error", text: "Error deleting users" };
+        res.redirect("/admin/user-list");
     }
 };
 
@@ -103,8 +104,8 @@ const getSalesReport = async (req, res) => {
   
       res.render("admin/reports", { productSales }); 
     } catch (error) {
-      console.error("Error fetching sales data:", error);
-      res.status(500).send("Internal Server Error");
+      req.session.toastMessage = { type: "error", text: "Error fetching sales report" };
+      res.redirect("/admin/reports");
     }
   };
   
