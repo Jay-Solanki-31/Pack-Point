@@ -35,17 +35,27 @@
                         <div class="col-sm-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <form class="form-inline search-form search-box" action="/checkout/order" method="get">
-                                        <div class="form-group">
-                                            <input class="form-control" type="search" name="search" 
-                                                   placeholder="Search by Name...">
-                                            <button type="submit" class="btn btn-primary">Search</button>
+                                    <form class="form-inline d-flex justify-content-between align-items-center" action="/admin/order-list" method="get" style="width: 100%;">
+                                        <div class="form-group mb-2">
+                                            <label for="search" class="mr-2">Search:</label>
+                                            <input class="form-control" type="search" name="search" placeholder="Search by Name..." >
                                         </div>
+                                
+                                        <div class="form-group mx-2 mb-2">
+                                            <label for="startDate" class="mr-2">From:</label>
+                                            <input class="form-control" type="date" name="startDate" id="startDate" >
+                                        </div>
+                                
+                                        <div class="form-group mx-2 mb-2">
+                                            <label for="endDate" class="mr-2">To:</label>
+                                            <input class="form-control" type="date" name="endDate" id="endDate">
+                                        </div>
+                                        <button type="submit" class="btn btn-primary mb-2">Search</button>
                                     </form>
-                                                                        
-                                    
-                                    
                                 </div>
+                                
+                                
+                                
                                 <div class="card-body">
                                     <div class="table-responsive table-desi">
                                         <table class="table all-package order-list-table" id="editableTable">

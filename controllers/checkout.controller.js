@@ -120,21 +120,30 @@ const handlePaymentSuccess = async (req, res) => {
 const getAllProductData = async (req, res) => {
   try {
     const search = req.query.search || "";
+    const startDate = req.query.startDate;
+    const endDate = req.query.endDate;
 
-    let orderList;
+    let filter = {};
+
     if (search.trim() !== "") {
-      orderList = await Order.find({
-        firstName: { $regex: search, $options: "i" }
-      }).sort({ createdAt: -1 });
-    } else {
-      orderList = await Order.find().sort({ createdAt: -1 });
+      filter.firstName = { $regex: search, $options: "i" };
     }
+
+    if (startDate && endDate) {
+      filter.createdAt = {
+        $gte: new Date(startDate), 
+        $lte: new Date(endDate + "T23:59:59.999Z") 
+      };
+    }
+
+    const orderList = await Order.find(filter).sort({ createdAt: -1 });
 
     res.render("admin/order-list", { orderList });
   } catch (error) {
-    res.status(500).json({ success: false, message: "error  data not found " })
+    res.status(500).json({ success: false, message: "Error: Data not found" });
   }
-}
+};
+
 
 
 
