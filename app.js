@@ -40,7 +40,6 @@ app.use((req, res, next) => {
     next();
 });
 
-app.use(errorHandler)
   
 
 app.set("view engine", "ejs");
@@ -56,7 +55,12 @@ app.use("/cart", cartRoutes);
 app.use("/checkout", checkoutRoutes);
 app.use("/contact", contactRoutes);
 
+app.use((req, res) => {
+    res.status(404).render("error", { statusCode: 404, message: "Page Not Found" });
+});
 
+
+app.use(errorHandler)
 
 
 

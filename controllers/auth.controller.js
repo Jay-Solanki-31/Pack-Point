@@ -62,11 +62,7 @@ const loginUser = asyncHandler(async (req, res) => {
     try {
         if (!username && !email) {
             req.session.toastMessage = { type: "error", text: "Username or email is required" };
-            if (user.userRole === "admin") {
-                return res.redirect("/admin");
-            } else {
-                return res.redirect("/user/login");
-            }
+            return res.redirect("/user/login");
         }
 
         const user = await User.findOne({
@@ -75,13 +71,13 @@ const loginUser = asyncHandler(async (req, res) => {
 
         if (!user) {
             req.session.toastMessage = { type: "error", text: "User does not exist" };
-            return res.redirect("/login");
+            return res.redirect("/user/login");
         }
 
         const isPasswordValid = await user.isPasswordCorrect(password);
         if (!isPasswordValid) {
             req.session.toastMessage = { type: "error", text: "Invalid credentials" };
-            return res.redirect("/login");
+            return res.redirect("/user/login");
         }
 
         const { accessToken, refreshToken } = await generateAccessAndRefereshTokens(user._id);
@@ -94,17 +90,15 @@ const loginUser = asyncHandler(async (req, res) => {
         res.cookie("accessToken", accessToken, options);
         res.cookie("refreshToken", refreshToken, options);
 
-        // Redirect based on user role
-        if (user.userRole === "admin") {
-            req.session.toastMessage = { type: "success", text: "Welcome Admin!" };
-            return res.redirect("/admin/dashboard");
-        } else {
-            req.session.toastMessage = { type: "success", text: "Welcome To Your Account!" };
-            return res.redirect("/");
-        }
+        req.session.toastMessage = {
+            type: "success",
+            text: user.userRole === "admin" ? "Welcome Admin!" : "Welcome To Your Account!"
+        };
+
+        return res.redirect(user.userRole === "admin" ? "/admin/dashboard" : "/");
     } catch (error) {
-        req.session.toastMessage = { type: "error", text: error.message };
-        return res.redirect("/login");
+        req.session.toastMessage = { type: "error", text: "Error logging in" };
+        return res.redirect("/user/login"); 
     }
 });
 
@@ -394,7 +388,7 @@ const resetPassword = async (req, res) => {
     } catch (error) {
         req.session.toastMessage = { type: "error", text: "Server error" };
         return res.status(500).json({ message: "Server error" });
-        
+
     }
 };
 
