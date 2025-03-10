@@ -42,7 +42,7 @@ const getUserOrderData = async (req, res) => {
     try {
         if (!req.user) return res.redirect("/user/login");
 
-        const getOrderList = await Order.find({ userId: req.user._id });
+        const getOrderList = await Order.find({ userId: req.user._id }).sort({ createdAt: -1 });
 
         // console.log("Fetched Orders:", getOrderList); 
 

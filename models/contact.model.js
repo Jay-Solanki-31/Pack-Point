@@ -26,10 +26,10 @@ const ContactSchema = new mongoose.Schema(
       minlength: [10, "Message must be at least 10 characters long."],
       trim: true,
     },
-    phone: {
+    Phone: {
       type: String,
       required: [true, "Phone number is required."],
-      match: [/^\d{10,15}$/, "Please enter a valid phone number."],
+      length: [10, "Phone number must be 10 digits long."],
       trim: true,
     },
   },

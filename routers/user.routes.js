@@ -28,7 +28,7 @@ router.get("/Profile", verifyJWT, requireAuth, async (req, res) => {
     try {
         const user = req.user;
         
-        const orders = await Order.find({ userId: user._id });
+        const orders = await Order.find({ userId: user._id }).sort({ createdAt: -1 });
 
         res.render("user/user-profile", {
             user: user,

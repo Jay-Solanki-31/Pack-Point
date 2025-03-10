@@ -22,9 +22,6 @@ const Addcontact = async (req, res) => {
             req.session.toastMessage = { type: "error", text: "All Fields Require" };
             return res.redirect("/contact");
         }
-
-
-
         const data = await Contact.create({
             name ,
             email,
