@@ -127,17 +127,20 @@
     <script src="/assets/js/main.js"></script>
 
     <script>
-        const toastMessage = <%- JSON.stringify(toastMessage || null) %>;
-        if (toastMessage) {
-            Toastify({
-                text: toastMessage.text,
-                duration: 3000,
-                gravity: "top",
-                position: "right",
-                backgroundColor: toastMessage.type === "error" ? "red" : "green",
-            }).showToast();
-        }
+        document.addEventListener("DOMContentLoaded", function () {
+            const toastMessage = <%- JSON.stringify(toastMessage || null) %>;
+            if (toastMessage) {
+                Toastify({
+                    text: toastMessage.text,
+                    duration: 3000,
+                    gravity: "top",
+                    position: "right",
+                    backgroundColor: toastMessage.type === "error" ? "red" : "green",
+                }).showToast();
+            }
+        });
     </script>
+    
     
     <script>
         function changeImage(newSrc, productId) {

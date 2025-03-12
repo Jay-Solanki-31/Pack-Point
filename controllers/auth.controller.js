@@ -18,19 +18,19 @@ const registerUser = asyncHandler(async (req, res) => {
 
         if ([fullName, email, username, password].some((field) => field?.trim() === "")) {
             req.session.toastMessage = { type: "error", text: "All Fields Require" };
-            return res.redirect("/user/login");
+            return res.redirect("/user/register");
         }
 
         const existedUser = await User.findOne({
             $or: [{ username }, { email }],
-
         })
+        // console.log(existedUser);
+        
 
         if (existedUser) {
-            req.session.toastMessage = { type: "error", text: "User AlreadyExists" }
-            return res.redirect("/user/login");
+            req.session.toastMessage = { type: "error", text: "User Already Existed" };
+            return res.redirect("/user/register");
         }
-        //console.log(req.files);
 
         const user = await User.create({
             fullName,
@@ -39,21 +39,31 @@ const registerUser = asyncHandler(async (req, res) => {
             userRole,
             username: username.toLowerCase()
         })
-
+        // console.log(`Insert user ${user}`);
         const createdUser = await User.findById(user._id).select(
             "-password -refreshToken"
         )
-
+        // console.log(`creatred user data is ${createdUser}`)
         if (!createdUser) {
             req.session.toastMessage = { type: "error", text: "User not Created" };
         }
+        
         req.session.toastMessage = { type: "success", text: "User Registered" };
         return res.redirect("/user/login");
 
-    } catch (error) {
-        req.session.toastMessage = { type: "error", text: "Error Registering User" };
-        return res.redirect("/user/login");
+    }catch (error) {
+        // console.error(error);
+
+        if (error.name === "ValidationError") {
+            const firstErrorMessage = Object.values(error.errors)[0].message;
+            req.session.toastMessage = { type: "error", text: firstErrorMessage };
+        } else {
+            req.session.toastMessage = { type: "error", text: "Error Registering User" };
+        }
+
+        res.redirect("/user/register");
     }
+
 });
 
 const loginUser = asyncHandler(async (req, res) => {
@@ -97,8 +107,13 @@ const loginUser = asyncHandler(async (req, res) => {
 
         return res.redirect(user.userRole === "admin" ? "/admin/dashboard" : "/");
     } catch (error) {
-        req.session.toastMessage = { type: "error", text: "Error logging in" };
-        return res.redirect("/user/login"); 
+        if (error.name === "ValidationError") {
+            const firstErrorMessage = Object.values(error.errors)[0].message;
+            req.session.toastMessage = { type: "error", text: firstErrorMessage };
+        } else {
+            req.session.toastMessage = { type: "error", text: "Error while login User" };
+        }
+        res.redirect("/user/login");
     }
 });
 
@@ -288,36 +303,36 @@ const getCurrentUser = asyncHandler(async (req, res) => {
 
 const updateAccountDetails = asyncHandler(async (req, res) => {
     try {
-    const { fullName, email, username, phone, address } = req.body;
+        const { fullName, email, username, phone, address } = req.body;
 
-    // if (!fullName && !email ) {
-    //     throw new ApiError(400, "At least one field (fullName or email) must be provided");
-    // }
+        // if (!fullName && !email ) {
+        //     throw new ApiError(400, "At least one field (fullName or email) must be provided");
+        // }
 
-    let updateFields = {};
-    if (fullName) updateFields.fullName = fullName;
-    if (email) updateFields.email = email;
-    if (username) updateFields.username = username;
-    if (phone) updateFields.phone = phone;
-    if (address) updateFields.address = address;
+        let updateFields = {};
+        if (fullName) updateFields.fullName = fullName;
+        if (email) updateFields.email = email;
+        if (username) updateFields.username = username;
+        if (phone) updateFields.phone = phone;
+        if (address) updateFields.address = address;
 
-    const user = await User.findByIdAndUpdate(
-        req.user?._id,
-        { $set: updateFields },
-        { new: true }
-    ).select("-password");
+        const user = await User.findByIdAndUpdate(
+            req.user?._id,
+            { $set: updateFields },
+            { new: true }
+        ).select("-password");
 
-    if (!user) {
-        req.session.toastMessage = { type: "error", text: "User not found" };
-    }
+        if (!user) {
+            req.session.toastMessage = { type: "error", text: "User not found" };
+        }
 
-    // Redirect based on user role
-    if (user.userRole === "admin") {
-        req.session.toastMessage = { type: "success", text: "Account details updated successfully" };
-        return res.redirect("/admin/dashboard");
-    } else {
-        req.session.toastMessage = { type: "success", text: "Account details updated successfully" };
-        return res.redirect("/user/Profile");
+        // Redirect based on user role
+        if (user.userRole === "admin") {
+            req.session.toastMessage = { type: "success", text: "Account details updated successfully" };
+            return res.redirect("/admin/dashboard");
+        } else {
+            req.session.toastMessage = { type: "success", text: "Account details updated successfully" };
+            return res.redirect("/user/Profile");
         }
     } catch (error) {
         req.session.toastMessage = { type: "error", text: error.message };
