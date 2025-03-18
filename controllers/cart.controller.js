@@ -58,7 +58,7 @@ const addToCart = async (req, res) => {
     res.redirect("/cart");
   } catch (error) {
     console.error("Error adding to cart:", error);
-    req.session.toastMessage = { type: "error", text: "Error adding to cart" };
+    // req.session.toastMessage = { type: "error", text: "Error adding to cart" };
     res.redirect("/cart");
   }
 };

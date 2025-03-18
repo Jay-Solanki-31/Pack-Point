@@ -49,6 +49,8 @@ const removeFromWishlist = async (req, res) => {
     try {
         const userId = req.user.id;
         const productId = req.params.productId;
+        console.log(productId);
+        
 
         await WhishList.findOneAndUpdate(
             { userId },

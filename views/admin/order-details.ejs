@@ -47,10 +47,9 @@
                                                         <thead>
                                                             <tr>
                                                                 <th colspan="2">Items</th>
-
                                                             </tr>
                                                         </thead>
-
+                                                    
                                                         <tbody>
                                                             <% order.products.forEach(product => { %>
                                                                 <tr class="table-order">
@@ -77,21 +76,17 @@
                                                                 </tr>
                                                             <% }); %>
                                                         </tbody>
-                                                        
-
+                                                    
                                                         <tfoot>
-                                                            <% order.products.forEach(product => { %>
-                                                             
-
                                                             <tr class="table-order">
                                                                 <td colspan="3">
                                                                     <h5>Subtotal :</h5>
                                                                 </td>
                                                                 <td>
-                                                                    <h4>₹<%= (product.price * product.quantity)%></h4>
+                                                                    <h4>₹<%= order.products.reduce((sum, product) => sum + (product.price * product.quantity), 0) %></h4>
                                                                 </td>
                                                             </tr>
-
+                                                    
                                                             <tr class="table-order">
                                                                 <td colspan="3">
                                                                     <h4 class="theme-color fw-bold">Total Price :</h4>
@@ -101,8 +96,8 @@
                                                                 </td>
                                                             </tr>
                                                         </tfoot>
-                                                        <% }) %>
                                                     </table>
+                                                    
                                                 </div>
                                             </div>
 

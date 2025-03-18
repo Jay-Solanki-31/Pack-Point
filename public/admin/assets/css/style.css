@@ -629,6 +629,22 @@
 .m-r-30 {
   margin-right: 30px;
 }
+html, body {
+  margin: 0;
+  padding: 0;
+}
+html.dark, body.dark {
+  background-color: #121212 !important;
+  color: #fff;
+}
+
+html.dark::-webkit-scrollbar {
+  background-color: #222; /* Dark background */
+}
+html.dark::-webkit-scrollbar-thumb {
+  background-color: #555; /* Dark scrollbar */
+}
+
 
 .m-r-35 {
   margin-right: 35px;

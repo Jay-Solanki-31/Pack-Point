@@ -42,69 +42,92 @@
                                     <div class="media static-top-widget align-items-center">
                                         <div class="icons-widgets">
                                             <div class="align-self-center text-center">
-                                                <i data-feather="navigation" class="font-warning"></i>
-                                                
+                                                <a href="/admin/reports">
+                                                    <i data-feather="navigation" class="font-warning"></i>
+                                                </a>
                                             </div>
                                         </div>
                                         <div class="media-body media-doller">
-                                            <span class="m-0">Earnings</span>
-                                            <h3 class="mb-0">₹ <span class="counter"><%= total %></span><small> Total Earnings</small></h3>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xxl-3 col-md-6 xl-50">
-                            <div class="card o-hidden">
-                                <div class="secondary-box card-body">
-                                    <div class="media static-top-widget align-items-center">
-                                        <div class="icons-widgets">
-                                            <div class="align-self-center text-center">
-                                                <i data-feather="package" class="font-secondary"></i>
-                                            </div>
-                                        </div>
-                                        <div class="media-body media-doller">
-                                            <span class="m-0">Products</span>
-                                            <h3 class="mb-0"> <span class="counter"><%= product %></span><small> Total 
-                                                Product    </small>
-                                            </h3>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xxl-3 col-md-6 xl-50">
-                            <div class="card o-hidden">
-                                <div class="primary-box card-body">
-                                    <div class="media static-top-widget align-items-center">
-                                        <div class="icons-widgets">
-                                            <div class="align-self-center text-center"><i data-feather="users"
-                                                    class="font-primary"></i></div>
-                                        </div>
-                                        <div class="media-body media-doller"><span class="m-0">User</span>
-                                            <h3 class="mb-0"> <span class="counter"><%= User %></span><small> No of User</small></h3>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xxl-3 col-md-6 xl-50">
-                            <div class="card o-hidden">
-                                <div class="primary-box card-body">
-                                    <div class="media static-top-widget align-items-center">
-                                        <div class="icons-widgets">
-                                            <div class="align-self-center text-center"><i data-feather="shopping-cart"
-                                                    class="font-primary"></i></div>
-                                        </div>
-                                        <div class="media-body media-doller"><span class="m-0">Orders</span>
-                                            <h3 class="mb-0"> <span class="counter"><%= totalOrder %></span><small> Total Order</small></h3>
+                                            <a href="/admin/reports"><span class="m-1">Earnings</span></a>
+                                            <h3 class="mb-0">₹ <span class="counter">
+                                                    <%= total %>
+                                                </span> <br> <small>Total Earnings</small></h3>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        
+                        <div class="col-xxl-3 col-md-6 xl-50">
+                            <div class="card o-hidden">
+                                <div class="secondary-box card-body">
+                                    <div class="media static-top-widget align-items-center">
+                                        <div class="icons-widgets">
+                                            <div class="align-self-center text-center">
+                                                <a href="/product/products">
+                                                    <i data-feather="package" class="font-secondary"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="media-body media-doller">
+                                            <a href="/product/products"><span class="m-0">Products</span></a>
+                                            <h3 class="mb-0"><span class="counter">
+                                                    <%= product %>
+                                                </span> <small>Total Products</small></h3>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xxl-3 col-md-6 xl-50">
+                            <div class="card o-hidden">
+                                <div class="secondary-box card-body">
+                                    <div class="media static-top-widget align-items-center">
+                                        <div class="icons-widgets">
+                                            <div class="align-self-center text-center">
+                                                <a href="/admin/user-list">
+                                                    <i data-feather="user" class="font-secondary"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="media-body media-doller">
+                                            <a href="/admin/user-list"><span class="m-0">User</span></a>
+                                            <h3 class="mb-0"><span class="counter">
+                                                    <%= User %>
+                                                </span> <small>Total User</small></h3>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <div class="col-xxl-3 col-md-6 xl-50">
+                            <div class="card o-hidden">
+                                <div class="primary-box card-body">
+                                    <div class="media static-top-widget align-items-center">
+                                        <div class="icons-widgets">
+                                            <div class="align-self-center text-center">
+                                                <a href="/admin/order-list">
+                                                    <i data-feather="shopping-cart" class="font-primary"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="media-body media-doller">
+                                            <a href="/admin/order-list"><span class="m-0">Orders</span></a>
+                                            <h3 class="mb-0"><span class="counter">
+                                                    <%= totalOrder %>
+                                                </span> <small>Total Orders</small></h3>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
                         <div class="col-xl-12 xl-100">
                             <div class="card">
                                 <div class="card-header">
@@ -132,15 +155,22 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <% order.forEach(Order => { %>
-                                                
-                                                <tr>
-                                                    <td><%= Order._id  %> </td>
-                                                    <td><%= Order.firstName %></td>
-                                                    <td class="digits">₹<%= Order.total %></td>
-                                                    <td class="font-danger"><%= Order.paymentStatus %></td>
-                                                </tr>
-                                                <% }) %>
+                                                <% order.forEach(Order=> { %>
+
+                                                    <tr>
+                                                        <td>
+                                                            <%= Order._id %>
+                                                        </td>
+                                                        <td>
+                                                            <%= Order.firstName %>
+                                                        </td>
+                                                        <td class="digits">₹<%= Order.total %>
+                                                        </td>
+                                                        <td class="font-danger">
+                                                            <%= Order.paymentStatus %>
+                                                        </td>
+                                                    </tr>
+                                                    <% }) %>
                                             </tbody>
                                         </table>
                                         <a href="/admin/order-list" class="btn btn-primary mt-4">View All Orders</a>

@@ -102,7 +102,7 @@ const loginUser = asyncHandler(async (req, res) => {
 
         req.session.toastMessage = {
             type: "success",
-            text: user.userRole === "admin" ? "Welcome Admin!" : "Welcome To Your Account!"
+            text: user.userRole === "admin" ? "Welcome Admin!" : "Welcome To PACK POINT!"
         };
 
         return res.redirect(user.userRole === "admin" ? "/admin/dashboard" : "/");
