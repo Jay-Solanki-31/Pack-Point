@@ -50,7 +50,7 @@ Show Live Demo : https://pack-point.onrender.com
 
 
 
-## License
+## Authors
 https://github.com/Jay-Solanki-31
 
 
