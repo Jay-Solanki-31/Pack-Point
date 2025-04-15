@@ -19,7 +19,7 @@ router.get("/products",
     async (req, res) => {
         try {
             const page = parseInt(req.query.page) || 1;
-            const limit = 8;
+            const limit = 12;
 
             const totalProducts = await Product.countDocuments();
             const pagination = getPagination(totalProducts, page, limit);
@@ -27,6 +27,7 @@ router.get("/products",
             const products = await Product.find({})
                 .skip((pagination.currentPage - 1) * limit)
                 .limit(limit)
+                .sort({ createdAt: -1 })
                 .exec();
 
             res.render('admin/products', {
@@ -85,16 +86,47 @@ router.post("/delete-image", verifyJWT, verifyRole("admin"), async (req, res) =>
     }
 });
 
-
 router.get("/product-details/:id", async (req, res) => {
     try {
         const product = await Product.findById(req.params.id);
-        // console.log(product);
-        
-        res.render('user/product-details', { product });
+        if (!product) {
+            return res.status(404).json({ message: "Product not found" });
+        }
+
+        let view = "user/product-details";
+
+        if (req.user && req.user.userRole === "admin") {
+            view = "admin/product-details";
+        }
+
+        res.render(view, { product });
+
     } catch (error) {
         res.status(500).json({ message: "Server error", error });
     }
-  });
+});
+
+
+// search product based on title and get all data and send to product-details page with prodduct id
+router.get("/search", async (req, res) => {
+    try {
+        const search = req.query.search; 
+        // console.log(search);
+        
+        const products = await Product.find({ title: { $regex: search, $options: "i" } });
+        // console.log(products);
+        
+
+        // if (products.length === 1) {
+        //     return res.redirect(`/product/product-details/${products[0]._id}`);
+        // }
+
+        res.render('user/search-results', { products }); 
+
+    } catch (error) {
+        res.status(500).json({ message: "Server error", error });
+    }
+});
+
 
 export default router;

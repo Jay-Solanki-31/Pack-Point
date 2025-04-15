@@ -5,7 +5,7 @@
         <div class="row">
             <div class="col-12">
                 <% if (wishlist.length === 0) { %>
-                    <p>Your wishlist is empty.</p>
+                    <h1>Your wishlist is empty.</h1>
                 <% } else { %>
                     <form action="#">
                         <div class="table-content table-responsive">
@@ -24,12 +24,12 @@
                                     <% wishlist.forEach(product => { %>
                                         <tr>
                                             <td class="product-thumbnail">
-                                                <a href="/product-details/<%= product._id %>">
+                                                <a href="/product/product-details/<%= product._id %>">
                                                     <img src="<%= product.imgUrls[0] %>" alt="">
                                                 </a>
                                             </td>
                                             <td class="product-name">
-                                                <a href="/product-details/<%= product._id %>">
+                                                <a href="/product/product-details/<%= product._id %>">
                                                     <%= product.title %>
                                                 </a>
                                             </td>
@@ -37,10 +37,11 @@
                                                 <span class="amount">₹<%= product.price %></span>
                                             </td>
                                             <td class="product-quantity">
-                                                <a href="/cart/add/<%= product._id %>" class="os-btn os-btn-black">
+                                                <a href="/cart/add/<%= product._id %>?redirect=/wishlist" class="os-btn os-btn-black">
                                                     Add to Cart
                                                 </a>
                                             </td>
+                                            
                                             <td class="product-subtotal">
                                                 <span class="amount">₹<%= product.price %></span>
                                             </td>

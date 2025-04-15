@@ -1,0 +1,77 @@
+<%-include('../partials/admin/index-header.ejs') %>
+<div class="page-body-wrapper">
+<%-include('../partials/admin/index-sidebar.ejs') %>
+            <div class="page-body">
+                <!-- Container-fluid starts-->
+                <div class="container-fluid">
+                    <div class="page-header">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="page-header-left">
+                                    <h3>Contact List
+                                        <small>PACK POINT Admin panel</small>
+                                    </h3>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <ol class="breadcrumb pull-right">
+                                    <li class="breadcrumb-item">
+                                        <a href="/admin/dashboard">
+                                            <i data-feather="home"></i>
+                                        </a>
+                                    </li>
+                                    <li class="breadcrumb-item">Menus</li>
+                                    <li class="breadcrumb-item active">Contact List</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Container-fluid Ends-->
+
+                <!-- Container-fluid starts-->
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="table-responsive table-desi">
+                                        <table class="table all-package order-list-table" id="editableTable">
+                                            <thead>
+                                                <tr>
+                                                    <th>User Name</th>
+                                                    <th>Email</th>
+                                                    <th>Phone</th>
+                                                    <th>Subject</th>   
+                                                    <th>Message</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <% if (contact.length > 0) { %>
+                                                    <% contact.forEach(contacts => { %>
+                                                        <tr>
+                                                            <td><%= contacts.name  %></td>
+                                                            <td><%= contacts.email  %></td>
+                                                            <td><%= contacts.Phone  %></td>
+                                                            <td><%= contacts.subject  %></td>
+                                                            <td><%= contacts.message  %></td>
+                                                        </tr>
+                                                    <% }) %>
+                                                <% } else { %>
+                                                    <tr>
+                                                        <td colspan="6" class="text-center">No contact Found</td>
+                                                    </tr>
+                                                <% } %>
+                                            </tbody>
+                                    
+                                            
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Container-fluid Ends-->
+            </div>
+<%-include('../partials/admin/index-footer.ejs') %>

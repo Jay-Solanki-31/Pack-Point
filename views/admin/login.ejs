@@ -168,12 +168,11 @@
                             <div class="single-item">
                                 <div>
                                     <div>
-                                        <h3>Welcome to The PACK POINT Admin Dashboard </h3>
-                                        <p> Please login to your account.
-                                          </p>
+                                        <h3>Welcome To 
+                                          <br> PACK POINT Admin Dashboard </h3>
+                                        <p> Please login to your account.</p>
                                     </div>
-                                </div>
-                                
+                                </div>    
                             </div>
                         </div>
                     </div>
@@ -186,17 +185,13 @@
                                             href="#top-profile" role="tab" aria-controls="top-profile"
                                             aria-selected="true"><span class="icon-user me-2"></span>Login</a>
                                     </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" id="contact-top-tab" data-bs-toggle="tab"
-                                            href="#top-contact" role="tab" aria-controls="top-contact"
-                                            aria-selected="false"><span class="icon-unlock me-2"></span>Register</a>
-                                    </li>
+
                                 </ul>
                                 <!-- login page tab  -->
                                 <div class="tab-content" id="top-tabContent">
                                     <div class="tab-pane fade show active" id="top-profile" role="tabpanel"
                                         aria-labelledby="top-profile-tab">
-                                        <form class="form-horizontal auth-form" action="auth/login" method="post">
+                                        <form class="form-horizontal auth-form" action="/auth/login" method="post">
                                             <div class="form-group">
                                                 <input required="" name="username" type="text"
                                                     class="form-control" placeholder="User Name" id="username">
@@ -222,35 +217,7 @@
                                         </form>
                                     </div>
 
-                                    <!-- register page   -->
-                                    <div class="tab-pane fade" id="top-contact" role="tabpanel"
-                                        aria-labelledby="contact-top-tab">
-                                        <form class="form-horizontal auth-form" action="auth/register" method="post">
-                                            <div class="form-group">
-                                                <input type="hidden" name="userRole" value="admin">
-                                                <input required="fullName" name="fullName" type="text"
-                                                    class="form-control" placeholder="Full Name "
-                                                    id="fullName">
-                                            </div>
-                                            <div class="form-group">
-                                                <input required="" name="email" type="email"
-                                                    class="form-control" placeholder="Email">
-                                            </div>
-                                            <div class="form-group">
-                                                <input required="" name="username" type="text"
-                                                    class="form-control" placeholder="User Name">
-                                            </div>
-                                            <div class="form-group">
-                                                <input required="" name="password" type="password"
-                                                    class="form-control" placeholder="Password">
-                                            </div>
-                                           
-                                            <div class="form-button">
-                                                <button class="btn btn-primary" type="submit">Register</button>
-                                            </div>
-                                           
-                                        </form>
-                                    </div>
+
 
                                 </div>
                             </div>

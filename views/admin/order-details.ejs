@@ -1,0 +1,148 @@
+<%-include('../partials/admin/index-header.ejs') %>
+ <div class="page-body-wrapper">
+ <%-include('../partials/admin/index-sidebar.ejs') %>
+<div class="page-body">
+                <!-- Container-fluid starts-->
+                <div class="container-fluid">
+                    <div class="page-header">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="page-header-left">
+                                    <h3>Order Details
+                                        <small>PACK POINT Admin panel</small>
+                                    </h3>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <ol class="breadcrumb pull-right">
+                                    <li class="breadcrumb-item">
+                                        <a href="/admin/dashboard">
+                                            <i data-feather="home"></i>
+                                        </a>
+                                    </li>
+                                    <li class="breadcrumb-item">Menus</li>
+                                    <li class="breadcrumb-item active">Order Details</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Container-fluid Ends-->
+
+                <!-- Container-fluid starts-->
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="bg-inner cart-section order-details-table">
+                                        <div class="row g-4">
+                                            <div class="col-xl-8">
+                                                <div class="card-details-title">
+                                                    <h3>Order Number <span><%= order._id %></span></h3>
+                                                </div>
+                                                
+                                                <div class="table-responsive table-details">
+                                                    <table class="table cart-table table-borderless">
+                                                        <thead>
+                                                            <tr>
+                                                                <th colspan="2">Items</th>
+                                                            </tr>
+                                                        </thead>
+                                                    
+                                                        <tbody>
+                                                            <% order.products.forEach(product => { %>
+                                                                <tr class="table-order">
+                                                                    <td>
+                                                                        <a href="javascript:void(0)">
+                                                                            <img src="<%= product.imageUrl.startsWith('http') ? product.imageUrl : '/uploads/' + product.imageUrl %>" 
+                                                                                 class="img-fluid blur-up lazyload" 
+                                                                                 alt="<%= product.name %>" 
+                                                                                 onerror="this.onerror=null;this.src='/assets/images/no-image.jpg';">
+                                                                        </a>
+                                                                    </td>
+                                                                    <td>
+                                                                        <p>Product Name</p>
+                                                                        <h5><%= product.name %></h5>
+                                                                    </td>
+                                                                    <td>
+                                                                        <p>Quantity</p>
+                                                                        <h5><%= product.quantity %></h5>
+                                                                    </td>
+                                                                    <td>
+                                                                        <p>Price</p>
+                                                                        <h5>₹<%= product.price %></h5>
+                                                                    </td>
+                                                                </tr>
+                                                            <% }); %>
+                                                        </tbody>
+                                                    
+                                                        <tfoot>
+                                                            <tr class="table-order">
+                                                                <td colspan="3">
+                                                                    <h5>Subtotal :</h5>
+                                                                </td>
+                                                                <td>
+                                                                    <h4>₹<%= order.products.reduce((sum, product) => sum + (product.price * product.quantity), 0) %></h4>
+                                                                </td>
+                                                            </tr>
+                                                    
+                                                            <tr class="table-order">
+                                                                <td colspan="3">
+                                                                    <h4 class="theme-color fw-bold">Total Price :</h4>
+                                                                </td>
+                                                                <td>
+                                                                    <h4 class="theme-color fw-bold">₹<%= order.total %></h4>
+                                                                </td>
+                                                            </tr>
+                                                        </tfoot>
+                                                    </table>
+                                                    
+                                                </div>
+                                            </div>
+
+                                            <div class="col-xl-4">
+                                                <div class="row g-4">
+                                                    <div class="text-center mt-3">
+                                                        <a href="/checkout/order/<%= order._id %>/generate-report" target="_blank" class="btn btn-primary">
+                                                            <i class="fa fa-file-pdf"></i> Generate Report
+                                                        </a>
+                                                        
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <div class="order-success">
+                                                            <h4>summery</h4>
+                                                            <ul class="order-details">
+                                                                <li>Order ID: <%= order._id %></li>
+                                                                <li>Order Date: <%= new Date(order.createdAt).toDateString() %></li>
+                                                                <li>Order Total: ₹<%= order.total %></li>
+                                                            </ul>
+                                                            
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-12">
+                                                        <div class="order-success">
+                                                            <h4>shipping address</h4>
+                                                            <ul class="order-details">
+                                                                <li><%= order.firstName %> <%= order.lastName %></li>
+                                                                <li><%= order.address %></li>
+                                                                <li><%= order.country %>, <%= order.postcode %> Contact No. <%= order.phone %></li>
+                                                            </ul>
+                                                            
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- section end -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Container-fluid Ends-->
+ </div>
+
+<%-include('../partials/admin/index-footer.ejs') %>

@@ -1,0 +1,32 @@
+
+<%-include('../partials/header') %>
+    <main>
+        <% if (products.length > 0) { %>
+            <div class="product-list">
+                <% products.forEach(product => { %>
+                    <div class="product-card">
+                        <div class="image-slider">    
+                            <% if (Array.isArray(product.imgUrls) && product.imgUrls.length > 0) { %>
+                                <img src="<%= product.imgUrls[0] %>" alt="<%= product.title %>" class="main-image" id="mainImage-<%= product._id %>">
+                                <div class="thumbnail-container">
+                                    <% product.imgUrls.forEach((img, index) => { %>
+                                        <img src="<%= img %>" class="thumbnail" onclick="changeImage('<%= img %>', '<%= product._id %>')">
+                                    <% }); %>
+                                </div>
+                            <% } else { %>
+                                <img src="/imgUrls/default.jpg" alt="No Image Available">
+                            <% } %>
+                        </div>
+                        
+                        <h3><%= product.title %></h3>
+                        <p>Price: ₹<%= product.price %></p>
+                        <a href="/product/product-details/<%= product._id %>" class="btn">View Details</a>
+                    </div>
+                <% }); %>
+            </div>
+        <% } else { %>
+            <h3>Oops! No products found </h3>
+        <% } %>
+    </main>
+
+<%-include('../partials/footer') %>

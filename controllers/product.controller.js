@@ -1,7 +1,5 @@
 import { Product } from "../models/product.model.js";
-import { asyncHandler } from "../utils/asyncHandler.js";
-import { ApiError } from "../utils/ApiError.js";
-import { render } from "ejs";
+
 
 
 const addProductController = async (req, res) => {
@@ -96,8 +94,9 @@ const updateProductDetails = async (req, res) => {
       return res.redirect("/product/products");
 
   } catch (error) {
-      console.error(error);
-      res.status(500).send("Server Error");
+    console.error(error);
+    req.session.toastMessage = { type: "error", text: "Error updating product" };
+    return res.redirect("/product/products");
   }
 };
 

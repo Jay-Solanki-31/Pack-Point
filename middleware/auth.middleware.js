@@ -6,6 +6,8 @@ import { User } from "../models/user.model.js";
 // Middleware to verify JWT token
 export const verifyJWT = asyncHandler(async (req, res, next) => {
     try {
+        // console.log('verify jwt is running.....');
+        
         const token = req.cookies?.accessToken || req.header("Authorization")?.replace("Bearer ", "");
 
         if (!token) {
@@ -34,21 +36,26 @@ export const verifyJWT = asyncHandler(async (req, res, next) => {
 
 // Middleware to verify user role
 export const verifyRole = (role) => (req, res, next) => {
-    if (!req.user) {
-        return res.redirect("/admin"); 
-    }
+    try {
+        if (!req.user) {
+            return res.redirect("/admin"); 
+        }
 
-    if (req.user.userRole !== role) {
-        return res.redirect(role === "admin" ? "/admin/dashboard" : "/user/user-login"); 
-    }
+        if (req.user.userRole !== role) {
+            return next({ statusCode: 403, message: "Access Denied: Unauthorized Role" });
+        }
 
-    next();
+        next();
+    } catch (error) {
+        next(error); 
+    }
 };
+
 
 
 export const requireAuth = (req, res, next) => {
     if (!req.user) {
-        return res.redirect("/user/login"); // Redirect to login if not authenticated
+        return res.redirect("/user/login"); 
     }
     next();
 };

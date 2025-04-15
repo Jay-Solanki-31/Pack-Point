@@ -1,7 +1,6 @@
 <!doctype html>
 <html class="no-js" lang="zxx">
 
-<!-- Mirrored from html.storebuild.shop/outstock-prv/outstock/index-4.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 24 Jan 2025 10:55:37 GMT -->
 
 <head>
     <meta charset="utf-8">
@@ -9,7 +8,6 @@
 <title>PACK POINT  </title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- Place favicon.ico in the root directory -->
 
     <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.png">
 
@@ -50,7 +48,7 @@
                 <div class="row align-items-center">
                     <div class="col-xl-3 col-lg-3 col-md-4 col-sm-4">
                         <div class="logo">
-                            <a href="/"><img src="assets/img/logo/logo.png" alt="logo"></a>
+                            <a href="/"><img src="assets/img/logo/LOGO102.png" alt="logo"></a>
                         </div>
                     </div>
                     <div class="col-xl-9 col-lg-9 col-md-8 col-sm-8">
@@ -62,7 +60,7 @@
                                         </li>
                                         <li class="mega-menu "><a href="/user/shop">Shop</a>
                                         </li>
-                                        <li><a href="contact.html">Contact</a></li>
+                                        <li><a href="/contact">Contact</a></li>
                                         <% if (user) { %>
                                             <li><a href="/wishlist">Wishlist</a></li>
                                             <li><a href="/cart">Cart</a></li>
@@ -76,8 +74,14 @@
                             <div class="header__action">
                                 <ul>
                                     <li><a href="#" class="search-toggle"><i class="ion-ios-search-strong"></i>
-                                            Search</a></li>
-                                    </li>
+                                        Search</a></li>
+                                    <li>
+                                    <% if (user) { %>
+                                        <li><a  class="fa fa-user" href="/user/Profile">Profile</a></li>
+
+                                    <% } else { %>
+                                        <li><a href="/user/Register">Create Account</a></li>
+                                    <% } %>
                                     <li>
                                         <a href="javascript:void(0);"><i class="far fa-bars"></i></a>
                                         <ul class="extra-info">
@@ -88,10 +92,7 @@
                                                             <li><a href="/user/Profile">My Account</a></li>
                                                             <li><a href="/wishlist">Wishlist</a></li>
                                                             <li><a href="/cart">Cart</a></li>
-                                                            <li><a href="checkout.html">Checkout</a></li>
-                                                        <% } else { %>
-                                                            <li><a href="/user/Register">Create Account</a></li>
-                                                        <% } %>
+                                                        <% }  %>
                                                     </ul>
                                                 </div>
                                             </li>
@@ -106,6 +107,24 @@
                 </div>
             </div>
         </div>
+        <!-- Error Modal -->
+<div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="errorModalLabel">Error</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p id="errorModalText"></p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
     </header>
     <!-- header area end -->
 
@@ -114,26 +133,27 @@
         <a href="javascript:void(0);"><i class="fas fa-level-up-alt"></i></a>
     </div>
     <!-- scroll up area end -->
-
-    <!-- search area start -->
+         <!-- search area start -->
     <section class="header__search white-bg transition-3">
         <div class="container">
             <div class="row">
                 <div class="col-xl-12">
                     <div class="header__search-inner text-center">
-                        <form action="#">
+                        <form action="/product/search" method="GET">
                             <div class="header__search-btn">
-                                <a href="javascript:void(0);" class="header__search-btn-close"><i
-                                        class="fal fa-times"></i></a>
+                                <a href="javascript:void(0);" class="header__search-btn-close">
+                                    <i class="fal fa-times"></i>
+                                </a>
                             </div>
                             <div class="header__search-header">
                                 <h3>Search</h3>
                             </div>
                             <div class="header__search-input p-relative">
-                                <input type="text" placeholder="Search for products... ">
+                                <input type="text" name="search" id="search" placeholder="Search for products... ">
                                 <button type="submit"><i class="far fa-search"></i></button>
                             </div>
                         </form>
+                        
 
 
                     </div>
@@ -142,6 +162,10 @@
         </div>
     </section>
     <div class="body-overlay transition-3"></div>
+    <!-- search area end -->
+
+
+
     <!-- search area end -->
 
 

@@ -7,7 +7,7 @@
                     <div class="col-xl-6 col-lg-6 col-md-6 col-12">
                         <div class="footer__widget mb-30">
                             <div class="footer__widget-title mb-25">
-                                <a href="index.html"><img src="/assets/img/logo/logo-2.png" alt="logo"></a>
+                                <!-- <a href="index.html"><img src="/assets/img/logo/.png" alt="logo"></a> -->
                             </div>
                             <div class="footer__widget-content">
                                 <p>Outstock is a premium Templates theme with advanced admin module. It’s extremely
@@ -19,7 +19,7 @@
                                                 <i class="fal fa-map-marker-alt"></i>
                                             </div>
                                             <div class="text">
-                                                <span>Add: 1234 Heaven Stress, Beverly Hill, Melbourne, USA.</span>
+                                                <span>Add: 1234 Heaven Stress, Beverly Hill, Surat, India..</span>
                                             </div>
                                         </li>
                                         <li>
@@ -27,7 +27,7 @@
                                                 <i class="fal fa-envelope-open-text"></i>
                                             </div>
                                             <div class="text">
-                                                <span>Email: Contact@basictheme.com</span>
+                                                <span>Email:packpoint@mail.com</span>
                                             </div>
                                         </li>
                                         <li>
@@ -127,15 +127,24 @@
     <script src="/assets/js/main.js"></script>
 
     <script>
-        const toastMessage = <%- JSON.stringify(toastMessage || null) %>;
-        if (toastMessage) {
-            Toastify({
-                text: toastMessage.text,
-                duration: 3000,
-                gravity: "top",
-                position: "right",
-                backgroundColor: toastMessage.type === "error" ? "red" : "green",
-            }).showToast();
+        document.addEventListener("DOMContentLoaded", function () {
+            const toastMessage = <%- JSON.stringify(toastMessage || null) %>;
+            if (toastMessage) {
+                Toastify({
+                    text: toastMessage.text,
+                    duration: 3000,
+                    gravity: "top",
+                    position: "right",
+                    backgroundColor: toastMessage.type === "error" ? "red" : "green",
+                }).showToast();
+            }
+        });
+    </script>
+    
+    
+    <script>
+        function changeImage(newSrc, productId) {
+            document.getElementById('mainImage-' + productId).src = newSrc;
         }
     </script>
     

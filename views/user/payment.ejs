@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Complete Payment</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(120deg, #282752, #333252);
+      color: #fff;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .container {
+      background: #1e1d35;
+      padding: 3rem;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(101, 10, 10, 0.5);
+      text-align: center;
+      width: 100%;
+      max-width: 400px;
+    }
+    h1 {
+      font-size: 28px;
+      margin-bottom: 1rem;
+      background: linear-gradient(90deg, #ff9a00, #ff6b00);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    p {
+      margin-bottom: 2rem;
+      font-size: 16px;
+      color: #bbb;
+    }
+    #rzp-button {
+      background: linear-gradient(90deg, #ff9a00, #ff6b00);
+      color: #fff;
+      border: none;
+      padding: 0.75rem 2rem;
+      font-size: 18px;
+      font-weight: bold;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(255, 107, 0, 0.4);
+    }
+    #rzp-button:hover {
+      background: linear-gradient(90deg, #ff6b00, #d94800);
+      transform: scale(1.05);
+    }
+    .loading {
+      display: none;
+      margin-top: 1.5rem;
+    }
+    .loading i {
+      font-size: 24px;
+      animation: spin 1.5s linear infinite;
+      color: #ff6b00;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    footer {
+      margin-top: 2rem;
+      font-size: 14px;
+      color: #666;
+    }
+    footer a {
+      color: #ff6b00;
+      text-decoration: none;
+    }
+    footer a:hover {
+      text-decoration: underline;
+    }
+  </style>
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+</head>
+<body>
+  <div class="container">
+    <h1>Secure Payment</h1>
+    <p>Click the button below to complete your payment securely.</p>
+    <button id="rzp-button">Pay Now</button>
+    <div class="loading">
+      <i class="fa fa-spinner"></i> Processing...
+    </div>
+    <footer>
+      <p>Need help? <a href="/contact">Contact Support</a></p>
+    </footer>
+  </div>
+
+  <script>
+    toastr.options = {
+      "closeButton": true,
+      "progressBar": true,
+      "positionClass": "toast-top-right",
+      "timeOut": "5000",
+    };
+
+    const options = {
+      key: "<%= razorpayKey %>",
+      amount: "<%= amount * 100 %>",
+      currency: "INR",
+      name: "PACK POINT",
+      description: "Order Payment",
+      order_id: "<%= orderId %>",
+      handler: function (response) {
+        // console.log(response);
+        
+        
+        document.querySelector(".loading").style.display = "block";
+
+        fetch("/checkout/payment/success", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(response),
+
+        })
+          .then((res) => res.json())
+          .then(() => {
+            toastr.success("Payment successful! Redirecting...");
+            setTimeout(() => {
+              window.location.href = "/";
+            }, 2000);
+          })
+          .catch((err) => {
+            res.status(200).json({ success: true, message: "Payment verified" });
+          })
+          .finally(() => {
+            document.querySelector(".loading").style.display = "none";
+          });
+      },
+      theme: {
+        color: "#ff6b00",
+      },
+      modal: {
+        ondismiss: function () {
+
+          document.querySelector(".loading").style.display = "none";
+          window.location.href = "/checkout";
+          toastr.warning("Payment process was cancelled.");
+        },
+      },
+    };
+
+    const rzp = new Razorpay(options);
+
+    document.getElementById("rzp-button").onclick = function () {
+      this.disabled = true;
+      document.querySelector(".loading").style.display = "block";
+      rzp.open();
+
+      rzp.on("payment.failed", () => {
+        this.disabled = false;
+        document.querySelector(".loading").style.display = "none";
+        window.location.href = "/checkout";
+        toastr.error("Payment failed. Please try again.");
+      });
+    };
+  </script>
+</body>
+</html>

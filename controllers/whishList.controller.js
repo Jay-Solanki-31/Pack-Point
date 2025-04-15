@@ -13,7 +13,7 @@ const getWishlist = async (req, res) => {
         res.render("user/wishlist", { wishlist: wishlist ? wishlist.products : [] });
     } catch (error) {
         console.error("Error fetching wishlist:", error);
-        res.redirect("/user/wishlist");
+        res.redirect("/wishlist");
     }
 };
 
@@ -40,8 +40,8 @@ const addToWishlist = async (req, res) => {
         req.session.toastMessage = { type: "success", text: "Product added to wishlist successfully" };
         res.redirect("/user/shop");
     } catch (error) {
-        console.error("Error adding to wishlist:", error);
-        res.redirect("/wishlist");
+        req.session.toastMessage = { type: "error", text: "Error adding to wishlist" };
+        res.redirect("/user/shop");
     }
 };
 
@@ -49,6 +49,8 @@ const removeFromWishlist = async (req, res) => {
     try {
         const userId = req.user.id;
         const productId = req.params.productId;
+        console.log(productId);
+        
 
         await WhishList.findOneAndUpdate(
             { userId },
@@ -57,7 +59,7 @@ const removeFromWishlist = async (req, res) => {
         req.session.toastMessage = { type: "success", text: "Product removed from wishlist" };
         res.redirect("/wishlist");
     } catch (error) {
-        console.error("Error removing from wishlist:", error);
+        req.session.toastMessage = { type: "error", text: "Error removing from wishlist" };
         res.redirect("/wishlist");
     }
 };

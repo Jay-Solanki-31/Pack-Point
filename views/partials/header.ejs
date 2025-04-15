@@ -28,18 +28,6 @@
 
 <body>
 
-    <!-- prealoder area start -->
-    <!-- <div id="loading">
-        <div id="loading-center">
-            <div id="loading-center-absolute">
-                <div class="object" id="first_object"></div>
-                <div class="object" id="second_object"></div>
-                <div class="object" id="third_object"></div>
-            </div>
-        </div>
-    </div> -->
-    <!-- prealoder area end -->
-
     <!-- header area start -->
     <header>
         <div id="header-sticky" class="header__area grey-bg">
@@ -47,7 +35,7 @@
                 <div class="row align-items-center">
                     <div class="col-xl-3 col-lg-3 col-md-4 col-sm-4">
                         <div class="logo">
-                            <a href="/"><img src="/assets/img/logo/logo.png" alt="logo"></a>
+                            <a href="/"><img src="/assets/img/logo/LOGO102.png" alt="logo"></a>
                         </div>
                     </div>
                     <div class="col-xl-9 col-lg-9 col-md-8 col-sm-8">
@@ -59,11 +47,12 @@
                                         </li>
                                         <li class="mega-menu "><a href="/user/shop">Shop</a>
                                         </li>
-                                        <li><a href="contact.html">Contact</a></li>
+                                        <li><a href="/contact">Contact</a></li>
+                                        
                                         <% if (user) { %>
                                             <li><a href="/wishlist">Wishlist</a></li>
-                                            <li><a href="/cart">Cart</a></li>  
-                                        <% } %>
+                                            <li><a href="/cart">Cart</a></li>
+                                            <% } %>
                                     </ul>
                                 </nav>
                             </div>
@@ -75,6 +64,7 @@
                                     <li><a href="#" class="search-toggle"><i class="ion-ios-search-strong"></i>
                                             Search</a></li>
                                     <li>
+                                        
                                         <a href="javascript:void(0);"><i class="far fa-bars"></i></a>
                                         <ul class="extra-info">
                                             <li>
@@ -84,16 +74,15 @@
                                                             <li><a href="/user/Profile">My Account</a></li>
                                                             <li><a href="/wishlist">Wishlist</a></li>
                                                             <li><a href="/cart">Cart</a></li>
-                                                            <li><a href="checkout.html">Checkout</a></li>
-                                                        <% } else { %>
-                                                            <li><a href="/user/Register">Create Account</a></li>
-                                                        <% } %>
+                                                            <% } else { %>
+                                                                <li><a href="/user/Register">Create Account</a></li>
+                                                                <% } %>
                                                     </ul>
                                                 </div>
                                             </li>
                                         </ul>
                                     </li>
-                                    
+
 
                                 </ul>
                             </div>
@@ -117,20 +106,21 @@
             <div class="row">
                 <div class="col-xl-12">
                     <div class="header__search-inner text-center">
-                        <form action="#">
+                        <form action="/product/search" method="GET">
                             <div class="header__search-btn">
-                                <a href="javascript:void(0);" class="header__search-btn-close"><i
-                                        class="fal fa-times"></i></a>
+                                <a href="javascript:void(0);" class="header__search-btn-close">
+                                    <i class="fal fa-times"></i>
+                                </a>
                             </div>
                             <div class="header__search-header">
                                 <h3>Search</h3>
                             </div>
-                            
                             <div class="header__search-input p-relative">
-                                <input type="text" placeholder="Search for products... ">
+                                <input type="text" name="search" id="search" placeholder="Search for products... ">
                                 <button type="submit"><i class="far fa-search"></i></button>
                             </div>
                         </form>
+
 
 
                     </div>
@@ -141,6 +131,6 @@
     <div class="body-overlay transition-3"></div>
     <!-- search area end -->
 
-    
+
     <div class="body-overlay transition-3"></div>
     <!-- extra info area end -->

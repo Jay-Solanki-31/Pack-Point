@@ -1,117 +1,100 @@
 <%- include('../partials/header') %>
-    <main>
-        
-        <!-- page title area start -->
-        <section class="page__title p-relative d-flex align-items-center" data-background="assets/img/slider/index-slider.jpg">
-            <div class="container">
-                <div class="row">
-                    <div class="col-xl-12">
-                        <div class="page__title-inner text-center">
-                            <h1>Checkout</h1>
-                            <div class="page__title-breadcrumb">                                 
-                                <nav aria-label="breadcrumb">
+<main>
+    <!-- Page title area -->
+    <section class="page__title p-relative d-flex align-items-center" data-background="assets/img/slider/index-slider.jpg">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="page__title-inner text-center">
+                        <h1>Checkout</h1>
+                        <div class="page__title-breadcrumb">
+                            <nav aria-label="breadcrumb">
                                 <ol class="breadcrumb justify-content-center">
                                     <li class="breadcrumb-item"><a href="/">Home</a></li>
-                                    <li class="breadcrumb-item active" aria-current="page"> Checkout</li>
+                                    <li class="breadcrumb-item active" aria-current="page">Checkout</li>
                                 </ol>
-                                </nav>
-                            </div>
+                            </nav>
                         </div>
                     </div>
                 </div>
             </div>
-        </section>
-        <!-- page title area end -->
+        </div>
+    </section>
+    <!-- Page title area end -->
 
-     
-        <!-- checkout-area start -->
-        <section class="checkout-area pt-100 pb-70">
-            <div class="container">
-                <form action="#">
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <div class="checkbox-form">
-                                <h3>Billing Details</h3>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="country-select">
-                                            <label>Country <span class="required">*</span></label>
-                                            <select>
-                                                <option value="surat">Surat</option>
-                                                <option value="Ahmedabad">Ahmedabad</option>
-                                                <option value="Vadodara">Vadodara</option>
-                                                <option value="Rajkot">Rajkot</option>
-                                                <option value="Gandhinagar">Gandhinagar</option>
-                                                <option value="Navsari">Navsari</option>
-                                                <option value="Valsad">Valsad</option>
-                                                <option value="Anand">Anand</option>
-                                            </select>
-                                        </div>
+    <!-- Checkout area -->
+    <section class="checkout-area pt-100 pb-70">
+        <div class="container">
+            <form action="/checkout/place-order" method="POST">
+                <div class="row">
+                    <!-- Billing Details -->
+                    <div class="col-lg-6">
+                        <div class="checkbox-form">
+                            <h3>Billing Details</h3>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="country-select">
+                                        <label>Country <span class="required">*</span></label>
+                                        <select name="country">
+                                            <option value="surat">Surat</option>
+                                            <option value="Ahmedabad">Ahmedabad</option>
+                                            <option value="Vadodara">Vadodara</option>
+                                            <option value="Rajkot">Rajkot</option>
+                                            <option value="Gandhinagar">Gandhinagar</option>
+                                            <option value="Navsari">Navsari</option>
+                                            <option value="Valsad">Valsad</option>
+                                            <option value="Anand">Anand</option>
+                                        </select>
                                     </div>
-                                    <div class="col-md-6">
-                                        <div class="checkout-form-list">
-                                            <label>First Name <span class="required">*</span></label>
-                                            <input type="text" placeholder="" />
-                                        </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="checkout-form-list">
+                                        <label>First Name <span class="required">*</span></label>
+                                        <input type="text" name="firstName" placeholder="First Name" required />
                                     </div>
-                                    <div class="col-md-6">
-                                        <div class="checkout-form-list">
-                                            <label>Last Name <span class="required">*</span></label>
-                                            <input type="text" placeholder="" />
-                                        </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="checkout-form-list">
+                                        <label>Last Name <span class="required">*</span></label>
+                                        <input type="text" name="lastName" placeholder="Last Name" required />
                                     </div>
-                                    <div class="col-md-12">
-                                        <div class="checkout-form-list">
-                                            <label>Company Name</label>
-                                            <input type="text" placeholder="" />
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <div class="checkout-form-list">
-                                            <label>Address <span class="required">*</span></label>
-                                            <input type="text" placeholder=" address" />
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <div class="checkout-form-list">
-                                            <label>Town / City <span class="required">*</span></label>
-                                            <input type="text" placeholder="Town / City" />
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="checkout-form-list">
-                                            <label>State / County <span class="required">*</span></label>
-                                            <input type="text" placeholder="" />
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="checkout-form-list">
-                                            <label>Postcode / Zip <span class="required">*</span></label>
-                                            <input type="text" placeholder="Postcode / Zip" />
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="checkout-form-list">
-                                            <label>Email Address <span class="required">*</span></label>
-                                            <input type="email" placeholder="" />
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="checkout-form-list">
-                                            <label>Phone <span class="required">*</span></label>
-                                            <input type="text" placeholder="Postcode / Zip" />
-                                        </div>
-                                    </div>
-                                    
                                 </div>
                                 
+                                <div class="col-md-12">
+                                    <div class="checkout-form-list">
+                                        <label>Address <span class="required">*</span></label>
+                                        <input type="text" name="address" placeholder="Address" required />
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="checkout-form-list">
+                                        <label>Postcode / Zip <span class="required">*</span></label>
+                                        <input type="text" name="postcode" placeholder="Postcode / Zip" required />
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="checkout-form-list">
+                                        <label>Email Address <span class="required">*</span></label>
+                                        <input type="email" name="email" placeholder="Email" required />
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="checkout-form-list">
+                                        <label>Phone <span class="required">*</span></label>
+                                        <input type="text" name="phone" placeholder="Phone" required />
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="col-lg-6">
-                            <div class="your-order mb-30 ">
-                                <h3>Your order</h3>
-                                <div class="your-order-table table-responsive">
-                                    <table>
+                    </div>
+
+                    <!-- Order Summary -->
+                    <div class="col-lg-6">
+                        <div class="your-order mb-30">
+                            <h3>Your order</h3>
+                            <div class="your-order-table table-responsive">
+                                <table>
+                                    <% orders.forEach((order) => { %>
                                         <thead>
                                             <tr>
                                                 <th class="product-name">Product</th>
@@ -119,127 +102,47 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr class="cart_item">
-                                                <td class="product-name">
-                                                    Vestibulum suscipit <strong class="product-quantity"> × 1</strong>
-                                                </td>
-                                                <td class="product-total">
-                                                    <span class="amount">$165.00</span>
-                                                </td>
-                                            </tr>
-                                            <tr class="cart_item">
-                                                <td class="product-name">
-                                                    Vestibulum dictum magna <strong class="product-quantity"> × 1</strong>
-                                                </td>
-                                                <td class="product-total">
-                                                    <span class="amount">$50.00</span>
-                                                </td>
-                                            </tr>
+                                            <% order.products.forEach((product) => { %>
+                                                <tr class="cart_item">
+                                                    <td class="product-name">
+                                                        <%= product.name %> <strong class="product-quantity">× <%= product.quantity %></strong>
+                                                    </td>
+                                                    <td class="product-total">
+                                                        ₹ <%= product.price * product.quantity %>
+                                                    </td>
+                                                </tr>
+                                            <% }) %>
                                         </tbody>
                                         <tfoot>
                                             <tr class="cart-subtotal">
                                                 <th>Cart Subtotal</th>
-                                                <td><span class="amount">$215.00</span></td>
-                                            </tr>
-                                            <tr class="shipping">
-                                                <th>Shipping</th>
-                                                <td>
-                                                    <ul>
-                                                        <li>
-                                                            <input type="radio" />
-                                                            <label>
-                                                                Flat Rate: <span class="amount">$7.00</span>
-                                                            </label>
-                                                        </li>
-                                                        <li>
-                                                            <input type="radio" />
-                                                            <label>Free Shipping:</label>
-                                                        </li>
-                                                        <li></li>
-                                                    </ul>
-                                                </td>
+                                                <td>₹ <%= order.total %></td>
                                             </tr>
                                             <tr class="order-total">
                                                 <th>Order Total</th>
-                                                <td><strong><span class="amount">$215.00</span></strong>
-                                                </td>
+                                                <td>₹ <%= order.total %></td>
                                             </tr>
                                         </tfoot>
-                                    </table>
-                                </div>
+                                    <% }) %>
+                                </table>
+                            </div>
 
-                                <div class="payment-method">
-                                    <div class="accordion" id="accordionExample">
-                                        <div class="card">
-                                            <div class="card-header" id="headingOne">
-                                                <h5 class="mb-0">
-                                                    <button class="btn-link" type="button" data-toggle="collapse"
-                                                        data-target="#collapseOne" aria-expanded="true"
-                                                        aria-controls="collapseOne">
-                                                        Direct Bank Transfer
-                                                    </button>
-                                                </h5>
-                                            </div>
+                            <!-- Hidden Input for Total -->
+                            <% orders.forEach((order) => { %>
+                                <input type="hidden" name="totalAmount" value="<%= order.total %>" />
+                            <% }) %>
 
-                                            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
-                                                data-parent="#accordionExample">
-                                                <div class="card-body">
-                                                    Make your payment directly into our bank account. Please use your Order ID
-                                                    as the payment
-                                                    reference. Your order won’t be
-                                                    shipped until the funds have cleared in our account.
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="card">
-                                            <div class="card-header" id="headingTwo">
-                                                <h5 class="mb-0">
-                                                    <button class="btn-link collapsed" type="button" data-toggle="collapse"
-                                                        data-target="#collapseTwo" aria-expanded="false"
-                                                        aria-controls="collapseTwo">
-                                                        Cheque Payment
-                                                    </button>
-                                                </h5>
-                                            </div>
-                                            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
-                                                data-parent="#accordionExample">
-                                                <div class="card-body">
-                                                    Please send your cheque to Store Name, Store Street, Store Town, Store
-                                                    State / County, Store
-                                                    Postcode.
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="card">
-                                            <div class="card-header" id="headingThree">
-                                                <h5 class="mb-0">
-                                                    <button class="btn-link collapsed" type="button" data-toggle="collapse"
-                                                        data-target="#collapseThree" aria-expanded="false"
-                                                        aria-controls="collapseThree">
-                                                        PayPal
-                                                    </button>
-                                                </h5>
-                                            </div>
-                                            <div id="collapseThree" class="collapse" aria-labelledby="headingThree"
-                                                data-parent="#accordionExample">
-                                                <div class="card-body">
-                                                    Pay via PayPal; you can pay with your credit card if you don’t have a
-                                                    PayPal account.
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="order-button-payment mt-20">
-                                        <button type="submit" class="os-btn os-btn-black">Place order</button>
-                                    </div>
+                            <div class="payment-method">
+                                <div class="order-button-payment mt-20">
+                                    <button type="submit" class="os-btn os-btn-black">Place Order</button>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </form>
-            </div>
-        </section>
-        <!-- checkout-area end -->
-    </main>
-
+                </div>
+            </form>
+        </div>
+    </section>
+    <!-- Checkout area end -->
+</main>
 <%- include('../partials/footer') %>
