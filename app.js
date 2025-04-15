@@ -22,7 +22,7 @@ app.use(cors({ origin: process.env.CORS_ORIGIN, credentials: true }));
 app.use(express.json({ limit: "16kb" }));
 app.use(express.urlencoded({ extended: true, limit: "16kb" }));
 app.use(cookieParser());
-app.use(flash());
+app.use(flash());-
 app.use(verifyJWT)
 app.use(session({
     secret: process.env.SESSION_SECRET,
